@@ -6,7 +6,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     description: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: true
     },
     address: {
@@ -28,6 +28,10 @@ module.exports = function(sequelize, DataTypes) {
     fax: {
         type: DataTypes.STRING,
         allowNull: false
+    },
+    logo: {
+        type: DataTypes.TEXT,
+        allowNull: true
     },
     city: {
       type: DataTypes.STRING,
