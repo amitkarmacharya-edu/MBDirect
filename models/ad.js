@@ -6,7 +6,7 @@ module.exports = function(sequelize, DataTypes) {
         allowNull: false
       },
       description: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: true
       },
       discount: {
@@ -19,6 +19,10 @@ module.exports = function(sequelize, DataTypes) {
           defaultValue: "Active",
           allowNull: true
         },
+    image: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    },
      start_date: {
           type: DataTypes.DATETIME,
           defaultValue: "Active",
