@@ -65,6 +65,9 @@ module.exports = function(sequelize, DataTypes) {
           allowNull: false
         }
       });
+    Company.hasMany(models.Ad, {
+        onDelete: "cascade"
+      });
   };
   
   return Company;
