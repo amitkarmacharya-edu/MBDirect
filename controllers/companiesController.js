@@ -4,14 +4,45 @@ const db = require("../models");
 module.exports = {
   
   findAll: function(req, res) {
-    db.Company.findAll({}).then((dbCompany) => {
+    db.Company.findAll({include: [db.Ad]}).then((dbCompany) => {
       res.json(dbCompany);
     });
+  },
+  findById: function(req, res) {
+    db.Company
+      .findOne({
+        where: {
+          id: req.params.id
+        },
+        include: [db.Ad]
+      })
+      .then(dbCompany => res.json(dbCompany))
+      .catch(err => res.status(422).json(err));
   },
   create: function(req, res) {
     db.Company
       .create(req.body)
-      .then(dbModel => res.json(dbModel))
+      .then(dbCompany => res.json(dbCompany))
+      .catch(err => res.status(422).json(err));
+  },
+  update: function(req, res) {
+    db.Company
+      .Update(req.body, {
+        where: {
+          id: req.body.id
+        }
+      })
+      .then(dbCompany => res.json(dbCompany))
+      .catch(err => res.status(422).json(err));
+  },
+  remove: function(req, res) {
+    db.Company
+      .destroy({
+        where: {
+          id: req.params.id
+        }
+      })      
+      .then(dbCompany => res.json(dbCompany))
       .catch(err => res.status(422).json(err));
   }
 };
