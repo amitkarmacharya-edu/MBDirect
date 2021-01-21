@@ -14,18 +14,18 @@ module.exports = function (sequelize, DataTypes) {
         allowNull: true,
     },
     start_time:{
-        tyep: DataTypes.DATETIME,
-        allowNull: false,
+        type: DataTypes.DATE,
+        allowNull: true,
     },
     end_time:{
-        tyep: DataTypes.DATETIME,
-        allowNull: false,
+        type: DataTypes.DATE,
+        allowNull: true,
     },
   });
    
-  Order.associate = function(models) {
+  Meet.associate = function(models) {
     Meet.belongsTo(models.User);
     Meet.belongsTo(models.Company);   
   };
-  return User;
+  return Meet;
 };
