@@ -1,5 +1,5 @@
 import React , { useState }from "react";
-import Axios from 'axios';
+// import Axios from 'axios';
 import API from './utils/API';
 import Header from "./components/Header/Header";
 import Home from "./components/Home/Home";
@@ -29,23 +29,18 @@ function App() {
 
   
   const login = () => {
-    Axios({
-      method: "POST",
-      data: {
-        username: loginUsername,
-        password: loginPassword,
-    },
-    withCredentials: true,
-    url: "https://localhost:3001/login"
+    API.login({     
+      email: loginUsername,
+      password: loginPassword    
   }).then((res)=> console.log(res));
   };
 
-  const getuser = () => {
-    Axios({
-      method: "GET",  
-    withCredentials: true,
-    url: "https://localhost:8080/getUser"
-  }).then((res)=> console.log(res));
+  const logout = () => {
+    API.logout({}).then((res)=> console.log("User has logged out"));
+  };
+
+  const getusers = () => {
+    API.getUsers({}).then((res)=> console.log(res));    
   };
 
   return (
@@ -80,9 +75,10 @@ function App() {
             <h1>Get User</h1>       
             <button onlick={getuser}>Submit</button>      
           </div>
-      
-      </div>
-
+          <div>
+            <h1>Logout</h1>       
+            <button onClick={logout}>Submit</button>      
+          </div>
     </Router>
     
   );
