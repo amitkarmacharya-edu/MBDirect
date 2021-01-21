@@ -4,45 +4,44 @@ const db = require("../models");
 module.exports = {
   
   findAll: function(req, res) {
-    db.Company.findAll({include: [db.Ad]}).then((dbCompany) => {
-      res.json(dbCompany);
+    db.Ad.findAll({}).then((dbAd) => {
+      res.json(dbAd);
     });
   },
   findById: function(req, res) {
-    db.Company
+    db.Ad
       .findOne({
         where: {
           id: req.params.id
-        },
-        include: [db.Ad]
+        }
       })
-      .then(dbCompany => res.json(dbCompany))
+      .then(dbAd => res.json(dbAd))
       .catch(err => res.status(422).json(err));
   },
   create: function(req, res) {
-    db.Company
+    db.Ad
       .create(req.body)
-      .then(dbCompany => res.json(dbCompany))
+      .then(dbAd => res.json(dbAd))
       .catch(err => res.status(422).json(err));
   },
   update: function(req, res) {
-    db.Company
+    db.Ad
       .Update(req.body, {
         where: {
           id: req.body.id
         }
       })
-      .then(dbCompany => res.json(dbCompany))
+      .then(dbAd => res.json(dbAd))
       .catch(err => res.status(422).json(err));
   },
   remove: function(req, res) {
-    db.Company
+    db.Ad
       .destroy({
         where: {
           id: req.params.id
         }
       })      
-      .then(dbCompany => res.json(dbCompany))
+      .then(dbAd => res.json(dbAd))
       .catch(err => res.status(422).json(err));
   }
 };

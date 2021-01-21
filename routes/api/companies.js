@@ -7,10 +7,10 @@ router.route("/")
   .post(companiesController.create);
 
 // // Matches with "/api/companies/:id"
-// router
-//   .route("/:id")
-//   .get(companiesController.findById)
-//   .put(companiesController.update)
-//   .delete(companiesController.remove);
+router
+  .route("/:id")
+  .get(companiesController.findById)
+  .put(companiesController.update)
+  .delete(companiesController.remove);
 
 module.exports = router;

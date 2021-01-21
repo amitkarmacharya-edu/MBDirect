@@ -4,45 +4,44 @@ const db = require("../models");
 module.exports = {
   
   findAll: function(req, res) {
-    db.Company.findAll({include: [db.Ad]}).then((dbCompany) => {
-      res.json(dbCompany);
+    db.Category.findAll({}).then((dbCategory) => {
+      res.json(dbCategory);
     });
   },
   findById: function(req, res) {
-    db.Company
+    db.Category
       .findOne({
         where: {
           id: req.params.id
-        },
-        include: [db.Ad]
+        }
       })
-      .then(dbCompany => res.json(dbCompany))
+      .then(dbCategory => res.json(dbCategory))
       .catch(err => res.status(422).json(err));
   },
   create: function(req, res) {
-    db.Company
+    db.Category
       .create(req.body)
-      .then(dbCompany => res.json(dbCompany))
+      .then(dbCategory => res.json(dbCategory))
       .catch(err => res.status(422).json(err));
   },
   update: function(req, res) {
-    db.Company
+    db.Category
       .Update(req.body, {
         where: {
           id: req.body.id
         }
       })
-      .then(dbCompany => res.json(dbCompany))
+      .then(dbCategory => res.json(dbCategory))
       .catch(err => res.status(422).json(err));
   },
   remove: function(req, res) {
-    db.Company
+    db.Category
       .destroy({
         where: {
           id: req.params.id
         }
       })      
-      .then(dbCompany => res.json(dbCompany))
+      .then(dbCategory => res.json(dbCategory))
       .catch(err => res.status(422).json(err));
   }
 };
