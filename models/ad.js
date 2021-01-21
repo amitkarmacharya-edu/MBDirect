@@ -24,13 +24,11 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     },
      start_date: {
-          type: DataTypes.DATETIME,
-          defaultValue: "Active",
+          type: DataTypes.DATE,          
           allowNull: true
         },
      end_date: {
-          type: DataTypes.DATETIME,
-          defaultValue: "Active",
+          type: DataTypes.DATE,          
           allowNull: true
         }
     });
