@@ -10,7 +10,7 @@ module.exports = function(sequelize, DataTypes) {
     });
   
     Category.associate = function(models) {
-      // Associating Category with Companies
+      // Associating Category with Company
       Category.hasMany(models.Company, {
         onDelete: "cascade"
       });
