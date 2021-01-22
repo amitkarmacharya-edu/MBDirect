@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import { Link } from "react-router-dom";
 import API from "../../utils/API";
 import './RegistrationForm.css';
+import {ACCESS_AUTHENTICATED} from "../../constants/apiConstants";
 
 import { withRouter } from "react-router-dom";
 function RegistrationForm(props) {
@@ -13,6 +14,7 @@ function RegistrationForm(props) {
         confirmPassword: "",
         successMessage: null
     })
+    
     const handleChange = (e) => {
         const {id, value} = e.target
         setState(prevState => ({
@@ -36,9 +38,8 @@ function RegistrationForm(props) {
                             ...prevState,
                             'successMessage' : 'Registration successful. Redirecting to home page..'
                         }))
-                        console.log("Success");
-                        redirectToLogin();
-                        
+                        localStorage.setItem(ACCESS_AUTHENTICATED,"true");
+                        console.log("Success");        
                         props.showError(null)
                     } else{
                         console.log("Error");
@@ -46,7 +47,7 @@ function RegistrationForm(props) {
                     }
                 })
                 .catch(function (error) {
-                    console.log(error);
+                    // console.log(error);
                 });    
         } else {
             props.showError('Please enter valid username and password')    
@@ -66,6 +67,7 @@ function RegistrationForm(props) {
         }
     }
     return(
+        
         <div className="card col-12 col-lg-4 login-card mt-2 hv-center">
             <form>
                 <div className="form-group text-left">
@@ -145,6 +147,7 @@ function RegistrationForm(props) {
                 <Link to="/login">Login here</Link>
             </div>
         </div>
+        
     )
 }
 
