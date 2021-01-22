@@ -1,13 +1,9 @@
 import React from "react";
 import Nav from "./components/Nav";
 import Home from "./pages/Home/Home";
-// import RegistrationForm from "./pages/RegistrationForm/RegirtrationForm";
-
-// import LoginForm from "./pages/LoginForm/LoginForm";
 import LoginRegister from "./pages/LoginRegister/LoginRegister";
 import "./App.css";
 
-// import LoginForm from "./pages/LoginForm/LoginForm";
 import { ProtectedRoute } from "./protected.route";
 
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
@@ -20,9 +16,7 @@ function App() {
         <Nav />
           <div className="container d-flex align-items-center flex-column">         
             <Switch>
-              {/* <Route exact path="/register" component={RegistrationForm}/> */}
-              {/* <Route exact path="/login" component={LoginForm}/> */}
-              <Route exact path="/" component={Home}/>
+               <Route exact path="/" component={Home}/>
               <Route exact path="/login" >
                 <LoginRegister />
               </Route>
