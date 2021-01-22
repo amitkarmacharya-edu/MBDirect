@@ -2,31 +2,32 @@ import React from "react";
 import Nav from "./components/Nav";
 import Home from "./pages/Home/Home";
 import RegistrationForm from "./pages/RegistrationForm/RegirtrationForm";
-import LoginForm from "./pages/LoginForm/LoginForm";
-
+// import LoginForm from "./pages/LoginForm/LoginForm";
+import LoginRegister from "./pages/LoginRegister/LoginRegister";
+import "./App.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-function App() {  
+function App() {
   return (
     <Router>
-      <div className="App">
-        <Nav />
+      <div>
+      <Nav />
+      </div>     
+      <div className="App">        
           <div className="container d-flex align-items-center flex-column">
             <Switch>
               <Route exact path="/api/users" />
               <Route exact path="/register" component={RegistrationForm} />                
-              <Route path="/login" exact={true}>
-                <LoginForm />
+              <Route exact path="/login" >
+                <LoginRegister />
               </Route>
-              <Route path="/" exact={true}>
+              <Route exact path={["/", "/home"]} >
                 <Home />
-              </Route>
-              
+              </Route>              
             </Switch>
         </div>
       </div>
-    </Router>
-    
+    </Router>    
   );
 }
 
