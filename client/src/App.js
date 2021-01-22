@@ -3,25 +3,22 @@ import Nav from "./components/Nav";
 import Home from "./pages/Home/Home";
 import RegistrationForm from "./pages/RegistrationForm/RegirtrationForm";
 import LoginForm from "./pages/LoginForm/LoginForm";
-
+import { ProtectedRoute } from "./protected.route";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { UserLayout } from "./pages/User/User";
 
 function App() {  
   return (
     <Router>
       <div className="App">
         <Nav />
-          <div className="container d-flex align-items-center flex-column">
+          <div className="container d-flex align-items-center flex-column">         
             <Switch>
-              <Route exact path="/api/users" />
-              <Route exact path="/register" component={RegistrationForm} />                
-              <Route path="/login" exact={true}>
-                <LoginForm />
-              </Route>
-              <Route path="/" exact={true}>
-                <Home />
-              </Route>
-              
+              <Route exact path="/register" component={RegistrationForm}/>
+              <Route exact path="/login" component={LoginForm}/>
+              <Route exact path="/" component={Home}/>
+              <ProtectedRoute exact path="/app" component={UserLayout}/>
+              <Route path="*" component={()=> "404 NOT FOUND"}/>            
             </Switch>
         </div>
       </div>
