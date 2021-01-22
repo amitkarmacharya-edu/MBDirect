@@ -186,33 +186,5 @@ function LoginRegister(props) {
           </div>
           </div>        
       );
-    }
-    // function LoginForm() {
-    //   return (
-    //     <React.Fragment>
-    //       <label htmlFor="username">USERNAME</label>
-    //       <input type="text" id="username" value={stateLogin.email} onChange={handleChangeLogin}/>
-    //       <label htmlFor="password">PASSWORD</label>
-    //       <input type="text" id="password" value={stateLogin.password} onChange={handleChangeLogin}/>
-    //       <button type="submit" value="submit" className="submit" onClick={loginUser} />
-    //     </React.Fragment>
-    //   );
-    // }    
-    // function RegisterForm() {
-    //   return (
-    //     <React.Fragment>
-    //       <label htmlFor="first_name">first name</label>
-    //       <input type="text" id="first_name" value={state.first_name} onChange={handleChange}/>
-    //       <label htmlFor="last_name">last name</label>
-    //       <input type="text" id="last_name" value={state.last_name} onChange={handleChange}/>
-    //       <label htmlFor="email">email</label>
-    //       <input type="text" id="email" value={state.email} onChange={handleChange}/>
-    //       <label htmlFor="password">password</label>
-    //       <input type="text" id="password" value={state.password} onChange={handleChange}/>
-    //       <label htmlFor="confirmpassword">confirm password</label>
-    //       <input type="text" id="confirmpassword" value={state.confirmPassword} onChange={handleChange} />
-    //       <button type="submit" value="submit" className="submit" onClick={handleSubmitClick}/>
-    //     </React.Fragment>
-    //   );
-// }
+    }    
 export default withRouter(LoginRegister);
