@@ -1,0 +1,16 @@
+html,body, body * { 
+    box-sizing: border-box; 
+    font-family: 'Open Sans', sans-serif; 
+    margin:0;
+    padding:0;
+    color:inherit;
+    background-color:inherit;
+    /* border:2px solid orange; */
+ }
+
+ body {
+    background-image: url(pic.jpg);
+    background-size:  cover;
+    background-position:center center;
+    
+  }
