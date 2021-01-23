@@ -5,12 +5,9 @@ html,body, body * {
     padding:0;
     color:inherit;
     background-color:inherit;
-    /* border:2px solid orange; */
  }
 
  body {
     background-image: url(pic.jpg);
-    background-size:  cover;
-    background-position:center center;
-    
+    background-size:  cover;    
   }
