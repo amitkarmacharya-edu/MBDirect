@@ -133,7 +133,7 @@ function LoginRegister(props) {
         setRegistartionFormStatus(false);
       }
       return (
-        <div className="container">
+        <div className="container-login">
            <div className="login-register-wrapper">
             <div className="nav-buttons">
               <animated.button
