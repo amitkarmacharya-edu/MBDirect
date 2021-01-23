@@ -3,10 +3,11 @@ import * as FaIcons from 'react-icons/fa';
 import * as AiIcons from 'react-icons/ai';
 import * as IoIcons from 'react-icons/io';
 
+
 export const SidebarData = [
     {
       title: 'Dashboard',
-      path: '/dashboardHome',
+      path: '/dashboard',
       icon: <AiIcons.AiFillHome />,
       cName: 'nav-text'
     },
@@ -33,11 +34,6 @@ export const SidebarData = [
       path: '/meets',
       icon: <FaIcons.FaEnvelopeOpenText />,
       cName: 'nav-text'
-    },
-    {
-      title: 'LogOut',
-      path: '/logout',
-      icon: <IoIcons.IoMdHelpCircle />,
-      cName: 'nav-text'
     }
+    
   ];
