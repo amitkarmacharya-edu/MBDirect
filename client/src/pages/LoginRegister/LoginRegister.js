@@ -3,7 +3,7 @@ import "./LoginRegister.css";
 import { withRouter, Link } from "react-router-dom";
 import { useSpring, animated } from "react-spring";
 import API from "../../utils/API";
-import {ACCESS_AUTHENTICATED} from "../../constants/apiConstants";
+import {ACCESS_AUTHENTICATED, USERID} from "../../constants/apiConstants";
 
 
 function LoginRegister(props) {
@@ -55,9 +55,8 @@ function LoginRegister(props) {
                           successMessage : 'Registration successful. Redirecting to home page..'
                       }))
                       localStorage.setItem(ACCESS_AUTHENTICATED,"true");
-                      console.log("Success");
-                      redirectToHome();        
-                      props.showError(null)
+                      localStorage.setItem(USERID, response.data.id);
+                      redirectToHome();                           
                   } else{
                       console.log("Error");
                       props.showError("Some error ocurred");
@@ -85,8 +84,9 @@ function LoginRegister(props) {
               successMessageLogin: "Login successful. Redirecting to home page.."            
             }));  
             localStorage.setItem(ACCESS_AUTHENTICATED,"true");
+            localStorage.setItem(USERID, response.data.id);
             redirectToHome();
-            props.showError(null);
+           
           } else if (response.status === 204) {
             props.showError("Username and password do not match");
           } else {

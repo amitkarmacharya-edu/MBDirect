@@ -51,20 +51,6 @@ app.get("/logout", (req, res) => {
   res.redirect("/");
 });
 
-
-app.get("/companies", isAuthenticated, (req, res) => {
- res.redirect("/dashboard");
-});
-
-app.get("/users", isAuthenticated, (req, res) => {
-  db.User
-      .findAll({include: [db.Company]})     
-      .then(dbUser => res.json(dbUser))
-      .catch(err => res.status(422).json(err));
-});
-
-
-
 app.use(routes);
 // Syncing our database and logging a message to the user upon success
 db.sequelize.sync().then(() => {
