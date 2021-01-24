@@ -97,7 +97,7 @@ function LoginRegister(props) {
         });
     };
     const redirectToHome = () => {    
-      props.history.push("/app");
+      props.history.push("/dashboard");
     };
 
     const handleSubmitClick = (e) => {

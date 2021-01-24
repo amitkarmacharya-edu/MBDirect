@@ -1,12 +1,15 @@
-import React from 'react'
+import React from "react";
+import Navbar from "../../components/Navbar/Navbar";
 
-function Companies() {
-    return (
-        <div className="companies">
-
-            <h1>Companies</h1>
-        </div>
-    )
+function Companies(props) {
+  return (
+    <>
+      <Navbar />
+      <div className="companies">
+        <h1>Companies</h1>
+      </div>
+    </>
+  );
 }
 
-export default Companies
+export default Companies;

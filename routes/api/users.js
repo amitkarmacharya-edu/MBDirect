@@ -5,7 +5,7 @@ const isAuthenticated = require("../../config/middleware/isAuthenticated");
 
 // Matches with "/api/users"
 router.route("/")
-  .get(isAuthenticated, usersController.findAll)
+  .get(usersController.findAll)
   .post(usersController.create);
 
 // Matches with "/api/users/:id"
