@@ -12,6 +12,7 @@ import Users from "./pages/Dashboard/Users";
 import { ProtectedRoute } from "./protected.route";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
+
 function App() {
   return (
     <Router>
