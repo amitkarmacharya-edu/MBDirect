@@ -12,8 +12,6 @@ import { ProtectedRoute } from "./protected.route";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { UserLayout } from "./pages/User/User";
 
-
-
 function App() {
   return (
     <Router>

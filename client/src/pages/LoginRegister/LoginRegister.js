@@ -45,6 +45,7 @@ function LoginRegister(props) {
               "last_name": state.last_name,
               "email":state.email,
               "password":state.password,
+              "type":"Owner"
           }
           API.registerUser(payload)
              .then(function (response) {
