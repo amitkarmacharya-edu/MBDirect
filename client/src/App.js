@@ -8,24 +8,23 @@ import Categories from "./pages/Dashboard/Categories";
 import Companies from "./pages/Dashboard/Companies";
 import Meets from "./pages/Dashboard/Meets";
 import Ads from "./pages/Dashboard/Ads";
+import Users from "./pages/Dashboard/Users";
 import { ProtectedRoute } from "./protected.route";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { UserLayout } from "./pages/User/User";
-
-
 
 function App() {
   return (
     <Router>
       <div className="App">
         <Switch>
-          <ProtectedRoute exact path="/app" component={UserLayout} />
+          
           <ProtectedRoute exact path="/dashboard" component={DashboardHome}/>
           <ProtectedRoute exact path="/companies" component={Companies}/>
           <ProtectedRoute exact path="/categories" component={Categories}/>
           <ProtectedRoute exact path="/meets" component={Meets}/>
           <ProtectedRoute exact path="/ads" component={Ads}/>
-
+          <ProtectedRoute exact path="/users" component={Users}/>
+          <React.Fragment>
           <div>
             <Nav />
             <div className="container d-flex align-items-center flex-column">
@@ -35,9 +34,11 @@ function App() {
                 <LoginRegister />
               </Route>
             </div>
-          </div>
+          </div>         
+          </React.Fragment>
           <Route path="*" component={() => "404 NOT FOUND"} />
         </Switch>
+        
       </div>
     </Router>
   );
