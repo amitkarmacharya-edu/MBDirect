@@ -5,11 +5,11 @@ import Col from "../Col";
 import { Link } from "react-router-dom";
 import API from "../../utils/API";
 
-function CardUser(props) {
+function CardCompany(props) {
 
-  const deleteUser = (e) => {
+  const deleteCompany = (e) => {
     e.preventDefault();
-    API.deleteUser(e.target.id)
+    API.deleteCompany(e.target.id)
       .then(function (response) {
         console.log(response);
       })
@@ -19,30 +19,30 @@ function CardUser(props) {
   }
 
   return (
-    <div className="card mb-3" id={props.userResults.id}>
+    <div className="card mb-3" id={props.companyResults.id}>
       <div className="card-header">
         <Row>
           <Col size="md-10">
             <h3>
-              {props.userResults.first_name} {props.userResults.last_name}
+              {props.companyResults.name}
             </h3>
           </Col>
           <Col size="md-2">
             {props.userType === "Admin" ? (
               <>                
                 <Link
-                  to={`user/edit/${props.userResults.id}`}
+                  to={`company/edit/${props.companyResults.id}`}
                   className="btn btn-sm btn-primary mr-1"
                 >
                   Edit
                 </Link>
-                <button id="delete" value={props.userResults.id} onClick={deleteUser} className="btn btn-sm btn-danger" >
+                <button id="delete" value={props.companyResults.id} onClick={deleteCompany} className="btn btn-sm btn-danger" >
                   Delete
                 </button>
               </>
             ) : (
               <Link
-                to={`user/edit/${props.userResults.id}`}
+                to={`company/edit/${props.companyResults.id}`}
                 className="btn btn-sm btn-primary mr-1"
               >
                 Edit
@@ -56,32 +56,42 @@ function CardUser(props) {
           <Col size="md-4">
             <span>
               <h5>Id: </h5>
-              {props.userResults.id}
+              {props.companyResults.id}
+            </span>
+            <span>
+              <h5>Description: </h5>
+              {props.companyResults.description}
             </span>
             <span>
               <h5>Email: </h5>
-              {props.userResults.email}
+              {props.companyResults.email}
             </span>
             <span>
               <h5>Phone: </h5>
-              {props.userResults.phone}
+              {props.companyResults.phone}
+            </span>
+            <span>
+              <h5>Fax: </h5>
+              {props.companyResults.fax}
             </span>
           </Col>
           <Col size="md-4">
             <span>
-              <h5>Address: </h5> {props.userResults.address},{" "}
-              {props.userResults.city}, {props.userResults.state}{" "}
-              {props.userResults.zipcode} - {props.userResults.country}
+              <h5>Address: </h5> {props.companyResults.address},{" "}
+              {props.companyResults.city}, {props.companyResults.state}{" "}
+              {props.companyResults.zipcode} - {props.companyResults.country}
             </span>
             <span>
-              <h5>Type </h5>
-              {props.userResults.type}
+              <h5>Category </h5>
+              {props.companyResults.CategoryId}
+            </span>
+            <span>
+              <h5>Status </h5>
+              {props.companyResults.type}
             </span>
           </Col>
           <Col size="md-4">
-            {/* <img alt="Pic" src={props.userResults.image} className="img-fluid" /> */}
-            {/* <div><h5>Company: </h5>{props.userResults.Companies[0].name}</div> 
-            <img alt="Pic" src={props.userResults.Companies[0].logo} className="img-fluid" /> */}
+            <img alt="Pic" src={props.companyResults.logo} className="img-fluid" />            
           </Col>
         </Row>
       </div>
@@ -89,4 +99,4 @@ function CardUser(props) {
   );
 }
 
-export default CardUser;
+export default CardCompany;
