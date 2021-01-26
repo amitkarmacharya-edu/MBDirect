@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import API from "../../utils/API";
-// import DeleteBtn from "../../components/DeleteBtn";
-import Jumbotron from "../../components/Jumbotron";
 import SearchForm from "../../components/SearchForm";
 import SearchResults from "../../components/SearchResults";
 import Container from "../../components/Container";
@@ -71,19 +69,16 @@ function Users() {
   return (
     <div>
       <Navbar />      
-      <Container style={{ marginTop: 30 }}>
-      <Jumbotron>
-        <h1>Users On My List</h1>
-      </Jumbotron>
+      <Container style={{ marginTop: 30 }}>      
       <Row>
           <Col size="md-12">        
             <div>
               <Container style={{ minHeight: "80%" }}>             
-                <SearchForm                  
+                <SearchForm pageName="Users"                 
                   handleInputChange={handleInputChange}
                   sortBy={sortBy}
                 />
-                <SearchResults results={filteredUsers} userType={userType}/>
+                <SearchResults results={filteredUsers} userType={userType} pageName="Users"/>
               </Container>
             </div>
           </Col>
