@@ -1,0 +1,30 @@
+.container-fluid {
+    padding: 0px 50px 0px 50px;
+    width: auto;
+    margin: 50px;
+
+  }
+
+  .container-fluid.active {
+      margin-left: 200px;
+      transition: 0.2s;
+  }
+
+  @media only screen and (max-width: 575.98px) {
+   
+    
+    .container-fluid.active {
+         display: none;
+      transition: all 0.5s;   
+    }
+    
+    .container-fluid {
+        padding:0px 5px 0px 5px;
+        width: auto;
+        margin: 50px;
+    
+      }  
+   
+    
+  }
+  
