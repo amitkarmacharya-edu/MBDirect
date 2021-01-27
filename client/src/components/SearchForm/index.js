@@ -8,12 +8,12 @@ function SearchForm(props) {
   const style = { width: "100%", height: "auto", overflow: "hidden" };
   return (
     <form className="search" style={style}>
-      <h1>{props.pageName}</h1>
+      {/* <h1>{props.pageName}</h1> */}
       {props.pageName === "Users" ? (
         <>
-          <Link to={`users/add`} className="btn btn-sm btn-success mb-2">
+          {/* <Link to={`users/add`} className="btn btn-sm btn-success mb-2">
             Add User
-          </Link>
+          </Link> */}
           <div className="form-group">
             <Row>
               <Col size="md-9">

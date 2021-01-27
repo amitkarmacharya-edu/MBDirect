@@ -21,6 +21,7 @@ function LoginRegister(props) {
       passwordLogin: "",    
       successMessageLogin: null
     });
+  
 
     const handleChange = (e) => {
       const {id, value} = e.target
@@ -37,6 +38,7 @@ function LoginRegister(props) {
         [id]: value,
       }));
     };
+
 
     const registerUser = () => {
       if(state.email.length && state.password.length && state.first_name && state.last_name) {
@@ -98,6 +100,7 @@ function LoginRegister(props) {
         });
     };
     const redirectToHome = () => {    
+
       props.history.push("/dashboard");
     };
 
@@ -188,4 +191,4 @@ function LoginRegister(props) {
           </div>        
       );
     }    
-export default withRouter(LoginRegister);
+export default LoginRegister;

@@ -1,14 +1,17 @@
 import React from "react";
 import Navbar from "../../components/Navbar/Navbar";
 
+
+
 function DashboardHome() {
   return (
-    <>
-      <Navbar />
-      <div className="dashboardHome">
+    <div>
+     <Navbar/>
+      <div>
         <h1>Dashboard Home</h1>
       </div>
-    </>
+      </div>
+    
   );
 }
 
