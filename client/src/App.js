@@ -1,48 +1,47 @@
 import React from "react";
 import Nav from "./components/Nav";
 import Home from "./pages/Home/Home";
+import { withRouter } from "react-router-dom";
 import LoginRegister from "./pages/LoginRegister/LoginRegister";
 import "./App.css";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import DashboardHome from "./pages/Dashboard/DashboardHome";
 import Categories from "./pages/Dashboard/Categories";
 import Companies from "./pages/Dashboard/Companies";
 import Meets from "./pages/Dashboard/Meets";
 import Ads from "./pages/Dashboard/Ads";
-import Users from "./pages/Dashboard/Users";
+// import { User } from "./pages/Dashboard/Users/User";
+import { Users } from "./pages/Dashboard/Users/Index";
 import { ProtectedRoute } from "./protected.route";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-
-function App() {
+function App({ match }) {
+  const { path } = match;
   return (
     <Router>
       <div className="App">
-        <Switch>
-          
-          <ProtectedRoute exact path="/dashboard" component={DashboardHome}/>
-          <ProtectedRoute exact path="/companies" component={Companies}/>
-          <ProtectedRoute exact path="/categories" component={Categories}/>
-          <ProtectedRoute exact path="/meets" component={Meets}/>
-          <ProtectedRoute exact path="/ads" component={Ads}/>
-          <ProtectedRoute exact path="/users" component={Users}/>
-          <React.Fragment>
-          <div>
-            <Nav />
-            <div className="container d-flex align-items-center flex-column">
-              <Route exact path="/" component={Home} />
-              <Route exact path="/home" component={Home} />
-              <Route exact path="/login">
-                <LoginRegister />
-              </Route>
-            </div>
-          </div>         
-          </React.Fragment>
-          <Route path="*" component={() => "404 NOT FOUND"} />
-        </Switch>
-        
+        <div>
+          <Switch>
+            <ProtectedRoute path="/dashboard" component={DashboardHome} />
+            <ProtectedRoute path="/companies" component={Companies} />
+            <ProtectedRoute path="/categories" component={Categories} />
+            <ProtectedRoute path="/meets" component={Meets} />
+            <ProtectedRoute path="/ads" component={Ads} />
+            {/* <ProtectedRoute exact path="/users" component={User} /> */}
+            <ProtectedRoute path="/users" component={Users} />
+            {/* <Route exact path="/users/add" component={AddEditUser} />
+              <Route exact path="/users/edit/:id" component={AddEditUser} /> */}
+            <React.Fragment>
+              <Nav />
+              <div className="container d-flex align-items-center flex-column">
+                <Route exact path="/" component={Home} />
+                <Route path="/login" component={LoginRegister} />
+              </div>
+            </React.Fragment>
+          </Switch>
+        </div>
       </div>
     </Router>
   );
 }
 
-export default App;
+export default withRouter(App);
