@@ -29,7 +29,7 @@ module.exports = {
     db.User
       .Update(req.body, {
         where: {
-          id: req.body.id
+          id: req.params.id
         }
       })
       .then(dbUser => res.json(dbUser))
