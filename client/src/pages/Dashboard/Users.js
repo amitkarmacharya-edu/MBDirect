@@ -9,11 +9,13 @@ import Col from "../../components/Col";
 import { USERID } from "../../constants/apiConstants";
 
 
-function Users() {
+function Users(props) {
   const [users, setUsers] = useState([]);
   const [userType, setUserType] = useState("");
   const [filteredUsers, setFilteredUsers] = useState([users]);
   const [sortType, setSortType] = useState("a-z");
+  const [sidebar, setSidebar] = useState(false);
+  const showSidebar = () => setSidebar(!sidebar);
 
   useEffect(() => {
     loadUsers();
@@ -68,8 +70,8 @@ function Users() {
 
   return (
     <div>
-      <Navbar />      
-      <Container style={{ marginTop: 30 }}>      
+      <Navbar sidebar={sidebar} isActive={showSidebar}/>      
+      <Container sidebar={sidebar} isActive={showSidebar} style={{ marginTop: 30 }}>      
       <Row>
           <Col size="md-12">        
             <div>
