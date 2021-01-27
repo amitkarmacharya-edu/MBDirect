@@ -19,7 +19,7 @@ function CardUser(props) {
   }
 
   return (
-    <div className="card mb-3" id={props.userResults.id}>
+    <div className="card mb-3" id={props.userResults.id} key={props.userResults.key}>
       <div className="card-header">
         <Row>
           <Col size="md-10">
@@ -31,7 +31,7 @@ function CardUser(props) {
             {props.userType === "Admin" ? (
               <>                
                 <Link
-                  to={`user/edit/${props.userResults.id}`}
+                  to={`edit/${props.userResults.id}`}
                   className="btn btn-sm btn-primary mr-1"
                 >
                   Edit
@@ -42,7 +42,7 @@ function CardUser(props) {
               </>
             ) : (
               <Link
-                to={`user/edit/${props.userResults.id}`}
+                to={`edit/${props.userResults.id}`}
                 className="btn btn-sm btn-primary mr-1"
               >
                 Edit
