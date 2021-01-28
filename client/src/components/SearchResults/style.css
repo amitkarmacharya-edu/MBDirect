@@ -1,3 +1,19 @@
 ul.search-results img {
   margin: 0 auto;
 }
+.col-md-2 {
+  background: none;
+  text-align: center;
+}
+
+.col-md-10 {
+  background: none;
+}
+
+.row {
+  background: none;
+}
+
+.btn {
+  margin-left: 5px;
+}
