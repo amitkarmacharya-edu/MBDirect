@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import * as FaIcons from "react-icons/fa";
 import * as AiIcons from "react-icons/ai";
 import { withRouter, Link } from "react-router-dom";
@@ -9,19 +9,17 @@ import { ACCESS_AUTHENTICATED } from "../../constants/apiConstants";
 import API from "../../utils/API";
 
 function Navbar(props) {
-  const [sidebar, setSidebar] = useState(false);
-  const showSidebar = () => setSidebar(!sidebar);
 
   return (
     <div>
       <IconContext.Provider value={{ color: "#fff" }}>
         <div className="navbarSide">
           <Link to="#" className="menu-bars">
-            <FaIcons.FaBars onClick={showSidebar} />
+            <FaIcons.FaBars onClick={props.isActive} />
           </Link>
         </div>
-        <nav className={sidebar ? "nav-menu active" : "nav-menu"}>
-          <ul className="nav-menu-items" onClick={showSidebar}>
+        <nav className={props.sidebar ? "nav-menu active" : "nav-menu"}>
+          <ul className="nav-menu-items" onClick={props.isActive}>
             <li className="navbar-toggle">
               <Link to="#" className="menu-bars">
                 <AiIcons.AiOutlineClose />

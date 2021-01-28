@@ -4,6 +4,8 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    margin-left: -10px;
+    transition: all 0.5s;
     
   }
   
@@ -28,7 +30,8 @@
   
   .nav-menu.active {
     left: 0;
-    transition: 350ms;
+    transition: 0.2s;
+    margin-left: 0;
   }
   
   .nav-text {
