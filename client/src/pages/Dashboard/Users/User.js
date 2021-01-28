@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Navbar from "../../../components/Navbar/Navbar";
 import { Link } from "react-router-dom";
 import Container from "../../../components/Container";
 import API from "../../../utils/API";
@@ -10,12 +11,15 @@ import { USERID } from "../../../constants/apiConstants";
 
 
 
-function User({ match }) {
+function User({ match }, props) {
   const { path } = match;
   const [users, setUsers] = useState([]);
   const [userType, setUserType] = useState("");
   const [filteredUsers, setFilteredUsers] = useState([users]);
   const [sortType, setSortType] = useState("a-z");
+  const [sidebar, setSidebar] = useState(false);
+  const showSidebar = () => setSidebar(!sidebar);
+
 
   useEffect(() => {
     loadUsers();
@@ -73,7 +77,10 @@ function User({ match }) {
   }
 
   return (
-    <div>     
+    <div>
+      <Navbar sidebar={sidebar} isActive={showSidebar}/>      
+      <Container sidebar={sidebar} isActive={showSidebar} style={{ marginTop: 30 }}>     
+     
         <Row>
           <Col size="md-12">
             <div>
@@ -98,7 +105,8 @@ function User({ match }) {
               </Container>
             </div>
           </Col>
-        </Row>     
+        </Row>
+        </Container>     
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./LoginRegister.css";
-import { withRouter, Link } from "react-router-dom";
+// import { withRouter, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useSpring, animated } from "react-spring";
 import API from "../../utils/API";
 import {ACCESS_AUTHENTICATED, USERID} from "../../constants/apiConstants";
@@ -178,8 +179,7 @@ function LoginRegister(props) {
                   <label htmlFor="password">password</label>
                   <input type="password" id="password" value={state.password} onChange={handleChange}/>
                   <label htmlFor="confirmPass">Confirm Password</label>
-                  <input type="password" id="confirmPass" value={state.confirmPass} onChange={handleChange}/>
-                  
+                  <input type="password" id="confirmPass" value={state.confirmPass} onChange={handleChange}/>                  
                   <input type="submit" value="submit" className="submit" onClick={handleSubmitClick}/>
                 </React.Fragment>
               </animated.form>

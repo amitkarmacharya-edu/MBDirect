@@ -15,7 +15,7 @@ import { Users } from "./pages/Dashboard/Users/Index";
 import { ProtectedRoute } from "./protected.route";
 
 function App({ match }) {
-  const { path } = match;
+  // const { path } = match;
   return (
     <Router>
       <div className="App">
