@@ -62,8 +62,7 @@ function Companies(props) {
   };
 
   return (
-    <div>
-      <Navbar />      
+    <div>            
       <Container style={{ marginTop: 30 }}>      
       <Row>
           <Col size="md-12">        

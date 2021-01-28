@@ -40,7 +40,7 @@ function Navbar(props) {
                 onClick={() => {
                   localStorage.setItem(ACCESS_AUTHENTICATED, "false");
                   API.logout().then(function (response) {
-                    props.history.push("/home");
+                    props.history.push("/");
                   });
                 }}
               >       
