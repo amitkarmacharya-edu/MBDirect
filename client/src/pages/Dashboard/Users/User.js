@@ -14,7 +14,7 @@ function User({ match }, props) {
   const { path } = match;
   const [users, setUsers] = useState([]);
   const [userType, setUserType] = useState("");
-  const [userName, setUserName] = useState("");
+
   const [userDeleted, setUserDeleted] = useState(false);
   const [filteredUsers, setFilteredUsers] = useState([users]);
   const [sortType, setSortType] = useState("a-z");
@@ -42,7 +42,7 @@ function User({ match }, props) {
     API.getUser(userId).then((res) => {
       console.log(res.data.type);
       setUserType(res.data.type);
-      setUserName(res.data.first_name + " " + res.data.last_name);
+ 
     });
   }
 
@@ -92,7 +92,7 @@ function User({ match }, props) {
 
   return (
     <div>
-      <Navbar sidebar={sidebar} isActive={showSidebar} userName={userName}/>
+      <Navbar sidebar={sidebar} isActive={showSidebar}/>
       {/* <Alert /> */}
       <Container
         sidebar={sidebar}

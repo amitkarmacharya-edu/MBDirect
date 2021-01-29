@@ -14,10 +14,6 @@ import Container from "../../../components/Container";
 function AddEditUser({ history, match }) {
   const { id } = match.params;
   const isAddMode = !id;
-
-
-
-
   // form validation rules
   const validationSchema = Yup.object().shape({  
     id: Yup.string(),    

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import * as FaIcons from "react-icons/fa";
 import * as AiIcons from "react-icons/ai";
 import { withRouter, Link } from "react-router-dom";
@@ -7,8 +7,26 @@ import "./Navbar.css";
 import { IconContext } from "react-icons";
 import { ACCESS_AUTHENTICATED } from "../../constants/apiConstants";
 import API from "../../utils/API";
+import { USERID } from "../../constants/apiConstants";
+
 
 function Navbar(props) {
+  const [userName, setUserName] = useState("");
+  const [userType, setUserType] = useState("");
+
+  useEffect(() => {
+    typeUsers();
+  }, [])
+
+  function typeUsers() {
+    const userId = localStorage.getItem(USERID);
+    API.getUser(userId).then((res) => {
+      console.log(res.data.type);
+      setUserType(res.data.type);
+      setUserName(res.data.first_name + " " + res.data.last_name);
+    });
+  }
+
   return (
     <div>
       <IconContext.Provider value={{ color: "#fff" }}>
@@ -20,7 +38,7 @@ function Navbar(props) {
               </Link>
             </div>
             <div className="col-md-11 text-white text-right">
-              <h3>Welcome, {props.userName} !  </h3>
+              <h3>Welcome, {userName} !  </h3>
             </div>
           </div>
         
