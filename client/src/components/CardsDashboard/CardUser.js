@@ -6,18 +6,7 @@ import { Link } from "react-router-dom";
 import API from "../../utils/API";
 
 function CardUser(props) {
-
-  const deleteUser = (e) => {
-    e.preventDefault();
-    API.deleteUser(e.target.id)
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error.response.data);
-      });
-  }
-
+   
   return (
     <div className="card mb-3" id={props.userResults.id} key={props.userResults.key}>
       <div className="card-header">
@@ -36,7 +25,7 @@ function CardUser(props) {
                 >
                   Edit
                 </Link>
-                <button id="delete" value={props.userResults.id} onClick={deleteUser} className="btn btn-sm btn-danger" >
+                <button id={props.userResults.id} value={props.userResults.id} onClick={props.deleteUser} className="btn btn-sm btn-danger" >
                   Delete
                 </button>
               </>
