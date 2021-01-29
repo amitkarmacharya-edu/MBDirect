@@ -41,11 +41,11 @@ module.exports = function(sequelize, DataTypes) {
           allowNull: false
         }
       });
-      // Ad.belongsTo(models.User, {
-      //   foreignKey: {
-      //     allowNull: false
-      //   }
-      // });
+      Ad.belongsTo(models.User, {
+        foreignKey: {
+          allowNull: false
+        }
+      });
     };
     
     return Ad;
