@@ -4,6 +4,8 @@ import Row from "../Row";
 import Col from "../Col";
 import { Link } from "react-router-dom";
 import API from "../../utils/API";
+import * as FaIcons from 'react-icons/fa';
+import * as BiIcons from 'react-icons/bi';
 
 function CardUser(props) {
    
@@ -44,30 +46,32 @@ function CardUser(props) {
         <Row>
           <Col size="md-4">
             <span>
-              <h5>Id: </h5>
-              {props.userResults.id}
+              <h5><BiIcons.BiUserPin/> {props.userResults.id} </h5>              
             </span>
             <span>
-              <h5>Email: </h5>
-              {props.userResults.email}
+              <h5><BiIcons.BiMailSend/> {props.userResults.email}</h5> 
             </span>
             <span>
-              <h5>Phone: </h5>
-              {props.userResults.phone}
+              <h5><BiIcons.BiPhoneCall/> {props.userResults.phone} </h5>              
+            </span>
+            <span>
+              <h5><FaIcons.FaUserTag/> {props.userResults.type} </h5>              
             </span>
           </Col>
           <Col size="md-4">
             <span>
-              <h5>Address: </h5> {props.userResults.address},{" "}
-              {props.userResults.city}, {props.userResults.state}{" "}
-              {props.userResults.zipcode} - {props.userResults.country}
+              <h5><FaIcons.FaPeriscope/> {props.userResults.address}</h5> 
             </span>
             <span>
-              <h5>Type </h5>
-              {props.userResults.type}
+              <h5><FaIcons.FaCity/> {props.userResults.city}, {props.userResults.state}, {props.userResults.zip_code}</h5> 
             </span>
+            <span>
+              <h5><FaIcons.FaGlobeAmericas/> {props.userResults.country}</h5> 
+            </span>            
           </Col>
           <Col size="md-4">
+              <img className="rounded-circle img-fluid " src="https://mdbootstrap.com/img/Photos/Avatars/img%20(31).jpg"
+              data-holder-rendered="true"/>
             {/* <img alt="Pic" src={props.userResults.image} className="img-fluid" /> */}
             {/* <div><h5>Company: </h5>{props.userResults.Companies[0].name}</div> 
             <img alt="Pic" src={props.userResults.Companies[0].logo} className="img-fluid" /> */}
