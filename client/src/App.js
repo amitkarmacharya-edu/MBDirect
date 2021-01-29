@@ -6,12 +6,11 @@ import LoginRegister from "./pages/LoginRegister/LoginRegister";
 import "./App.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import DashboardHome from "./pages/Dashboard/DashboardHome";
-import Categories from "./pages/Dashboard/Categories";
-import Companies from "./pages/Dashboard/Companies";
-import Meets from "./pages/Dashboard/Meets";
-import Ads from "./pages/Dashboard/Ads";
-// import { User } from "./pages/Dashboard/Users/User";
 import { Users } from "./pages/Dashboard/Users/Index";
+import { Companies } from "./pages/Dashboard/Companies/Index";
+import { Categories } from "./pages/Dashboard/Categories/Index";
+import { Meets } from "./pages/Dashboard/Meets/Index";
+import { Ads } from "./pages/Dashboard/Ads/Index";
 import { ProtectedRoute } from "./protected.route";
 
 function App({ match }) {
