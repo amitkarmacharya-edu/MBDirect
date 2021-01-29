@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
+import "yup-phone";
 import { alertService } from "../../../services";
 import API from "../../../utils/API";
 import Row from "../../../components/Row";
@@ -14,13 +15,16 @@ function AddEditUser({ history, match }) {
   const { id } = match.params;
   const isAddMode = !id;
 
+
+
+
   // form validation rules
   const validationSchema = Yup.object().shape({  
     id: Yup.string(),    
     first_name: Yup.string().required("First Name is required"),
     last_name: Yup.string().required("Last Name is required"),
     email: Yup.string().email("Email is invalid").required("Email is required"),
-    phone: Yup.string().required("Phone is required"),
+    phone: Yup.string().phone("US",true,"Format invalid").required("Phone is required"),
     address: Yup.string().required("Street name is required"),
     city: Yup.string().required("City is required"),
     state: Yup.string().required("State is required"),
@@ -39,6 +43,7 @@ function AddEditUser({ history, match }) {
       .oneOf([Yup.ref("password")], "Passwords must match"),
   });
 
+ 
   // functions to build form returned by useForm() hook
   const {
     register,

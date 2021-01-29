@@ -45,6 +45,7 @@ module.exports = {
         state: req.body.state,
         zip_code: req.body.zip_code,
         country: req.body.country,
+        phone: req.body.phone,
         password: passwordUpdated,
       },
       {
