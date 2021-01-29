@@ -5,6 +5,7 @@ import CardCompany from "../CardsDashboard/CardCompany";
 import { USERID } from "../../constants/apiConstants";
 
 function SearchResults(props) {
+  
   return (
     <>
       {console.log(props.userType)}
@@ -18,6 +19,7 @@ function SearchResults(props) {
                   userResults={result}
                   key={result.id}
                   userType={props.userType}
+                  deleteUser = {props.deleteUser}
                 />
               ))}
             </>
@@ -31,6 +33,7 @@ function SearchResults(props) {
                       companyResults={result}
                       key={result.id}
                       userType={props.userType}
+                      
                     />
                   ))}
                 </>

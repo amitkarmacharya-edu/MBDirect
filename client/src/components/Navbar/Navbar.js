@@ -9,15 +9,21 @@ import { ACCESS_AUTHENTICATED } from "../../constants/apiConstants";
 import API from "../../utils/API";
 
 function Navbar(props) {
-
   return (
     <div>
       <IconContext.Provider value={{ color: "#fff" }}>
         <div className="navbarSide">
-          <Link to="#" className="menu-bars">
-            <FaIcons.FaBars onClick={props.isActive} />
-          </Link>
-        </div>
+          
+            <div className="col-md-1">
+              <Link to="#" className="menu-bars">
+                <FaIcons.FaBars onClick={props.isActive} />
+              </Link>
+            </div>
+            <div className="col-md-11 text-white text-right">
+              <h3>Welcome, {props.userName} !  </h3>
+            </div>
+          </div>
+        
         <nav className={props.sidebar ? "nav-menu active" : "nav-menu"}>
           <ul className="nav-menu-items" onClick={props.isActive}>
             <li className="navbar-toggle">
@@ -35,7 +41,7 @@ function Navbar(props) {
                 </li>
               );
             })}
-            <li key={SidebarData.length + 1} className="nav-text">              
+            <li key={SidebarData.length + 1} className="nav-text">
               <button
                 onClick={() => {
                   localStorage.setItem(ACCESS_AUTHENTICATED, "false");
@@ -43,8 +49,8 @@ function Navbar(props) {
                     props.history.push("/");
                   });
                 }}
-              >       
-                <AiIcons.AiOutlineLogout/>                
+              >
+                <AiIcons.AiOutlineLogout />
                 <span>Logout</span>
               </button>
             </li>
