@@ -41,6 +41,7 @@ module.exports = {
         last_name: req.body.last_name,
         email: req.body.email,
         address: req.body.address,
+        type: req.body.type,
         city: req.body.city,
         state: req.body.state,
         zip_code: req.body.zip_code,

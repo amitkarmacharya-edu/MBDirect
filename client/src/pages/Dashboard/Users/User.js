@@ -115,8 +115,7 @@ function User({ match }, props) {
                     <SearchForm
                       pageName="Users"
                       handleInputChange={handleInputChange}
-                      sortBy={sortBy}
-                      
+                      sortBy={sortBy}                     
                     />
                   </>
                 ) : (
