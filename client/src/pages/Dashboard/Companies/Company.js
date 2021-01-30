@@ -7,22 +7,23 @@ import Row from "../../../components/Row";
 import Col from "../../../components/Col";
 import { USERID } from "../../../constants/apiConstants";
 import Navbar from "../../../components/Navbar/Navbar";
+import { Link } from "react-router-dom";
 
-function Company(props) {
+function Company({ match }, props) {
+  const { path } = match;
   const [companies, setCompanies] = useState([]);
   const [userType, setUserType] = useState("");
+  const [companyDeleted, setCompanyDeleted] = useState(false);
   const [filteredCompanies, setFilteredCompanies] = useState([companies]);
   const [sortType, setSortType] = useState("a-z");
   const [sidebar, setSidebar] = useState(false);
   const showSidebar = () => setSidebar(!sidebar);
- 
-
-
 
   useEffect(() => {
+    setCompanyDeleted(false);
     loadCompanies();
     typeUsers();
-  }, []);
+  }, [companyDeleted]);
 
   function loadCompanies() {
     API.getCompanies()
@@ -39,7 +40,6 @@ function Company(props) {
     API.getUser(userId).then((res) => {
       console.log(res.data.type);
       setUserType(res.data.type);
-     
     });
   }
 
@@ -70,9 +70,21 @@ function Company(props) {
     return setFilteredCompanies(listCompaniesSorted);
   }
 
+  function deleteCompany (e) {
+    e.preventDefault();
+    API.deleteCompany(e.target.id)
+      .then(function (response) {
+        console.log(response);
+        return setCompanyDeleted(true);
+      })
+      .catch(function (error) {
+        console.log(error.response.data);
+      });
+  }
+
   return (
     <div>
-      <Navbar sidebar={sidebar} isActive={showSidebar}  />
+      <Navbar sidebar={sidebar} isActive={showSidebar} />
 
       <Container
         sidebar={sidebar}
@@ -83,15 +95,30 @@ function Company(props) {
           <Col size="md-12">
             <div>
               <Container style={{ minHeight: "80%" }}>
-                <SearchForm
-                  pageName="Companies"
-                  handleInputChange={handleInputChange}
-                  sortBy={sortBy}
-                />
+                {userType === "Admin" ? (
+                  <>
+                    <Link
+                      to={`${path}/add`}
+                      className="btn btn-sm btn-success mb-2"
+                    >
+                      Add Company
+                    </Link>
+                    <SearchForm
+                      pageName="Companies"
+                      handleInputChange={handleInputChange}
+                      sortBy={sortBy}
+                    />
+                  </>
+                ) : (
+                  <></>
+                )}
+
                 <SearchResults
                   results={filteredCompanies}
                   userType={userType}
+                  key={USERID}
                   pageName="Companies"
+                  deleteCompany = {deleteCompany}
                 />
               </Container>
             </div>
