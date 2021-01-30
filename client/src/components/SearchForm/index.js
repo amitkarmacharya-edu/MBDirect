@@ -84,19 +84,19 @@ function SearchForm(props) {
             <>
               {props.pageName === "Ads" ? (
                 <>
-                  <Link to={`ads/add`} className="btn btn-sm btn-success mb-2">
-                    Add User
-                  </Link>
+                  {/* <Link to={`ads/add`} className="btn btn-sm btn-success mb-2">
+                    Add Advertisment
+                  </Link> */}
                   <div className="form-group">
                     <Row>
                       <Col size="md-9">
-                        <label htmlFor="ad">Search by Ad Name:</label>
+                        <label htmlFor="ad">Search by Advertisment Name:</label>
                         <input
                           onChange={props.handleInputChange}
                           name="ad"
                           type="text"
                           className="form-control"
-                          placeholder="Type Ad Name to Search"
+                          placeholder="Type Advertisment Name to Search"
                           id="ad"
                         />
                       </Col>
