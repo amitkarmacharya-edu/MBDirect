@@ -33,7 +33,7 @@ function SearchResults(props) {
                       companyResults={result}
                       key={result.id}
                       userType={props.userType}
-                      
+                      deleteCompany = {props.deleteCompany}
                     />
                   ))}
                 </>
