@@ -31,7 +31,7 @@ export const SidebarData = [
     },
     {
       title: 'Meets',
-      path: '/meets',
+      path: '/meets/',
       icon: <FaIcons.FaEnvelopeOpenText />,
       cName: 'nav-text'
     }
