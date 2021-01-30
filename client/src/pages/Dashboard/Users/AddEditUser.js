@@ -9,18 +9,33 @@ import API from "../../../utils/API";
 import Row from "../../../components/Row";
 import Col from "../../../components/Col";
 import Container from "../../../components/Container";
-
+import { USERID } from "../../../constants/apiConstants"; 
 
 function AddEditUser({ history, match }) {
   const { id } = match.params;
   const isAddMode = !id;
+  
+  const [userType, setUserType] = useState("");
+
+  function typeUsers() {
+    const userId = localStorage.getItem(USERID);
+    API.getUser(userId).then((res) => {
+      console.log(res.data.type);
+      setUserType(res.data.type);
+     
+    });
+  }
+
   // form validation rules
-  const validationSchema = Yup.object().shape({  
-    id: Yup.string(),    
+  const validationSchema = Yup.object().shape({
+    id: Yup.string(),
     first_name: Yup.string().required("First Name is required"),
     last_name: Yup.string().required("Last Name is required"),
     email: Yup.string().email("Email is invalid").required("Email is required"),
-    phone: Yup.string().phone("US",true,"Format invalid").required("Phone is required"),
+    phone: Yup.string()
+      .phone("US", true, "Format invalid")
+      .required("Phone is required"),
+    type: Yup.string(),
     address: Yup.string().required("Street name is required"),
     city: Yup.string().required("City is required"),
     state: Yup.string().required("State is required"),
@@ -39,7 +54,6 @@ function AddEditUser({ history, match }) {
       .oneOf([Yup.ref("password")], "Passwords must match"),
   });
 
- 
   // functions to build form returned by useForm() hook
   const {
     register,
@@ -54,7 +68,7 @@ function AddEditUser({ history, match }) {
   });
 
   function onSubmit(data) {
-    return isAddMode ? createUser(data) : updateUser(id,data);
+    return isAddMode ? createUser(data) : updateUser(id, data);
   }
 
   function createUser(data) {
@@ -68,9 +82,9 @@ function AddEditUser({ history, match }) {
       .catch(alertService.error);
   }
 
-  function updateUser(id,data) {
-    console.log(data);  
-    return API.updateUser(id,data)
+  function updateUser(id, data) {
+    console.log(data);
+    return API.updateUser(id, data)
       .then((res) => {
         console.log(res);
         alertService.success("User updated", { keepAfterRouteChange: true });
@@ -82,16 +96,28 @@ function AddEditUser({ history, match }) {
   const [user, setUser] = useState({});
   const [showPassword, setShowPassword] = useState(false);
 
-
   useEffect(() => {
     if (!isAddMode) {
-        // get user and set form fields
-        API.getUser(id).then((user) => {
-            const fields = ['id','first_name', 'last_name', 'email', 'phone','address','city','zip_code','state','country'];
-            fields.forEach(field => setValue(field, user.data[field]));
-            setUser(user.data);
-        });
+      // get user and set form fields
+      API.getUser(id).then((user) => {
+        const fields = [
+          "id",
+          "first_name",
+          "last_name",
+          "email",
+          "phone",
+          "type",
+          "address",
+          "city",
+          "zip_code",
+          "state",
+          "country",
+        ];
+        fields.forEach((field) => setValue(field, user.data[field]));
+        setUser(user.data);
+      });
     }
+    typeUsers();
   }, []);
 
   return (
@@ -110,19 +136,18 @@ function AddEditUser({ history, match }) {
             <div className="card-body">
               <div className="form-row">
                 <div className="form-group col-2">
-                <label>ID</label>
+                  <label>ID</label>
                   <input
                     name="id"
-                    style={{ background: "rgba(0,0,0,0.07)",pointerEvents:"none" }}
+                    style={{
+                      background: "rgba(0,0,0,0.07)",
+                      pointerEvents: "none",
+                    }}
                     type="text"
-                    ref={register}                    
-                    className={`form-control ${
-                      errors.id ? "is-invalid" : ""
-                    }`}
+                    ref={register}
+                    className={`form-control ${errors.id ? "is-invalid" : ""}`}
                   />
-                  <div className="invalid-feedback">
-                    {errors.id?.message}
-                  </div>
+                  <div className="invalid-feedback">{errors.id?.message}</div>
                 </div>
                 <div className="form-group col-5">
                   <label>First Name</label>
@@ -156,7 +181,7 @@ function AddEditUser({ history, match }) {
                 </div>
               </div>
               <div className="form-row">
-                <div className="form-group col-7">
+                <div className="form-group col-5">
                   <label>Email</label>
                   <input
                     name="email"
@@ -171,7 +196,7 @@ function AddEditUser({ history, match }) {
                     {errors.email?.message}
                   </div>
                 </div>
-                <div className="form-group col-5">
+                <div className="form-group col-4">
                   <label>Phone</label>
                   <input
                     name="phone"
@@ -185,6 +210,23 @@ function AddEditUser({ history, match }) {
                   <div className="invalid-feedback">
                     {errors.phone?.message}
                   </div>
+                </div>
+                <div className="form-group col-3">
+                  <label>Type</label>
+                  
+                  <select
+                    className="form-control form-select form-select-sm"
+                    name="type"
+                    ref={register}
+                    value={user.type}
+                    aria-label=".form-select-sm"  
+                    disabled= {userType === "Owner" ? true : false}                  
+                    style={{ background: "rgba(0,0,0,0.07)", height:"33px", textAlign:"top"}}
+                  >             
+                    <option value="Owner">Owner</option>
+                    <option value="Admin">Admin</option>
+                    <option value="Guest">Guest</option>
+                  </select>                  
                 </div>
               </div>
               <div className="form-row">
@@ -278,13 +320,13 @@ function AddEditUser({ history, match }) {
                       (!showPassword ? (
                         <span>
                           {" "}
-                          {" "}
                           {/* <a
                             onClick={() => setShowPassword(!showPassword)}
                             className="text-primary"
                           >
                             Show
-                          </a> */}{/*Activate Function to show Encrypted Password*/ }
+                          </a> */}
+                          {/*Activate Function to show Encrypted Password*/}
                         </span>
                       ) : (
                         <em> - {user.password}</em>
