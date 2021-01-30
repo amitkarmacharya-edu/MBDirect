@@ -13,6 +13,7 @@ import { USERID } from "../../../constants/apiConstants";
 
 function AddEditCompany({ history, match }) {
   const { id } = match.params;
+  console.log(id);
   const isAddMode = !id;
   
   const [userType, setUserType] = useState("");
@@ -29,29 +30,23 @@ function AddEditCompany({ history, match }) {
   // form validation rules
   const validationSchema = Yup.object().shape({
     id: Yup.string(),
-    first_name: Yup.string().required("First Name is required"),
-    last_name: Yup.string().required("Last Name is required"),
+    name: Yup.string().required("Company name is required"),
+    description: Yup.string().required("Description is required"),
     email: Yup.string().email("Email is invalid").required("Email is required"),
     phone: Yup.string()
       .phone("US", true, "Format invalid")
       .required("Phone is required"),
-    type: Yup.string(),
+    fax: Yup.string()
+    .phone("US", true, "Format invalid"),    
     address: Yup.string().required("Street name is required"),
     city: Yup.string().required("City is required"),
     state: Yup.string().required("State is required"),
-    zip_code: Yup.string().required("Zip code is required"),
+    // zip_code: Yup.string().required("Zip code is required"),
     country: Yup.string().required("Country is required"),
-    password: Yup.string()
-      .transform((x) => (x === "" ? undefined : x))
-      .concat(isAddMode ? Yup.string().required("Password is required") : null)
-      .min(6, "Password must be at least 6 characters"),
-    confirmPassword: Yup.string()
-      .transform((x) => (x === "" ? undefined : x))
-      .when("password", (password, schema) => {
-        if (password || isAddMode)
-          return schema.required("Confirm Password is required");
-      })
-      .oneOf([Yup.ref("password")], "Passwords must match"),
+    logo: Yup.string(),
+    status: Yup.string(),    
+    CategoryId: Yup.number().required("Category is required"),
+    UserId: Yup.number(), 
   });
 
   // functions to build form returned by useForm() hook
@@ -68,13 +63,13 @@ function AddEditCompany({ history, match }) {
   });
 
   function onSubmit(data) {
-    return isAddMode ? createUser(data) : updateUser(id, data);
+    return isAddMode ? createCompany(data) : updateCompany(id, data);
   }
 
-  function createUser(data) {
-    return API.saveUser(data)
+  function createCompany(data) {
+    return API.saveCompany(data)
       .then(() => {
-        alertService.success("User has been created", {
+        alertService.success("Company has been created", {
           keepAfterRouteChange: true,
         });
         history.push(".");
@@ -82,42 +77,59 @@ function AddEditCompany({ history, match }) {
       .catch(alertService.error);
   }
 
-  function updateUser(id, data) {
+  function updateCompany(id, data) {
     console.log(data);
-    return API.updateUser(id, data)
+    return API.updateCompany(id, data)
       .then((res) => {
         console.log(res);
-        alertService.success("User updated", { keepAfterRouteChange: true });
+        alertService.success("Company updated", { keepAfterRouteChange: true });
         history.push("..");
       })
       .catch(alertService.error);
   }
 
-  const [user, setUser] = useState({});
-  const [showPassword, setShowPassword] = useState(false);
+  const [categories,setCategories]=useState([]);
+
+  function getCategories() {    
+    return API.getCategories()
+      .then((res) => {
+        console.log(res);
+        setCategories(res.data);
+        })
+      .catch(function (error) {
+        console.log(error.res.data);
+      })         
+  }
+
+  const [company, setCompany] = useState({}); 
 
   useEffect(() => {
     if (!isAddMode) {
-      // get user and set form fields
-      API.getUser(id).then((user) => {
+      // get company and set form fields
+      API.getCompany(id).then((company) => {
         const fields = [
           "id",
-          "first_name",
-          "last_name",
+          "name",
+          "description",
+          "address",
           "email",
           "phone",
-          "type",
-          "address",
+          "fax",
+          "logo",          
           "city",
           "zip_code",
           "state",
           "country",
+          "status",
+          "CategoryId",
+          "UserId",
         ];
-        fields.forEach((field) => setValue(field, user.data[field]));
-        setUser(user.data);
+        fields.forEach((field) => setValue(field, company.data[field]));
+        setCompany(company.data);
       });
     }
     typeUsers();
+    getCategories();
   }, []);
 
   return (
@@ -131,7 +143,7 @@ function AddEditCompany({ history, match }) {
             onReset={reset}
           >
             <div className="card-header">
-              <h1>{isAddMode ? "Add User" : "Edit User"}</h1>
+              <h1>{isAddMode ? "Add Company" : "Edit Company"}</h1>
             </div>
             <div className="card-body">
               <div className="form-row">
@@ -150,37 +162,20 @@ function AddEditCompany({ history, match }) {
                   <div className="invalid-feedback">{errors.id?.message}</div>
                 </div>
                 <div className="form-group col-5">
-                  <label>First Name</label>
+                  <label>Company Name</label>
                   <input
-                    name="first_name"
+                    name="name"
                     style={{ background: "rgba(0,0,0,0.07)" }}
                     type="text"
                     ref={register}
                     className={`form-control ${
-                      errors.first_name ? "is-invalid" : ""
+                      errors.name ? "is-invalid" : ""
                     }`}
                   />
                   <div className="invalid-feedback">
-                    {errors.first_name?.message}
+                    {errors.name?.message}
                   </div>
                 </div>
-                <div className="form-group col-5">
-                  <label>Last Name</label>
-                  <input
-                    name="last_name"
-                    type="text"
-                    ref={register}
-                    style={{ background: "rgba(0,0,0,0.07)" }}
-                    className={`form-control ${
-                      errors.last_name ? "is-invalid" : ""
-                    }`}
-                  />
-                  <div className="invalid-feedback">
-                    {errors.last_name?.message}
-                  </div>
-                </div>
-              </div>
-              <div className="form-row">
                 <div className="form-group col-5">
                   <label>Email</label>
                   <input
@@ -196,7 +191,25 @@ function AddEditCompany({ history, match }) {
                     {errors.email?.message}
                   </div>
                 </div>
-                <div className="form-group col-4">
+                
+              </div>
+              <div className="form-row">
+              <div className="form-group col-6">
+                  <label>Description</label>
+                  <input
+                    name="description"
+                    type="text"
+                    ref={register}
+                    style={{ background: "rgba(0,0,0,0.07)" }}
+                    className={`form-control ${
+                      errors.description ? "is-invalid" : ""
+                    }`}
+                  />
+                  <div className="invalid-feedback">
+                    {errors.description?.message}
+                  </div>
+                </div>
+                <div className="form-group col-3">
                   <label>Phone</label>
                   <input
                     name="phone"
@@ -212,22 +225,20 @@ function AddEditCompany({ history, match }) {
                   </div>
                 </div>
                 <div className="form-group col-3">
-                  <label>Type</label>
-                  
-                  <select
-                    className="form-control form-select form-select-sm"
-                    name="type"
+                  <label>Fax</label>
+                  <input
+                    name="fax"
+                    type="text"
                     ref={register}
-                    value={user.type}
-                    aria-label=".form-select-sm"  
-                    disabled= {userType === "Owner" ? true : false}                  
-                    style={{ background: "rgba(0,0,0,0.07)", height:"33px", textAlign:"top"}}
-                  >             
-                    <option value="Owner">Owner</option>
-                    <option value="Admin">Admin</option>
-                    <option value="Guest">Guest</option>
-                  </select>                  
-                </div>
+                    style={{ background: "rgba(0,0,0,0.07)" }}
+                    className={`form-control ${
+                      errors.fax ? "is-invalid" : ""
+                    }`}
+                  />
+                  <div className="invalid-feedback">
+                    {errors.fax?.message}
+                  </div>
+                </div>                
               </div>
               <div className="form-row">
                 <div className="form-group col-8">
@@ -305,62 +316,71 @@ function AddEditCompany({ history, match }) {
                     {errors.country?.message}
                   </div>
                 </div>
+                <div className="form-row">
+                    <div className="form-group col-3">
+                    <label>Status</label>                  
+                    <select
+                        className="form-control form-select form-select-sm"
+                        name="status"
+                        ref={register}    
+                                            
+                        aria-label=".form-select-sm"  
+                        disabled= {userType === "Owner" ? true : false}                  
+                        style={{ background: "rgba(0,0,0,0.07)", height:"33px", textAlign:"top"}}                    >  
+                        <option value="Active">Active </option>
+                        <option value="Inactive">Inactive </option>                                                       
+                    </select>                 
+                    </div>
+                    <div className="form-group col-3">
+                    <label>Logo</label>
+                    <input
+                        name="logo"
+                        type="text"
+                        ref={register}
+                        style={{ background: "rgba(0,0,0,0.07)" }}
+                        className={`form-control ${
+                        errors.logo ? "is-invalid" : ""
+                        }`}
+                    />
+                    <div className="invalid-feedback">
+                        {errors.logo?.message}
+                    </div>
+                    </div>
+                    <div className="form-group col-3">
+                    <label>Category</label>                  
+                    <select
+                        className="form-control form-select form-select-sm"
+                        name="CategoryId"
+                        ref={register}                        
+                        aria-label=".form-select-sm"  
+                        disabled= {userType === "Owner" ? true : false}                  
+                        style={{ background: "rgba(0,0,0,0.07)", height:"33px", textAlign:"top"}}                    >  
+                        {categories.map((result) => (
+                        <option  value={result.id}             
+                        key={result.id}                       
+                        >{result.name} </option>
+                        ))}                                   
+                    </select>                  
+                    </div>
+                    <div className="form-group col-3">
+                    <label>User Id</label>
+                    <input
+                        name="UserId"
+                        type="text"
+                        ref={register}
+                        style={{ background: "rgba(0,0,0,0.07)" }}
+                        className={`form-control ${
+                        errors.UserId ? "is-invalid" : ""
+                        }`}
+                    />
+                    <div className="invalid-feedback">
+                        {errors.UserId?.message}
+                    </div>
+                    </div>
+                </div>
+                
               </div>
-              {!isAddMode && (
-                <div>
-                  <h3 className="pt-3">Change Password</h3>
-                  <p>Leave blank to keep the same password</p>
-                </div>
-              )}
-              <div className="form-row">
-                <div className="form-group col-6">
-                  <label>
-                    Password
-                    {!isAddMode &&
-                      (!showPassword ? (
-                        <span>
-                          {" "}
-                          {/* <a
-                            onClick={() => setShowPassword(!showPassword)}
-                            className="text-primary"
-                          >
-                            Show
-                          </a> */}
-                          {/*Activate Function to show Encrypted Password*/}
-                        </span>
-                      ) : (
-                        <em> - {user.password}</em>
-                      ))}
-                  </label>
-                  <input
-                    name="password"
-                    type="password"
-                    ref={register}
-                    style={{ background: "rgba(0,0,0,0.07)" }}
-                    className={`form-control ${
-                      errors.password ? "is-invalid" : ""
-                    }`}
-                  />
-                  <div className="invalid-feedback">
-                    {errors.password?.message}
-                  </div>
-                </div>
-                <div className="form-group col-6">
-                  <label>Confirm Password</label>
-                  <input
-                    name="confirmPassword"
-                    type="password"
-                    ref={register}
-                    style={{ background: "rgba(0,0,0,0.07)" }}
-                    className={`form-control ${
-                      errors.confirmPassword ? "is-invalid" : ""
-                    }`}
-                  />
-                  <div className="invalid-feedback">
-                    {errors.confirmPassword?.message}
-                  </div>
-                </div>
-              </div>
+             
             </div>
             <div className="card-footer">
               <div className="form-group">
