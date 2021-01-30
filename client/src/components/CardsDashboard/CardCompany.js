@@ -3,20 +3,9 @@ import "./style.css";
 import Row from "../Row";
 import Col from "../Col";
 import { Link } from "react-router-dom";
-import API from "../../utils/API";
 
 function CardCompany(props) {
 
-  const deleteCompany = (e) => {
-    e.preventDefault();
-    API.deleteCompany(e.target.id)
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error.response.data);
-      });
-  }
 
   return (
     <div className="card mb-3" id={props.companyResults.id} key={props.companyResults.key}>
@@ -31,18 +20,18 @@ function CardCompany(props) {
             {props.userType === "Admin" ? (
               <>                
                 <Link
-                  to={`company/edit/${props.companyResults.id}`}
+                  to={`edit/${props.companyResults.id}`}
                   className="btn btn-sm btn-primary mr-1"
                 >
                   Edit
                 </Link>
-                <button id="delete" value={props.companyResults.id} onClick={deleteCompany} className="btn btn-sm btn-danger" >
+                <button id="delete" id={props.companyResults.id} value={props.companyResults.id} onClick={props.deleteCompany} className="btn btn-sm btn-danger" >
                   Delete
                 </button>
               </>
             ) : (
               <Link
-                to={`company/edit/${props.companyResults.id}`}
+                to={`edit/${props.companyResults.id}`}
                 className="btn btn-sm btn-primary mr-1"
               >
                 Edit

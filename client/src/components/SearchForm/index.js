@@ -10,10 +10,7 @@ function SearchForm(props) {
     <form className="search" style={style}>
       {/* <h1>{props.pageName}</h1> */}
       {props.pageName === "Users" ? (
-        <>
-          {/* <Link to={`users/add`} className="btn btn-sm btn-success mb-2">
-            Add User
-          </Link> */}
+        <>  
           <div className="form-group">
             <Row>
               <Col size="md-9">
@@ -45,13 +42,7 @@ function SearchForm(props) {
       ) : (
         <>
           {props.pageName === "Companies" ? (
-            <>
-              <Link
-                to={`companies/add`}
-                className="btn btn-sm btn-success mb-2"
-              >
-                Add Company
-              </Link>
+            <>         
               <div className="form-group">
                 <Row>
                   <Col size="md-9">
@@ -83,10 +74,8 @@ function SearchForm(props) {
           ) : (
             <>
               {props.pageName === "Ads" ? (
-                <>
-                  {/* <Link to={`ads/add`} className="btn btn-sm btn-success mb-2">
-                    Add Advertisment
-                  </Link> */}
+
+                <> 
                   <div className="form-group">
                     <Row>
                       <Col size="md-9">
@@ -119,13 +108,7 @@ function SearchForm(props) {
                 <>
                   {props.pageName === "Meets" ? (
                     <>
-                      <Link
-                        to={`meets/add`}
-                        className="btn btn-sm btn-success mb-2"
-                      >
-                        Add User
-                      </Link>
-                      <div className="form-group">
+                     <div className="form-group">
                         <Row>
                           <Col size="md-9">
                             <label htmlFor="meet">Search by Meet Title:</label>

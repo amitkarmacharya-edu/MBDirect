@@ -3,7 +3,6 @@ import "./style.css";
 import Row from "../Row";
 import Col from "../Col";
 import { Link } from "react-router-dom";
-import API from "../../utils/API";
 import * as FaIcons from 'react-icons/fa';
 import * as BiIcons from 'react-icons/bi';
 

@@ -50,16 +50,16 @@ export default {
     return axios.get("/api/companies/" + id);
   },
    // Update the Company with the given id
-   updateCompany: function(id) {
-    return axios.put("/api/companies/" + id);
+  updateCompany: function(id,companyData) {
+    return axios.put("/api/companies/" + id,companyData);
   },
   // Deletes the Company with the given id
   deleteCompany: function(id) {
     return axios.delete("/api/companies/" + id);
   },
   // Saves a Company to the database
-  saveCompany: function(userData) {
-    return axios.post("/api/companies", userData);
+  saveCompany: function(companyData) {
+    return axios.post("/api/companies", companyData);
   },
 
 
@@ -83,8 +83,8 @@ export default {
     return axios.delete("/api/ads/" + id);
   },
   // Saves a Ad to the database
-  saveAd: function(userData) {
-    return axios.post("/api/ads", userData);
+  saveAd: function(adData) {
+    return axios.post("/api/ads", adData);
   },
 
    /*** MEETS API AXIOS CALL ***/
@@ -107,9 +107,32 @@ export default {
     return axios.delete("/api/meets/" + id);
   },
   // Saves a Meet to the database
-  saveMeet: function(userData) {
-    return axios.post("/api/meets", userData);
+  saveMeet: function(meetData) {
+    return axios.post("/api/meets", meetData);
   },
    
+   /*** Categories API AXIOS CALL ***/
+
+  // Gets all Categories
+  getCategories: function() {
+    console.log("IN");
+    return axios.get("/api/categories");
+  },
+  // Gets the Category with the given id
+  getCategory: function(id) {
+    return axios.get("/api/categories/" + id);
+  },
+   // Update the Category with the given id
+   updateCategory: function(id) {
+    return axios.put("/api/categories/" + id);
+  },
+  // Deletes the Category with the given id
+  deleteCategory: function(id) {
+    return axios.delete("/api/categories/" + id);
+  },
+  // Saves a Category to the database
+  saveCategory: function(categoryData) {
+    return axios.post("/api/categories", categoryData);
+  },
   
 };
