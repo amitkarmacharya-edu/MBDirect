@@ -26,10 +26,12 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   update: function(req, res) {
+    idToNumber = parseInt(req.params.id);
+    console.log(idToNumber);
     db.Company
-      .Update(req.body, {
+      .update(req.body, {
         where: {
-          id: req.body.id
+          id: idToNumber,
         }
       })
       .then(dbCompany => res.json(dbCompany))
