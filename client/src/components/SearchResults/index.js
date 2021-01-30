@@ -2,10 +2,10 @@ import React from "react";
 import "./style.css";
 import CardUser from "../CardsDashboard/CardUser";
 import CardCompany from "../CardsDashboard/CardCompany";
+import CardAd from "../CardsDashboard/CardAd";
 import { USERID } from "../../constants/apiConstants";
 
 function SearchResults(props) {
-  
   return (
     <>
       {console.log(props.userType)}
@@ -19,7 +19,7 @@ function SearchResults(props) {
                   userResults={result}
                   key={result.id}
                   userType={props.userType}
-                  deleteUser = {props.deleteUser}
+                  deleteUser={props.deleteUser}
                 />
               ))}
             </>
@@ -38,7 +38,22 @@ function SearchResults(props) {
                   ))}
                 </>
               ) : (
-                <>Add Code Here for other pages</>
+                <>
+                  {props.pageName === "Ads" ? (
+                    <>
+                      {console.log(props.results)}
+                      {props.results.map((result) => (
+                        <CardAd
+                          adResults={result}
+                          key={result.id}
+                          userType={props.userType}
+                        />
+                      ))}
+                    </>
+                  ) : (
+                    <>Add Code Here for other pages</>
+                  )}
+                </>
               )}
             </>
           )}
@@ -68,23 +83,49 @@ function SearchResults(props) {
               {props.pageName === "Companies" ? (
                 <>
                   {props.results
-                .filter(function (result) {
-                  console.log(result.UserId);
-                  console.log(parseInt(localStorage.getItem(USERID)));
-                  return result.UserId === parseInt(localStorage.getItem(USERID));
-                })
-                .map(function (result) {
-                  return (
-                    <CardCompany
-                      companyResults={result}
-                      key={result.id}
-                      userType={props.userType}
-                    />
-                  );
-                })}
+                    .filter(function (result) {
+                      console.log(result.UserId);
+                      console.log(parseInt(localStorage.getItem(USERID)));
+                      return (
+                        result.UserId === parseInt(localStorage.getItem(USERID))
+                      );
+                    })
+                    .map(function (result) {
+                      return (
+                        <CardCompany
+                          companyResults={result}
+                          key={result.id}
+                          userType={props.userType}
+                        />
+                      );
+                    })}
                 </>
               ) : (
-                <>Add Code Here for other pages</>
+                <>
+                  {props.pageName === "Ads" ? (
+                    <>
+                      {props.results
+                        .filter(function (result) {
+                          console.log(parseInt(localStorage.getItem(USERID)));
+                          return (
+                            result.UserId ===
+                            parseInt(localStorage.getItem(USERID))
+                          );
+                        })
+                        .map(function (result) {
+                          return (
+                            <CardAd
+                              adResults={result}
+                              key={result.id}
+                              userType={props.userType}
+                            />
+                          );
+                        })}
+                    </>
+                  ) : (
+                    <>Add Code Here for other pages</>
+                  )}
+                </>
               )}
             </>
           )}

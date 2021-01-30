@@ -26,9 +26,9 @@ module.exports = {
   },
   update: function(req, res) {
     db.Ad
-      .Update(req.body, {
+      .update(req.body, {
         where: {
-          id: req.body.id
+          id: req.params.id
         }
       })
       .then(dbAd => res.json(dbAd))

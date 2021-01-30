@@ -75,8 +75,8 @@ export default {
     return axios.get("/api/ads/" + id);
   },
    // Update the Ad with the given id
-   updateAd: function(id) {
-    return axios.put("/api/ads/" + id);
+   updateAd: function(id, data) {
+    return axios.put("/api/ads/" + id, data);
   },
   // Deletes the Ad with the given id
   deleteAd: function(id) {
