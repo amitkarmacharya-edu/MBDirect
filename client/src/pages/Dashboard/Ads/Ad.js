@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Navbar from "../../../components/Navbar/Navbar";
 import Container from "../../../components/Container";
 import API from "../../../utils/API";
+import { alertService } from "../../../services";
 import SearchForm from "../../../components/SearchForm";
 import SearchResults from "../../../components/SearchResults";
 import { USERID } from "../../../constants/apiConstants";
@@ -73,11 +74,10 @@ function Ad({ match }, props) {
     API.deleteAd(e.target.id)
       .then(function (response) {
         console.log(response);
+        alertService.success("Ad has been deleted")
         return setAdDeleted(true);
       })
-      .catch(function (error) {
-        console.log(error.response.data);
-      });
+      .catch(alertService.error);
   }
 
   return (

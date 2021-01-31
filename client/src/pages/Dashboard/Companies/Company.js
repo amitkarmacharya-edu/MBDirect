@@ -3,6 +3,7 @@ import API from "../../../utils/API";
 import SearchForm from "../../../components/SearchForm";
 import SearchResults from "../../../components/SearchResults";
 import Container from "../../../components/Container";
+import { alertService } from "../../../services";
 import Row from "../../../components/Row";
 import Col from "../../../components/Col";
 import { USERID } from "../../../constants/apiConstants";
@@ -75,11 +76,12 @@ function Company({ match }, props) {
     API.deleteCompany(e.target.id)
       .then(function (response) {
         console.log(response);
+        alertService.success("Company has been deleted", {
+          keepAfterRouteChange: true,
+        });
         return setCompanyDeleted(true);
       })
-      .catch(function (error) {
-        console.log(error.response.data);
-      });
+      .catch(alertService.error);
   }
 
   return (
