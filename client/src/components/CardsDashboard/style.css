@@ -20,3 +20,8 @@
 .card-body {
   border-radius: inherit;
 }
+
+.rounded-circle {
+  height: 175px;
+  width: 175px;
+}
