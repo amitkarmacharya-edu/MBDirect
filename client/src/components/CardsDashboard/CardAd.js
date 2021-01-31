@@ -19,8 +19,7 @@ function CardAd(props) {
               {props.adResults.name}
             </h3>
           </Col>
-          <Col size="md-2">
-            {props.userType === "Admin" ? (
+          <Col size="md-2">            
               <>                
                 <Link
                   to={`edit/${props.adResults.id}`}
@@ -31,15 +30,7 @@ function CardAd(props) {
                 <button id={props.adResults.id} value={props.adResults.id} onClick={props.deleteAd} className="btn btn-sm btn-danger" >
                   Delete
                 </button>
-              </>
-            ) : (
-              <Link
-                to={`edit/${props.adResults.id}`}
-                className="btn btn-sm btn-primary mr-1"
-              >
-                Edit
-              </Link>
-            )}
+              </>            
           </Col>
         </Row>
       </div>
