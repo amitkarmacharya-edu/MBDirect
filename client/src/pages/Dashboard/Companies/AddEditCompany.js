@@ -74,7 +74,10 @@ function AddEditCompany({ history, match }) {
         });
         history.push(".");
       })
-      .catch(alertService.error);
+      .catch(function (error) {
+        alertService.error(error.response.data.errors[0].message);
+        console.log(error.response.data.errors[0].message);
+      });
   }
 
   function updateCompany(id, data) {
@@ -96,9 +99,8 @@ function AddEditCompany({ history, match }) {
         console.log(res);
         setCategories(res.data);
         })
-      .catch(function (error) {
-        console.log(error.res.data);
-      })         
+        .catch(alertService.error);  
+              
   }
 
   const [company, setCompany] = useState({}); 

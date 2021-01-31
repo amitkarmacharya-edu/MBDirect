@@ -78,8 +78,11 @@ function AddEditUser({ history, match }) {
           keepAfterRouteChange: true,
         });
         history.push(".");
-      })
-      .catch(alertService.error);
+      })      
+      .catch(function (error) {
+        alertService.error(error.response.data.errors[0].message);
+        console.log(error.response.data.errors[0].message);
+      });
   }
 
   function updateUser(id, data) {

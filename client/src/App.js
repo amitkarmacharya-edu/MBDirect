@@ -12,10 +12,13 @@ import { Categories } from "./pages/Dashboard/Categories/Index";
 import { Meets } from "./pages/Dashboard/Meets/Index";
 import { Ads } from "./pages/Dashboard/Ads/Index";
 import { ProtectedRoute } from "./protected.route";
+import {Alert}  from "../../client/src/components/AlertComponent/Alert";
 
 function App({ match }) {
   // const { path } = match;
   return (
+    <>
+    <Alert />
     <Router>
       <div className="App">
         <div>
@@ -40,6 +43,7 @@ function App({ match }) {
         </div>
       </div>
     </Router>
+     </>
   );
 }
 
