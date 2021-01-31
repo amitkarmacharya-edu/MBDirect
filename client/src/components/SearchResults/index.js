@@ -47,6 +47,7 @@ function SearchResults(props) {
                           adResults={result}
                           key={result.id}
                           userType={props.userType}
+                          deleteAd={props.deleteAd}
                         />
                       ))}
                     </>
@@ -118,6 +119,7 @@ function SearchResults(props) {
                               adResults={result}
                               key={result.id}
                               userType={props.userType}
+                              deleteAd={props.deleteAd}
                             />
                           );
                         })}
