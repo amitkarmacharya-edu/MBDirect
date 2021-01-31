@@ -74,7 +74,7 @@ function Ad({ match }, props) {
     API.deleteAd(e.target.id)
       .then(function (response) {
         console.log(response);
-        alertService.success("Ad has been deleted")
+        alertService.success("Advertisment has been deleted")
         return setAdDeleted(true);
       })
       .catch(alertService.error);
@@ -92,7 +92,6 @@ function Ad({ match }, props) {
           <Col size="md-12">
             <div>
               <Container style={{ minHeight: "80%" }}>
-                {userType === "Admin" ? (
                   <>
                     <Link
                       to={`${path}/add`}
@@ -106,16 +105,12 @@ function Ad({ match }, props) {
                       sortBy={sortBy}
                     />
                   </>
-                ) : (
-                  <></>
-                )}
-
                 <SearchResults
                   results={filteredAds}
                   userType={userType}
                   key={USERID}
                   pageName="Ads"
-                  deleteUser={deleteAd}
+                  deleteAd={deleteAd}
                 />
               </Container>
             </div>
