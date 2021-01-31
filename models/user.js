@@ -47,10 +47,14 @@ module.exports = function (sequelize, DataTypes) {
         type: DataTypes.STRING,
         allowNull: true,
       },
+      image: {
+        type: DataTypes.TEXT,
+        allowNull: true
+      },
     // The password cannot be null
     password: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
   });
 
