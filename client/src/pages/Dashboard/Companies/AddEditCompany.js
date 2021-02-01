@@ -386,6 +386,7 @@ function AddEditCompany({ history, match }) {
                         name="UserId"
                         type="text"
                         ref={register}
+                        disabled= {userType === "Owner" ? true : false}
                         value={returnTest}
                         style={{ background: "rgba(0,0,0,0.07)" }}
                         className={`form-control ${
