@@ -9,14 +9,18 @@ import API from "../../../utils/API";
 import Row from "../../../components/Row";
 import Col from "../../../components/Col";
 import Container from "../../../components/Container";
-import { USERID } from "../../../constants/apiConstants"; 
+import { USERID } from "../../../constants/apiConstants";
+import { Button } from 'react-bootstrap';
+import ModalUser from "../../../components/Modal";
+
 
 function AddEditCompany({ history, match }) {
   const { id } = match.params;
-  console.log(id);
-  const isAddMode = !id;
-  
+  const isAddMode = !id;  
   const [userType, setUserType] = useState("");
+  // variable to show or hide modal
+  const [showHide, setShowHide] = useState(false);
+  const [returnTest, setReturnTest] = useState();
 
   function typeUsers() {
     const userId = localStorage.getItem(USERID);
@@ -104,6 +108,18 @@ function AddEditCompany({ history, match }) {
   }
 
   const [company, setCompany] = useState({}); 
+
+  // function to handle the modal
+  function handleModalShowHide() {
+    setShowHide(!showHide);    
+  }
+
+  function handleDataBack(e) {
+    e.preventDefault();
+    console.log(e.target.value);
+    setReturnTest(e.target.value);
+    handleModalShowHide();
+  }
 
   useEffect(() => {
     if (!isAddMode) {
@@ -366,15 +382,22 @@ function AddEditCompany({ history, match }) {
                     </div>
                     <div className="form-group col-3">
                     <label>User Id</label>
-                    <input
+                    <label
                         name="UserId"
                         type="text"
                         ref={register}
+                        value={returnTest}
                         style={{ background: "rgba(0,0,0,0.07)" }}
                         className={`form-control ${
                         errors.UserId ? "is-invalid" : ""
                         }`}
                     />
+                    <Button
+                    variant="primary"
+                    onClick={handleModalShowHide}
+                  >
+                    Launch demo modal
+                  </Button>
                     <div className="invalid-feedback">
                         {errors.UserId?.message}
                     </div>
@@ -405,6 +428,8 @@ function AddEditCompany({ history, match }) {
         </Col>
         <Col size="md-2" />
       </Row>
+      <ModalUser show={showHide} handleModalShowHide={handleModalShowHide} handleDataBack={handleDataBack} pageName="Users"/>
+
     </Container>
   );
 }
