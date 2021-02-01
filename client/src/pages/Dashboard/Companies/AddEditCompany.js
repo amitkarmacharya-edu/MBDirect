@@ -370,6 +370,7 @@ function AddEditCompany({ history, match }) {
                         name="UserId"
                         type="text"
                         ref={register}
+                        disabled= {userType === "Owner" ? true : false}
                         style={{ background: "rgba(0,0,0,0.07)" }}
                         className={`form-control ${
                         errors.UserId ? "is-invalid" : ""

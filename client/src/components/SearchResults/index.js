@@ -34,6 +34,8 @@ function SearchResults(props) {
                       key={result.id}
                       userType={props.userType}
                       deleteCompany = {props.deleteCompany}
+                      categories={props.categories}
+
                     />
                   ))}
                 </>
@@ -97,6 +99,8 @@ function SearchResults(props) {
                           companyResults={result}
                           key={result.id}
                           userType={props.userType}
+                          categories={props.categories}
+
                         />
                       );
                     })}
