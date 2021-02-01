@@ -50,6 +50,8 @@ function SearchResults(props) {
                           key={result.id}
                           userType={props.userType}
                           deleteAd={props.deleteAd}
+                          companiesData={props.companiesData}
+                          usersData={props.usersData}
                         />
                       ))}
                     </>
@@ -124,6 +126,8 @@ function SearchResults(props) {
                               key={result.id}
                               userType={props.userType}
                               deleteAd={props.deleteAd}
+                              companiesData={props.companiesData}
+                              usersData={props.usersData}
                             />
                           );
                         })}

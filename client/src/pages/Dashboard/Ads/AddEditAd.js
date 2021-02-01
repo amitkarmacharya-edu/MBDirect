@@ -9,20 +9,25 @@ import API from "../../../utils/API";
 import Row from "../../../components/Row";
 import Col from "../../../components/Col";
 import Container from "../../../components/Container";
-import { USERID } from "../../../constants/apiConstants"; 
+import { USERID } from "../../../constants/apiConstants";
+import { Button } from 'react-bootstrap';
+import ModalCompany from "../../../components/Modal"
+
+
 
 function AddEditAd({ history, match }) {
   const { id } = match.params;
   const isAddMode = !id;
-  
   const [userType, setUserType] = useState("");
+  // variable to show or hide modal
+  const [showHide, setShowHide] = useState(false);
+  const [returnTest, setReturnTest] = useState();
 
   function typeUsers() {
     const userId = localStorage.getItem(USERID);
     API.getUser(userId).then((res) => {
       console.log(res.data.type);
       setUserType(res.data.type);
-     
     });
   }
 
@@ -73,13 +78,27 @@ function AddEditAd({ history, match }) {
     return API.updateAd(id, data)
       .then((res) => {
         console.log(res);
-        alertService.success("Advertisment updated", { keepAfterRouteChange: true });
+        alertService.success("Advertisment updated", {
+          keepAfterRouteChange: true,
+        });
         history.push("..");
       })
       .catch(alertService.error);
   }
 
   const [ad, setAd] = useState({});
+
+  // function to handle the modal
+  function handleModalShowHide() {
+    setShowHide(!showHide);    
+  }
+
+  function handleDataBack(e) {
+    e.preventDefault();
+    console.log(e.target.value);
+    setReturnTest(e.target.value);
+    handleModalShowHide();
+  }
 
   useEffect(() => {
     if (!isAddMode) {
@@ -144,9 +163,7 @@ function AddEditAd({ history, match }) {
                       errors.name ? "is-invalid" : ""
                     }`}
                   />
-                  <div className="invalid-feedback">
-                    {errors.name?.message}
-                  </div>
+                  <div className="invalid-feedback">{errors.name?.message}</div>
                 </div>
               </div>
               <div className="form-row">
@@ -167,18 +184,22 @@ function AddEditAd({ history, match }) {
                 </div>
                 <div className="form-group col-3">
                   <label>Status</label>
-                  
+
                   <select
                     className="form-control form-select form-select-sm"
                     name="status"
                     ref={register}
-                    aria-label=".form-select-sm"  
-                    disabled= {userType === "Owner" ? true : false}                  
-                    style={{ background: "rgba(0,0,0,0.07)", height:"33px", textAlign:"top"}}
-                  >             
+                    aria-label=".form-select-sm"
+                    disabled={userType === "Owner" ? true : false}
+                    style={{
+                      background: "rgba(0,0,0,0.07)",
+                      height: "33px",
+                      textAlign: "top",
+                    }}
+                  >
                     <option value="Active">Active</option>
                     <option value="Deactivate">Deactivate</option>
-                  </select>                  
+                  </select>
                 </div>
               </div>
               <div className="form-row">
@@ -208,7 +229,9 @@ function AddEditAd({ history, match }) {
                       errors.end_date ? "is-invalid" : ""
                     }`}
                   />
-                  <div className="invalid-feedback">{errors.end_date?.message}</div>
+                  <div className="invalid-feedback">
+                    {errors.end_date?.message}
+                  </div>
                 </div>
                 <div className="form-group col-4">
                   <label>Discount</label>
@@ -223,21 +246,31 @@ function AddEditAd({ history, match }) {
                       errors.discount ? "is-invalid" : ""
                     }`}
                   />
-                  <div className="invalid-feedback">{errors.discount?.message}</div>
+                  <div className="invalid-feedback">
+                    {errors.discount?.message}
+                  </div>
                 </div>
               </div>
               <div className="form-row">
                 <div className="form-group col-4">
                   <label>Company Id</label>
-                  <input
+                  <label
                     name="CompanyId"
                     type="number"
                     ref={register}
+                    value={returnTest}
                     style={{ background: "rgba(0,0,0,0.07)" }}
                     className={`form-control ${
                       errors.CompanyId ? "is-invalid" : ""
                     }`}
-                  />
+                  >{returnTest}</label>
+                  <Button
+                    variant="primary"
+                    onClick={handleModalShowHide}
+                  >
+                    Launch demo modal
+                  </Button>
+
                   <div className="invalid-feedback">
                     {errors.CompanyId?.message}
                   </div>
@@ -295,6 +328,8 @@ function AddEditAd({ history, match }) {
         </Col>
         <Col size="md-2" />
       </Row>
+      <ModalCompany show={showHide} handleModalShowHide={handleModalShowHide} handleDataBack={handleDataBack} pageName="Companies"/>
+                
     </Container>
   );
 }
