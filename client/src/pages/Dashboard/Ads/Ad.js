@@ -20,11 +20,15 @@ function Ad({ match }, props) {
 
   const [sidebar, setSidebar] = useState(false);
   const showSidebar = () => setSidebar(!sidebar);
+  const [companiesData, setCompaniesData] = useState([]);
+  const [usersData, setUsersData] = useState([]);
 
   useEffect(() => {
     setAdDeleted(false);
     loadAds();
     typeUsers();
+    getCompaniesData();
+    getUsersData(); 
   }, [adDeleted]);
 
   function loadAds() {
@@ -45,6 +49,18 @@ function Ad({ match }, props) {
  
     });
   }
+
+  function getCompaniesData(){    
+    API.getCompanies().then((res) => {
+      setCompaniesData(res.data);
+    });
+  }
+  function getUsersData(){    
+    API.getUsers().then((res) => { 
+      setUsersData(res.data);
+    });
+  }
+
 
   function handleInputChange(e) {
     const listAds = ads.filter(
@@ -110,6 +126,8 @@ function Ad({ match }, props) {
                   userType={userType}
                   key={USERID}
                   pageName="Ads"
+                  companiesData={companiesData}
+                  usersData={usersData}
                   deleteAd={deleteAd}
                 />
               </Container>
