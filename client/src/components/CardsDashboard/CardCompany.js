@@ -77,7 +77,7 @@ function CardCompany(props) {
               <h5><FaIcons.FaObjectGroup/> {props.companyResults.CategoryId}</h5>              
             </span>
             <span>
-              <h5><TiIcons.TiTickOutline/> {props.companyResults.type}</h5>              
+              <h5><TiIcons.TiTickOutline/> {props.companyResults.status}</h5>              
             </span>
           </Col>
           <Col size="md-4">
