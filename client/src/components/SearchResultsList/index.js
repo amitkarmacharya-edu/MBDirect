@@ -55,6 +55,8 @@ function SearchResultsList(props) {
                       userResults={result}
                       key={result.id}
                       userType={props.userType}
+                      handleDataBack={props.handleDataBack}
+
                     />
                   ))}
                 </tbody>

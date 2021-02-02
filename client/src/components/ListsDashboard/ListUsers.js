@@ -2,25 +2,27 @@ import React from "react";
 import "./style.css";
 
 function ListUsers(props) {
+  const fullName= props.userResults.first_name + " " + props.userResults.last_name;
   
-  console.log(props.results);
+  // console.log(props.userResults);
       return (
-            <tr key={props.key}>  
-            <td data-th="Id" className="name-cell align-middle">
+            <tr key={props.key} id={props.userResults.id} value={props.userResults.id}  onClick={props.handleDataBack}>  
+            <td data-th="Id" data-id={props.userResults.id} data-user={fullName}  className="name-cell align-middle">
                 {props.userResults.id}
               </td>            
-              <td data-th="Name" className="name-cell align-middle">
-                {props.userResults.first_name} {props.userResults.last_name}
+              <td data-th="Name" data-id={props.userResults.id} data-user={fullName} className="name-cell align-middle">
+              {fullName}
               </td>              
-              <td data-th="Email" className="align-middle">                
+              <td data-th="Email"  data-id={props.userResults.id} data-user={fullName}  className="align-middle">                
                   {props.userResults.email}
               </td>
-              <td data-th="Phone" className="align-middle">
+              <td data-th="Phone" data-id={props.userResults.id} data-user={fullName} className="align-middle">
                 {props.userResults.phone}
               </td>                
-              <td data-th="Image" className="align-middle">
+              <td data-th="Image" data-id={props.userResults.id} data-user={fullName} className="align-middle">
                 <img
                   src={props.userResults.logo}
+                  
                   className="img-responsive"
                 />
               </td>
