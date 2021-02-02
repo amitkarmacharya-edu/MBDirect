@@ -19,11 +19,13 @@ function Company({ match }, props) {
   const [sortType, setSortType] = useState("a-z");
   const [sidebar, setSidebar] = useState(false);
   const showSidebar = () => setSidebar(!sidebar);
+  const [categories,setCategories] = useState([]);
 
   useEffect(() => {
     setCompanyDeleted(false);
     loadCompanies();
     typeUsers();
+    loadCategories();
   }, [companyDeleted]);
 
   function loadCompanies() {
@@ -42,6 +44,13 @@ function Company({ match }, props) {
       console.log(res.data.type);
       setUserType(res.data.type);
     });
+  }
+
+  function loadCategories(){
+    API.getCategories().then((res)=>{
+      setCategories(res.data);
+      console.log(res.data);
+    })
   }
 
   function handleInputChange(e) {
@@ -119,6 +128,7 @@ function Company({ match }, props) {
                   results={filteredCompanies}
                   userType={userType}
                   key={USERID}
+                  categories={categories}
                   pageName="Companies"
                   deleteCompany = {deleteCompany}
                 />

@@ -130,6 +130,7 @@ function ModalCompany(props) {
               userType={userType}
               key={USERID}
               pageName="Users"
+              handleDataBack={props.handleDataBack}
             />
           )}
         </>

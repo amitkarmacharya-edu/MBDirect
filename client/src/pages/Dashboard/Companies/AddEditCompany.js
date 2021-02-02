@@ -10,24 +10,25 @@ import Row from "../../../components/Row";
 import Col from "../../../components/Col";
 import Container from "../../../components/Container";
 import { USERID } from "../../../constants/apiConstants";
-import { Button } from 'react-bootstrap';
+import { Button } from "react-bootstrap";
 import ModalUser from "../../../components/Modal";
 import $ from "jquery";
-
 function AddEditCompany({ history, match }) {
   const { id } = match.params;
-  const isAddMode = !id;  
+  const isAddMode = !id;
   const [userType, setUserType] = useState("");
   // variable to show or hide modal
   const [showHide, setShowHide] = useState(false);
   const [returnTest, setReturnTest] = useState();
+  const [userId, setUserId] = useState();
+  const [userName, setUserName] = useState();
 
+  // Checking Usertype to grant Add/Eddit permissions.
   function typeUsers() {
     const userId = localStorage.getItem(USERID);
     API.getUser(userId).then((res) => {
       console.log(res.data.type);
       setUserType(res.data.type);
-     
     });
   }
 
@@ -40,17 +41,15 @@ function AddEditCompany({ history, match }) {
     phone: Yup.string()
       .phone("US", true, "Format invalid")
       .required("Phone is required"),
-    fax: Yup.string()
-    .phone("US", true, "Format invalid"),    
+    fax: Yup.string().phone("US", true, "Format invalid"),
     address: Yup.string().required("Street name is required"),
     city: Yup.string().required("City is required"),
     state: Yup.string().required("State is required"),
-    // zip_code: Yup.string().required("Zip code is required"),
-    country: Yup.string().required("Country is required"),
-    // logo: Yup.string(),
-    status: Yup.string(),    
+    zip_code: Yup.string().required("Zip code is required"),    
+    country: Yup.string().required("Country is required"),    
+    status: Yup.string(),
     CategoryId: Yup.number().required("Category is required"),
-    UserId: Yup.number(), 
+    UserId: Yup.number(),
   });
 
   // functions to build form returned by useForm() hook
@@ -69,6 +68,7 @@ function AddEditCompany({ history, match }) {
   function onSubmit(data) {
     return isAddMode ? createCompany(data) : updateCompany(id, data);
   }
+
 
   function createCompany(data) { 
 
@@ -94,6 +94,7 @@ function AddEditCompany({ history, match }) {
   });      
   }
 
+  //API call to update company information
   function updateCompany(id, data) {
     console.log(data);
     return API.updateCompany(id, data)
@@ -105,32 +106,44 @@ function AddEditCompany({ history, match }) {
       .catch(alertService.error);
   }
 
-  const [categories,setCategories]=useState([]);
+  //Creating state to store categories from GetCategories API call to
+  const [categories, setCategories] = useState([]);
 
-  function getCategories() {    
+  // API call pulling all Categories
+  function getCategories() {
     return API.getCategories()
       .then((res) => {
         console.log(res);
         setCategories(res.data);
-        })
-        .catch(alertService.error);  
-              
+      })
+      .catch(alertService.error);
   }
-
-  const [company, setCompany] = useState({}); 
 
   // function to handle the modal
   function handleModalShowHide() {
-    setShowHide(!showHide);    
+    setShowHide(!showHide);
   }
 
+  // Funtion to handle data choosen from Modal
   function handleDataBack(e) {
     e.preventDefault();
-    console.log(e.target.value);
-    setReturnTest(e.target.value);
+    console.log(e.target.dataset.id);
+    console.log(e.target.dataset.user);
+    setUserName(e.target.dataset.user);
+    setUserId(e.target.dataset.id);
     handleModalShowHide();
   }
 
+  // API call to Users for pulling owners info
+  function checkOwnersInfo() {
+    console.log(company);
+    const userId = company.UserId;
+    API.getUser(userId).then((res) => {
+      setUserName(res.first_name + " " + res.last_name);
+    });
+  }
+
+  const [company, setCompany] = useState({});
   useEffect(() => {
     if (!isAddMode) {
       // get company and set form fields
@@ -143,7 +156,7 @@ function AddEditCompany({ history, match }) {
           "email",
           "phone",
           "fax",
-          "logo",          
+          "logo",
           "city",
           "zip_code",
           "state",
@@ -203,7 +216,7 @@ function AddEditCompany({ history, match }) {
                   />
                   <div className="invalid-feedback">
                     {errors.name?.message}
-                  </div>
+                    </div>
                 </div>
                 <div className="form-group col-5">
                   <label>Email</label>
@@ -220,10 +233,9 @@ function AddEditCompany({ history, match }) {
                     {errors.email?.message}
                   </div>
                 </div>
-                
-              </div>
+              </div>              
               <div className="form-row">
-              <div className="form-group col-6">
+                <div className="form-group col-6">
                   <label>Description</label>
                   <input
                     name="description"
@@ -266,8 +278,8 @@ function AddEditCompany({ history, match }) {
                   />
                   <div className="invalid-feedback">
                     {errors.fax?.message}
-                  </div>
-                </div>                
+                    </div>
+                </div>
               </div>
               <div className="form-row">
                 <div className="form-group col-8">
@@ -345,22 +357,27 @@ function AddEditCompany({ history, match }) {
                     {errors.country?.message}
                   </div>
                 </div>
-                <div className="form-row">
-                    <div className="form-group col-3">
-                    <label>Status</label>                  
+              </div>
+              <div className="form-row">
+                  <div className="form-group col-3">
+                    <label>Status</label>
                     <select
-                        className="form-control form-select form-select-sm"
-                        name="status"
-                        ref={register}    
-                                            
-                        aria-label=".form-select-sm"  
-                        disabled= {userType === "Owner" ? true : false}                  
-                        style={{ background: "rgba(0,0,0,0.07)", height:"33px", textAlign:"top"}}                    >  
-                        <option value="Active">Active </option>
-                        <option value="Inactive">Inactive </option>                                                       
-                    </select>                 
-                    </div>
-                    <div className="form-group col-3">
+                      className="form-control form-select form-select-sm"
+                      name="status"
+                      ref={register}
+                      aria-label=".form-select-sm"
+                      disabled={userType === "Owner" ? true : false}
+                      style={{
+                        background: "rgba(0,0,0,0.07)",
+                        height: "33px",
+                        textAlign: "top",
+                      }}
+                    >
+                      <option value="Active">Active </option>
+                      <option value="Inactive">Inactive </option>
+                    </select>
+                  </div>
+                  <div className="form-group col-3">
                     <label>Logo</label>
                     <input
                         name="logo"
@@ -369,54 +386,94 @@ function AddEditCompany({ history, match }) {
                         style={{ background: "rgba(0,0,0,0.07)" }}
                         className={`form-control ${
                         errors.logo ? "is-invalid" : ""
-                        }`}
+                      }`}
                     />
                     <div className="invalid-feedback">
-                        {errors.logo?.message}
+                      {errors.logo?.message}
                     </div>
-                    </div>
-                    <div className="form-group col-3">
-                    <label>Category</label>                  
+                  </div>
+                  <div className="form-group col-3">
+                    <label>Category</label>
                     <select
-                        className="form-control form-select form-select-sm"
-                        name="CategoryId"
-                        ref={register}                        
-                        aria-label=".form-select-sm"  
-                        disabled= {userType === "Owner" ? true : false}                  
-                        style={{ background: "rgba(0,0,0,0.07)", height:"33px", textAlign:"top"}}                    >  
-                        {categories.map((result) => (
-                        <option  value={result.id}             
-                        key={result.id}                       
-                        >{result.name} </option>
-                        ))}                                   
-                    </select>                  
-                    </div>
-                    <div className="form-group col-3">
-                    <label>User Id</label>
-                    <input
+                      className="form-control form-select form-select-sm"
+                      name="CategoryId"
+                      ref={register}
+                      aria-label=".form-select-sm"
+                      disabled={userType === "Owner" ? true : false}
+                      style={{
+                        background: "rgba(0,0,0,0.07)",
+                        height: "33px",
+                        textAlign: "top",
+                      }}
+                    >
+                      {categories.map((result) => (
+                        <option value={result.id} key={result.id}>
+                          {result.name}{" "}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+              </div>
+                 <div className="form-row">
+                  <div className="form-group col-4">
+                    <label>Owner Id</label>
+                    <>
+                    {isAddMode === true ? (
+                      <input
                         name="UserId"
                         type="text"
                         ref={register}
-                        value={returnTest}
-                        style={{ background: "rgba(0,0,0,0.07)" }}
+                        value={userId}
+                        style={{
+                          background: "rgba(0,0,0,0.07)",
+                          height: "30px",
+                        }}
                         className={`form-control ${
-                        errors.UserId ? "is-invalid" : ""
+                          errors.UserId ? "is-invalid" : ""
                         }`}
-                    />
-                    <Button
-                    variant="primary"
-                    onClick={handleModalShowHide}
-                  >
-                    Launch demo modal
-                  </Button>
+                      />                     
+                      
+                    ) : (
+                      <input
+                        name="UserId"
+                        type="text"
+                        ref={register}
+                        value={userId}
+                        style={{
+                          background: "rgba(0,0,0,0.07)",
+                          height: "30px",
+                        }}
+                        className={`form-control ${
+                          errors.UserId ? "is-invalid" : ""
+                        }`}
+                      />
+                    )}
+                    </>
+                  </div>
+
+                  <div className="form-group col-6">
+                    <label>Owner Name</label>
+                    <label
+                      name="ownerName"
+                      type="text"
+                      disabled={userType === "Owner" ? true : false}
+                      style={{ background: "rgba(0,0,0,0.07)", height: "30px" }}
+                      className={`form-control ${
+                        errors.UserId ? "is-invalid" : ""
+                      }`}
+                    >
+                      {userName}
+                    </label>
                     <div className="invalid-feedback">
-                        {errors.UserId?.message}
+                      {errors.UserId?.message}
                     </div>
-                    </div>
-                </div>
-                
-              </div>
-             
+                  </div>
+                  <div className="form-group col-2 mt-2">
+                    <Button variant="primary" onClick={handleModalShowHide}>
+                      Search Owner
+                    </Button>
+                  </div>
+                </div>              
             </div>
             <div className="card-footer">
               <div className="form-group">
@@ -439,8 +496,12 @@ function AddEditCompany({ history, match }) {
         </Col>
         <Col size="md-2" />
       </Row>
-      <ModalUser show={showHide} handleModalShowHide={handleModalShowHide} handleDataBack={handleDataBack} pageName="Users"/>
-
+      <ModalUser
+        show={showHide}
+        handleModalShowHide={handleModalShowHide}
+        handleDataBack={handleDataBack}
+        pageName="Users"
+      />
     </Container>
   );
 }
