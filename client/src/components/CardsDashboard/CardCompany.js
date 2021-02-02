@@ -14,7 +14,7 @@ function CardCompany(props) {
   useEffect(()=>{
     setCategories (props.categories);
   },[caterogies]);
-  
+    
   return (
     <div
       className="card mb-3"
