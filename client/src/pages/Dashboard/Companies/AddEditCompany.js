@@ -12,7 +12,7 @@ import Container from "../../../components/Container";
 import { USERID } from "../../../constants/apiConstants";
 import { Button } from "react-bootstrap";
 import ModalUser from "../../../components/Modal";
-
+import $ from "jquery";
 function AddEditCompany({ history, match }) {
   const { id } = match.params;
   const isAddMode = !id;
@@ -45,8 +45,7 @@ function AddEditCompany({ history, match }) {
     address: Yup.string().required("Street name is required"),
     city: Yup.string().required("City is required"),
     state: Yup.string().required("State is required"),
-    zip_code: Yup.string().required("Zip code is required"),
-    logo: Yup.string(),
+    zip_code: Yup.string().required("Zip code is required"),    
     country: Yup.string().required("Country is required"),    
     status: Yup.string(),
     CategoryId: Yup.number().required("Category is required"),
@@ -70,19 +69,29 @@ function AddEditCompany({ history, match }) {
     return isAddMode ? createCompany(data) : updateCompany(id, data);
   }
 
-  //API call to create Company record
+
   function createCompany(data) { 
-    return API.saveCompany(data)
-      .then(() => {
-        alertService.success("Company has been created", {
-          keepAfterRouteChange: true,
-        });
-        history.push(".");
-      })
-      .catch(function (error) {
-        alertService.error(error.response.data.errors[0].message);
-        console.log(error.response.data.errors[0].message);
-      });
+
+    console.log(Array.from(data.logo));
+    const file = Array.from(data.logo); 
+      
+    const fd= new FormData($("#companiesForm")[0]);
+  $.ajax({
+    url: "/api/companies",
+    type: "POST",
+    data: fd,
+    contentType: false,
+    processData: false
+  }).then(() => {
+    alertService.success("Company has been created", {
+      keepAfterRouteChange: true,
+    });
+    history.push(".");
+  })
+  .catch(function (error) {
+    alertService.error(error.response.data.errors[0].message);
+    console.log(error.response.data.errors[0].message);  
+  });      
   }
 
   //API call to update company information
@@ -169,7 +178,8 @@ function AddEditCompany({ history, match }) {
       <Row>
         <Col size="md-2" />
         <Col size="md-8">
-          <form
+          <form 
+            id="companiesForm"
             className="card"
             onSubmit={handleSubmit(onSubmit)}
             onReset={reset}
@@ -370,11 +380,11 @@ function AddEditCompany({ history, match }) {
                   <div className="form-group col-3">
                     <label>Logo</label>
                     <input
-                      name="logo"
-                      type="text"
-                      ref={register}
-                      style={{ background: "rgba(0,0,0,0.07)" }}
-                      className={`form-control ${
+                        name="logo"
+                        type="file"
+                        ref={register}
+                        style={{ background: "rgba(0,0,0,0.07)" }}
+                        className={`form-control ${
                         errors.logo ? "is-invalid" : ""
                       }`}
                     />

@@ -13,18 +13,16 @@ const PORT = process.env.PORT || 3001;
 
 const db = require("./models");
 const app = express();
-
+app.use(fileupload());
 app.use(express.urlencoded({ extended: true })); 
 app.use(express.json()); 
+app.use(express.static("public"));
 
 app.use(
   session({ secret: "keyboard cat", resave: true, saveUninitialized: true })
 );
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(fileupload());
-
-
 app.post("/api/login", passportLog.authenticate("local"), (req, res) => {
   // Sending back a password, even a hashed password, isn't a good idea
   res.json({    
