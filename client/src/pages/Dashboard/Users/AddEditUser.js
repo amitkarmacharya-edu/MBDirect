@@ -85,7 +85,7 @@ function AddEditUser({ history, match }) {
       processData: false,
     })
       .then(() => {
-        alertService.success("Uset has been created", {
+        alertService.success("User has been created", {
           keepAfterRouteChange: true,
         });
         history.push(".");
@@ -96,19 +96,36 @@ function AddEditUser({ history, match }) {
       });
   }
 
+  // Function to Update User information 
   function updateUser(id, data) {
-    console.log(data);
-    return API.updateUser(id, data)
-      .then((res) => {
-        console.log(res);
-        alertService.success("User updated", { keepAfterRouteChange: true });
+    console.log(Array.from(data.image));
+    const file = Array.from(data.image);
+    const fd = new FormData($("#usersForm")[0]);
+    console.log(fd);
+    $.ajax({
+      url: "/api/users/" + id,
+      type: "PUT",
+      data: fd,
+      contentType: false,
+      processData: false,
+    })
+      .then(() => {
+        alertService.success("User has been updated", {
+          keepAfterRouteChange: true,
+        });
         history.push("..");
       })
-      .catch(alertService.error);
+      .catch(function (error) {
+        alertService.error(error.response.data.errors[0].message);
+        console.log(error.response.data.errors[0].message);
+      });
+
   }
 
   const [user, setUser] = useState({});
-  const [showPassword, setShowPassword] = useState(false);
+
+  // State use for showing password - feature enhancement 
+  const [showPassword, setShowPassword] = useState(false); 
 
   useEffect(() => {
     if (!isAddMode) {
