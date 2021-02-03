@@ -69,7 +69,7 @@ function CardUser(props) {
             </span>            
           </Col>
           <Col size="md-4">
-              <img className="rounded-circle img-fluid " src="https://mdbootstrap.com/img/Photos/Avatars/img%20(31).jpg"
+              <img className="rounded-circle img-fluid " src={props.userResults.image}
               data-holder-rendered="true"/>
             {/* <img alt="Pic" src={props.userResults.image} className="img-fluid" /> */}
             {/* <div><h5>Company: </h5>{props.userResults.Companies[0].name}</div> 
