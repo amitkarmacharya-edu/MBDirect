@@ -16,11 +16,7 @@ function CardCompany(props) {
   },[caterogies]);
     
   return (
-    <div
-      className="card mb-3"
-      id={props.companyResults.id}
-      key={props.companyResults.key}
-    >
+    <div className="card mb-3" id={props.companyResults.id} >
       <div className="card-header">
         <Row>
           <Col size="md-10">

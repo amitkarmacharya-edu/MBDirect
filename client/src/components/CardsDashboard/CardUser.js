@@ -9,7 +9,7 @@ import * as BiIcons from 'react-icons/bi';
 function CardUser(props) {
    
   return (
-    <div className="card mb-3" id={props.userResults.id} key={props.userResults.key}>
+    <div className="card mb-3" id={props.userResults.id} >
       <div className="card-header">
         <Row>
           <Col size="md-10">
