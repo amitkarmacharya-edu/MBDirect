@@ -6,7 +6,7 @@ function ListUsers(props) {
   
   // console.log(props.userResults);
       return (
-            <tr key={props.key} id={props.userResults.id} value={props.userResults.id}  onClick={props.handleDataBack}>  
+            <tr key={props.userResults.id}  id={props.userResults.id} value={props.userResults.id}  onClick={props.handleDataBack}>  
             <td data-th="Id" data-id={props.userResults.id} data-user={fullName}  className="name-cell align-middle">
                 {props.userResults.id}
               </td>            
