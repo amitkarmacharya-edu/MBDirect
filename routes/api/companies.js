@@ -10,7 +10,11 @@ router.route("/")
 router
   .route("/:id")
   .get(companiesController.findById)
-  .put(companiesController.update)
+  .put(companiesController.update)  
   .delete(companiesController.remove);
+
+router
+  .route("/noimage/:id")
+  .put(companiesController.updateWithNoImage);
 
 module.exports = router;
