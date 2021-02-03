@@ -254,7 +254,7 @@ function AddEditAd({ history, match }) {
               <div className="form-row">
                 <div className="form-group col-4">
                   <label>Company Id</label>
-                  <label
+                  <input
                     name="CompanyId"
                     type="number"
                     ref={register}
@@ -263,7 +263,7 @@ function AddEditAd({ history, match }) {
                     className={`form-control ${
                       errors.CompanyId ? "is-invalid" : ""
                     }`}
-                  >{returnTest}</label>
+                  />
                   <Button
                     variant="primary"
                     onClick={handleModalShowHide}
