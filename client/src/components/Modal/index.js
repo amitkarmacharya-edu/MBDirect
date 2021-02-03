@@ -138,17 +138,7 @@ function ModalCompany(props) {
       <Modal.Footer>
         <Button variant="secondary" onClick={props.handleModalShowHide}>
           Close
-        </Button>
-        <input
-          name="dataBack"
-          type="button"
-          value="1"
-          onClick={props.handleDataBack}
-          style={{ background: "rgba(0,0,0,0.07)" }}
-        />
-        <Button variant="primary" onClick={props.handleModalShowHide}>
-          Save Changes
-        </Button>
+        </Button>        
       </Modal.Footer>
     </Modal>
   );
