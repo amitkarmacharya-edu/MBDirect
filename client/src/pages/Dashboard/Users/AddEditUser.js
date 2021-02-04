@@ -252,12 +252,10 @@ function AddEditUser({ history, match }) {
                 </div>
                 <div className="form-group col-3">
                   <label>Type</label>
-
                   <select
                     className="form-control form-select form-select-sm"
                     name="type"
-                    ref={register}
-                    value={user.type}
+                    ref={register}                   
                     aria-label=".form-select-sm"
                     disabled={userType === "Owner" ? true : false}
                     style={{
@@ -265,7 +263,7 @@ function AddEditUser({ history, match }) {
                       height: "33px",
                       textAlign: "top",
                     }}
-                  >
+                  >                    
                     <option value="Owner">Owner</option>
                     <option value="Admin">Admin</option>
                     <option value="Guest">Guest</option>
