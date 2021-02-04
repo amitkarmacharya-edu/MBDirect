@@ -1,13 +1,12 @@
 import React from "react";
 function Main() {
-    
+    const [state, dispatch] = useMeetingContext();
     return (
             <main className="container-md">
                 <div className="row">
-                    <BusinessCategory header={"Top 10 business"} bList={""} />
+                    
                 </div>
-                {/* meeting room */}
-                { state.meetingStarted === true && <MeetingRoom />}
+                
             </main>
     );
 }
