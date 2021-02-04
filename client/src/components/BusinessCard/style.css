@@ -1,0 +1,27 @@
+.business-card {
+    border: 1px solid rgb(187, 187, 187);
+    transition: transform .2s;
+    overflow: hidden;
+}
+.business-card:hover {
+    transform: scale(1.2);
+}
+.business-img-header {
+    height: 85%;
+    width: 100%;
+    transition: height .2s;
+}
+.business-name {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+}
+.business-card .card-body {
+    margin: .25rem;
+    padding: .25rem;
+}
+.business-img-header img {
+ height: 100%;
+ width: 100%;
+}
