@@ -31,11 +31,12 @@ function SearchResultsList(props) {
       {console.log(props.userType)}
       {console.log(props.pageName)}
       {props.userType === "Admin" ? (
-        <>
+        <div style={{overflow:"auto"}}>
           {props.pageName === "Users" ? (      
               <table
                 id="table"
                 className="table  table-striped table-hover table-condensed"
+                
               >
                 <thead>
                   <tr>
@@ -62,7 +63,7 @@ function SearchResultsList(props) {
                 </tbody>
               </table>
           ) : (
-            <>
+            <div style={{overflow:"auto"}}>
               {props.pageName === "Companies" ? (
                 <table
                   id="table"
@@ -86,6 +87,7 @@ function SearchResultsList(props) {
                         companyResults={result}
                         key={result.id}
                         userType={props.userType}
+                        handleDataBack={props.handleDataBack}
                       />
                     ))}
                   </tbody>
@@ -93,11 +95,11 @@ function SearchResultsList(props) {
               ) : (
                 <>Add Code Here for other pages</>
               )}
-            </>
+            </div>
           )}
-        </>
+        </div>
       ) : (
-        <>
+        <div style={{overflow:"auto"}}>
           {props.pageName === "Users" ? (
               <table
                 id="table"
@@ -127,6 +129,7 @@ function SearchResultsList(props) {
                       userResults={result}
                       key={result.id}
                       userType={props.userType}
+                      handleDataBack={props.handleDataBack}
                     />
                   );
                 })}
@@ -167,6 +170,7 @@ function SearchResultsList(props) {
                             companyResults={result}
                             key={result.id}
                             userType={props.userType}
+                            handleDataBack={props.handleDataBack}
                           />
                         );
                       })}
@@ -177,7 +181,7 @@ function SearchResultsList(props) {
               )}
             </>
           )}
-        </>
+        </div>
       )}
     </>
   );
