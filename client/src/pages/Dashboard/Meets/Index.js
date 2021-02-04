@@ -1,11 +1,7 @@
 import React, {useState} from "react";
 import { Route, Switch } from "react-router-dom";
 import { Meet } from "./Meet";
-import Navbar from "../../../components/Navbar/Navbar";
-import Container from "../../../components/Container";
-
 // import { AddEditMeet } from "./AddEditMeet";
-
 
 function Meets({ match }) {
   const { path } = match;
