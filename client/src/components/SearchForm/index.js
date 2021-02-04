@@ -122,15 +122,15 @@ function SearchForm(props) {
                             />
                           </Col>
                           <Col size="md-3">
-                            <label htmlFor="sortOptions">Sort by:</label>
+                            <label htmlFor="sortOptions">Sort by Dates:</label>
                             <select
                               id="sortOptions"
                               onChange={props.sortBy}
                               className="form-control"
                               style={{ height: "29px", padding: "2px" }}
                             >
-                              <option value="A-Z">A-Z</option>
-                              <option value="Z-A">Z-A</option>
+                              <option value="Newest-Oldest">Newest-Oldest</option>
+                              <option value="Oldest-Newest">Oldest-Newest</option>
                             </select>
                           </Col>
                         </Row>
