@@ -9,7 +9,7 @@ import * as BiIcons from 'react-icons/bi';
 function CardUser(props) {
    
   return (
-    <div className="card mb-3" id={props.userResults.id} key={props.userResults.key}>
+    <div className="card mb-3" id={props.userResults.id} >
       <div className="card-header">
         <Row>
           <Col size="md-10">
@@ -69,7 +69,7 @@ function CardUser(props) {
             </span>            
           </Col>
           <Col size="md-4">
-              <img className="rounded-circle img-fluid " src="https://mdbootstrap.com/img/Photos/Avatars/img%20(31).jpg"
+              <img className="rounded-circle img-fluid " src={props.userResults.image}
               data-holder-rendered="true"/>
             {/* <img alt="Pic" src={props.userResults.image} className="img-fluid" /> */}
             {/* <div><h5>Company: </h5>{props.userResults.Companies[0].name}</div> 

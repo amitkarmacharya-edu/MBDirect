@@ -1,15 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./style.css";
 import Row from "../Row";
 import Col from "../Col";
 import { Link } from "react-router-dom";
-import API from "../../utils/API";
 import * as FaIcons from 'react-icons/fa';
 import * as BiIcons from 'react-icons/bi';
 import * as MdIcons from 'react-icons/md';
 import * as TiIcons from 'react-icons/ti';
-function CardAd(props) {
-   
+
+
+function CardAd(props) { 
+  const [companiesData, setCompaniesData] = useState([]);
+  const [usersData, setUsersData] = useState([]);
+
+  useEffect(() => {
+    setCompaniesData(props.companiesData);
+    setUsersData(props.usersData)    
+  }, [])
+
   return (
     <div className="card mb-3" id={props.adResults.id} key={props.adResults.key}>
       <div className="card-header">
@@ -19,8 +27,7 @@ function CardAd(props) {
               {props.adResults.name}
             </h3>
           </Col>
-          <Col size="md-2">
-            {props.userType === "Admin" ? (
+          <Col size="md-2">            
               <>                
                 <Link
                   to={`edit/${props.adResults.id}`}
@@ -31,15 +38,7 @@ function CardAd(props) {
                 <button id={props.adResults.id} value={props.adResults.id} onClick={props.deleteAd} className="btn btn-sm btn-danger" >
                   Delete
                 </button>
-              </>
-            ) : (
-              <Link
-                to={`edit/${props.adResults.id}`}
-                className="btn btn-sm btn-primary mr-1"
-              >
-                Edit
-              </Link>
-            )}
+              </>            
           </Col>
         </Row>
       </div>
@@ -65,7 +64,34 @@ function CardAd(props) {
             </span>
             <span>
                 <h5><FaIcons.FaRegCalendarMinus/> {props.adResults.end_date}</h5>
-            </span>         
+            </span>
+            <span>
+              {companiesData.map((result) => (
+                <>
+                {result.id === props.adResults.CompanyId ? (
+                  <h5 key={props.adResults.id}>
+                    Company: {result.name}
+                  </h5>
+                ):(
+                  <></>
+                )}
+                </>
+              ))}                
+            </span>
+            <span>
+            {usersData.map((result) => (
+                <>
+                {result.id === props.adResults.UserId ? (
+                  <h5 key={props.adResults.id}>
+                    User: {result.first_name} {result.last_name} 
+                  </h5>
+                ):(
+                  <></>
+                )}
+                </>
+              ))}       
+            </span>   
+
           </Col>
           <Col size="md-4">
               <img className="rounded-circle img-fluid " src={props.adResults.image}

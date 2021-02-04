@@ -9,12 +9,13 @@ import API from "../../../utils/API";
 import Row from "../../../components/Row";
 import Col from "../../../components/Col";
 import Container from "../../../components/Container";
-import { USERID } from "../../../constants/apiConstants"; 
+import { USERID } from "../../../constants/apiConstants";
+import $ from "jquery";
 
 function AddEditUser({ history, match }) {
   const { id } = match.params;
   const isAddMode = !id;
-  
+
   const [userType, setUserType] = useState("");
 
   function typeUsers() {
@@ -22,7 +23,6 @@ function AddEditUser({ history, match }) {
     API.getUser(userId).then((res) => {
       console.log(res.data.type);
       setUserType(res.data.type);
-     
     });
   }
 
@@ -72,29 +72,60 @@ function AddEditUser({ history, match }) {
   }
 
   function createUser(data) {
-    return API.saveUser(data)
+    console.log(Array.from(data.image));
+    const file = Array.from(data.image);
+
+    const fd = new FormData($("#usersForm")[0]);
+    console.log(fd);
+    $.ajax({
+      url: "/api/users",
+      type: "POST",
+      data: fd,
+      contentType: false,
+      processData: false,
+    })
       .then(() => {
         alertService.success("User has been created", {
           keepAfterRouteChange: true,
         });
         history.push(".");
       })
-      .catch(alertService.error);
+      .catch(function (error) {
+        alertService.error(error.response.data.errors[0].message);
+        console.log(error.response.data.errors[0].message);
+      });
   }
 
+  // Function to Update User information 
   function updateUser(id, data) {
-    console.log(data);
-    return API.updateUser(id, data)
-      .then((res) => {
-        console.log(res);
-        alertService.success("User updated", { keepAfterRouteChange: true });
+    console.log(Array.from(data.image));
+    const file = Array.from(data.image);
+    const fd = new FormData($("#usersForm")[0]);
+    console.log(fd);
+    $.ajax({
+      url: "/api/users/" + id,
+      type: "PUT",
+      data: fd,
+      contentType: false,
+      processData: false,
+    })
+      .then(() => {
+        alertService.success("User has been updated", {
+          keepAfterRouteChange: true,
+        });
         history.push("..");
       })
-      .catch(alertService.error);
+      .catch(function (error) {
+        alertService.error(error.response.data.errors[0].message);
+        console.log(error.response.data.errors[0].message);
+      });
+
   }
 
   const [user, setUser] = useState({});
-  const [showPassword, setShowPassword] = useState(false);
+
+  // State use for showing password - feature enhancement 
+  const [showPassword, setShowPassword] = useState(false); 
 
   useEffect(() => {
     if (!isAddMode) {
@@ -106,6 +137,7 @@ function AddEditUser({ history, match }) {
           "last_name",
           "email",
           "phone",
+          "image",
           "type",
           "address",
           "city",
@@ -113,8 +145,14 @@ function AddEditUser({ history, match }) {
           "state",
           "country",
         ];
-        fields.forEach((field) => setValue(field, user.data[field]));
-        setUser(user.data);
+        fields.forEach((field) =>{
+          if (field === "image" && user.data[field] !== "" ){
+            return setValue(field, "");
+          }
+          setUser(user.data);
+          return setValue(field, user.data[field]);
+
+        });        
       });
     }
     typeUsers();
@@ -126,6 +164,7 @@ function AddEditUser({ history, match }) {
         <Col size="md-2" />
         <Col size="md-8">
           <form
+             id="usersForm"
             className="card"
             onSubmit={handleSubmit(onSubmit)}
             onReset={reset}
@@ -213,25 +252,29 @@ function AddEditUser({ history, match }) {
                 </div>
                 <div className="form-group col-3">
                   <label>Type</label>
-                  
+
                   <select
                     className="form-control form-select form-select-sm"
                     name="type"
                     ref={register}
                     value={user.type}
-                    aria-label=".form-select-sm"  
-                    disabled= {userType === "Owner" ? true : false}                  
-                    style={{ background: "rgba(0,0,0,0.07)", height:"33px", textAlign:"top"}}
-                  >             
+                    aria-label=".form-select-sm"
+                    disabled={userType === "Owner" ? true : false}
+                    style={{
+                      background: "rgba(0,0,0,0.07)",
+                      height: "33px",
+                      textAlign: "top",
+                    }}
+                  >
                     <option value="Owner">Owner</option>
                     <option value="Admin">Admin</option>
                     <option value="Guest">Guest</option>
-                  </select>                  
+                  </select>
                 </div>
               </div>
               <div className="form-row">
                 <div className="form-group col-8">
-                  <label>Address</label>
+                  <label>Street</label>
                   <input
                     name="address"
                     type="text"
@@ -304,6 +347,26 @@ function AddEditUser({ history, match }) {
                   <div className="invalid-feedback">
                     {errors.country?.message}
                   </div>
+                </div>
+              </div>
+              <div className="form-row">
+                <div className="form-group col-4">
+                  <label>Picture</label>
+                  <input
+                    name="image"
+                    type="file"
+                    ref={register}
+                    style={{
+                      background: "rgba(0,0,0,0.07)",
+                      height: "33px",
+                      paddingTop: "2px",
+                      paddingBottom: "2px",
+                    }}
+                    className={`form-control ${
+                      errors.image ? "is-invalid" : ""
+                    }`}
+                  />
+                  <div className="invalid-feedback">{errors.image?.message}</div>
                 </div>
               </div>
               {!isAddMode && (

@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import Navbar from "../../../components/Navbar/Navbar";
 import { Link } from "react-router-dom";
 import Container from "../../../components/Container";
-import { Alert } from "../../../components/AlertComponent/Alert";
 import API from "../../../utils/API";
+import { alertService } from "../../../services";
 import SearchForm from "../../../components/SearchForm";
 import SearchResults from "../../../components/SearchResults";
 import Row from "../../../components/Row";
@@ -83,11 +83,12 @@ function User({ match }, props) {
     API.deleteUser(e.target.id)
       .then(function (response) {
         console.log(response);
+        alertService.success("User has been deleted", {
+          keepAfterRouteChange: true,
+        });
         return setUserDeleted(true);
       })
-      .catch(function (error) {
-        console.log(error.response.data);
-      });
+      .catch(alertService.error);
   }
 
   return (

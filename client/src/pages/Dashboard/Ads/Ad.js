@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Navbar from "../../../components/Navbar/Navbar";
 import Container from "../../../components/Container";
 import API from "../../../utils/API";
+import { alertService } from "../../../services";
 import SearchForm from "../../../components/SearchForm";
 import SearchResults from "../../../components/SearchResults";
 import { USERID } from "../../../constants/apiConstants";
@@ -19,11 +20,15 @@ function Ad({ match }, props) {
 
   const [sidebar, setSidebar] = useState(false);
   const showSidebar = () => setSidebar(!sidebar);
+  const [companiesData, setCompaniesData] = useState([]);
+  const [usersData, setUsersData] = useState([]);
 
   useEffect(() => {
     setAdDeleted(false);
     loadAds();
     typeUsers();
+    getCompaniesData();
+    getUsersData(); 
   }, [adDeleted]);
 
   function loadAds() {
@@ -44,6 +49,18 @@ function Ad({ match }, props) {
  
     });
   }
+
+  function getCompaniesData(){    
+    API.getCompanies().then((res) => {
+      setCompaniesData(res.data);
+    });
+  }
+  function getUsersData(){    
+    API.getUsers().then((res) => { 
+      setUsersData(res.data);
+    });
+  }
+
 
   function handleInputChange(e) {
     const listAds = ads.filter(
@@ -73,11 +90,10 @@ function Ad({ match }, props) {
     API.deleteAd(e.target.id)
       .then(function (response) {
         console.log(response);
+        alertService.success("Advertisment has been deleted")
         return setAdDeleted(true);
       })
-      .catch(function (error) {
-        console.log(error.response.data);
-      });
+      .catch(alertService.error);
   }
 
   return (
@@ -92,7 +108,6 @@ function Ad({ match }, props) {
           <Col size="md-12">
             <div>
               <Container style={{ minHeight: "80%" }}>
-                {userType === "Admin" ? (
                   <>
                     <Link
                       to={`${path}/add`}
@@ -106,16 +121,14 @@ function Ad({ match }, props) {
                       sortBy={sortBy}
                     />
                   </>
-                ) : (
-                  <></>
-                )}
-
                 <SearchResults
                   results={filteredAds}
                   userType={userType}
                   key={USERID}
                   pageName="Ads"
-                  deleteUser={deleteAd}
+                  companiesData={companiesData}
+                  usersData={usersData}
+                  deleteAd={deleteAd}
                 />
               </Container>
             </div>

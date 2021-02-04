@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import "./LoginRegister.css";
-// import { withRouter, Link } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useSpring, animated } from "react-spring";
 import API from "../../utils/API";
 import {ACCESS_AUTHENTICATED, USERID} from "../../constants/apiConstants";
+import { alertService } from "../../services";
 
 
 function LoginRegister(props) {
@@ -55,21 +55,19 @@ function LoginRegister(props) {
                   if(response.status === 200){
                       setState(prevState => ({
                           ...prevState,
-                          successMessage : 'Registration successful. Redirecting to home page..'
+                          successMessage : 'Registration successful. Redirecting to dashboard..'
                       }))
                       localStorage.setItem(ACCESS_AUTHENTICATED,"true");
-                      localStorage.setItem(USERID, response.data.id);
-                      redirectToHome();                           
-                  } else{
-                      console.log("Error");
-                      props.showError("Some error ocurred");
-                  }
+                      localStorage.setItem(USERID, response.data.id);                      
+                      redirectToHome();   
+                  } 
               })
               .catch(function (error) {
-                  // console.log(error);
-              });    
+                alertService.error(error.response.data.errors[0].message);
+                console.log(error.response.data.errors[0].message);
+              });
       } else {
-          props.showError('Please enter valid username and password')    
+         alertService.error('Please enter valid username and password');    
       }      
     }
     
@@ -84,24 +82,19 @@ function LoginRegister(props) {
           if (response.status === 200) {
             setStateLogin((prevStateLogin) => ({
               ...prevStateLogin,
-              successMessageLogin: "Login successful. Redirecting to home page.."            
+              successMessageLogin: "Login successful. Redirecting to dashboard.."            
             }));  
             localStorage.setItem(ACCESS_AUTHENTICATED,"true");
-            localStorage.setItem(USERID, response.data.id);
-            redirectToHome();
-           
-          } else if (response.status === 204) {
-            props.showError("Username and password do not match");
-          } else {
-            props.showError("Username does not exists");
+            localStorage.setItem(USERID, response.data.id);                       
+            redirectToHome();           
           }
         })
         .catch(function (error) {
-          console.log(error);
+          alertService.error("Username or password is invalid. User: " + error.response.data);
         });
     };
     const redirectToHome = () => {    
-
+      alertService.success("Login/Register Successfully", { keepAfterRouteChange: true });  
       props.history.push("/dashboard");
     };
 
@@ -110,7 +103,7 @@ function LoginRegister(props) {
       if(state.password === state.confirmPass) {
         registerUser();    
       } else {
-          props.showError('Passwords do not match');
+          alertService.error('Passwords do not match');
       }
   }
 
@@ -185,7 +178,7 @@ function LoginRegister(props) {
               </animated.form>
             </div>
             <animated.div className="forgot-panel" style={loginProps}>
-              <Link to="/home">Home page</Link>
+              <Link to="/">Home page</Link>
           </animated.div>
           </div>
           </div>        

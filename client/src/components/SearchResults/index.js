@@ -26,14 +26,16 @@ function SearchResults(props) {
           ) : (
             <>
               {props.pageName === "Companies" ? (
-                <>
-                  {console.log(props.results)}
+                <>                  
                   {props.results.map((result) => (
                     <CardCompany
                       companyResults={result}
                       key={result.id}
+                      keyprops={result.id}                      
                       userType={props.userType}
                       deleteCompany = {props.deleteCompany}
+                      categories={props.categories}
+
                     />
                   ))}
                 </>
@@ -47,6 +49,9 @@ function SearchResults(props) {
                           adResults={result}
                           key={result.id}
                           userType={props.userType}
+                          deleteAd={props.deleteAd}
+                          companiesData={props.companiesData}
+                          usersData={props.usersData}
                         />
                       ))}
                     </>
@@ -96,6 +101,8 @@ function SearchResults(props) {
                           companyResults={result}
                           key={result.id}
                           userType={props.userType}
+                          categories={props.categories}
+
                         />
                       );
                     })}
@@ -118,6 +125,9 @@ function SearchResults(props) {
                               adResults={result}
                               key={result.id}
                               userType={props.userType}
+                              deleteAd={props.deleteAd}
+                              companiesData={props.companiesData}
+                              usersData={props.usersData}
                             />
                           );
                         })}
