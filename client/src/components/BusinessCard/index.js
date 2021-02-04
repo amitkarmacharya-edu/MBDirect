@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import "./style.css";
+import AudioIcon from "../AudioIcon";
+import VideoIcon from "../VideoIcon";
 function BusinessCard({ business }) {
     const [hide, setHide] = useState("d-none");
     const [imgHeaderHeight, setImgHeaderHeight] = useState("h-100");
@@ -30,7 +32,8 @@ function BusinessCard({ business }) {
                 <p className="business-name">{business.name}Test</p>
             </div>
             <div className={`card-body ${hide}`}>
-                
+            <VideoIcon businessId={business.businessId} roomId={business.roomId}/>
+            <AudioIcon businessId={business.businessId} roomId={business.roomId}/>  
                 {/* add a link to the business page */}
             </div>
         </div>
