@@ -43,37 +43,39 @@ function SearchResultsList(props) {
       {console.log(props.userType)}
       {console.log(props.pageName)}
       {props.userType === "Admin" ? (
-        <>
-          {props.pageName === "Users" ? (
-            <table
-              id="table"
-              className="table  table-striped table-hover table-condensed"
-            >
-              <thead>
-                <tr>
-                  {headingsUsers.map(({ name, width }) => {
-                    return (
-                      <th className="col" key={name} style={{ width }}>
-                        {name.toUpperCase()}
-                      </th>
-                    );
-                  })}
-                </tr>
-              </thead>
-              <tbody>
-                {console.log(props.results)}
-                {props.results.map((result) => (
-                  <ListUsers
-                    userResults={result}
-                    key={result.id}
-                    userType={props.userType}
-                    handleDataBack={props.handleDataBack}
-                  />
-                ))}
-              </tbody>
-            </table>
+        <div style={{overflow:"auto"}}>
+          {props.pageName === "Users" ? (      
+              <table
+                id="table"
+                className="table  table-striped table-hover table-condensed"
+                
+              >
+                <thead>
+                  <tr>
+                    {headingsUsers.map(({ name, width }) => {
+                      return (
+                        <th className="col" key={name} style={{ width }}>
+                          {name.toUpperCase()}
+                        </th>
+                      );
+                    })}
+                  </tr>
+                </thead>
+                <tbody>
+                  {console.log(props.results)}
+                  {props.results.map((result) => (
+                    <ListUsers
+                      userResults={result}
+                      key={result.id}
+                      userType={props.userType}
+                      handleDataBack={props.handleDataBack}
+
+                    />
+                  ))}
+                </tbody>
+              </table>
           ) : (
-            <>
+            <div style={{overflow:"auto"}}>
               {props.pageName === "Companies" ? (
                 <table
                   id="table"
@@ -97,6 +99,7 @@ function SearchResultsList(props) {
                         companyResults={result}
                         key={result.id}
                         userType={props.userType}
+                        handleDataBack={props.handleDataBack}
                       />
                     ))}
                   </tbody>
@@ -137,45 +140,46 @@ function SearchResultsList(props) {
                 
                 </>
               )}
-            </>
+            </div>
           )}
-        </>
+        </div>
       ) : (
-        <>
+        <div style={{overflow:"auto"}}>
           {props.pageName === "Users" ? (
-            <table
-              id="table"
-              className="table  table-striped table-hover table-condensed"
-            >
-              <thead>
-                <tr>
-                  {headingsUsers.map(({ name, width }) => {
-                    return (
-                      <th className="col" key={name} style={{ width }}>
-                        {name.toUpperCase()}
-                      </th>
-                    );
-                  })}
-                </tr>
-              </thead>
-              <tbody>
-                {props.results
-                  .filter(function (result) {
-                    console.log(result.id);
-                    console.log(parseInt(localStorage.getItem(USERID)));
-                    return result.id === parseInt(localStorage.getItem(USERID));
-                  })
-                  .map(function (result) {
-                    return (
-                      <ListUsers
-                        userResults={result}
-                        key={result.id}
-                        userType={props.userType}
-                      />
-                    );
-                  })}
-              </tbody>
-            </table>
+              <table
+                id="table"
+                className="table  table-striped table-hover table-condensed"
+              >
+                <thead>
+                  <tr>
+                    {headingsUsers.map(({ name, width }) => {
+                      return (
+                        <th className="col" key={name} style={{ width }}>
+                          {name.toUpperCase()}
+                        </th>
+                      );
+                    })}
+                  </tr>
+                </thead>
+                <tbody>
+                  {props.results
+                .filter(function (result) {
+                  console.log(result.id);
+                  console.log(parseInt(localStorage.getItem(USERID)));
+                  return result.id === parseInt(localStorage.getItem(USERID));
+                })
+                .map(function (result) {
+                  return (
+                    <ListUsers
+                      userResults={result}
+                      key={result.id}
+                      userType={props.userType}
+                      handleDataBack={props.handleDataBack}
+                    />
+                  );
+                })}
+                </tbody>
+              </table>
           ) : (
             <>
               {props.pageName === "Companies" ? (
@@ -211,6 +215,7 @@ function SearchResultsList(props) {
                             meetResults={result}
                             key={result.id}
                             userType={props.userType}
+                            handleDataBack={props.handleDataBack}
                           />
                         );
                       })}
@@ -272,7 +277,7 @@ function SearchResultsList(props) {
               )}
             </>
           )}
-        </>
+        </div>
       )}
     </>
   );

@@ -123,6 +123,7 @@ function ModalCompany(props) {
               userType={userType}
               key={USERID}
               pageName="Companies"
+              handleDataBack={props.handleDataBack}
             />
           ) : (
             <SearchResultsList
