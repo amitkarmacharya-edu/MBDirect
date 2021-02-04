@@ -12,6 +12,7 @@ import Container from "../../../components/Container";
 import { USERID } from "../../../constants/apiConstants";
 import { Button } from 'react-bootstrap';
 import ModalCompany from "../../../components/Modal"
+import $ from "jquery";
 
 
 
@@ -22,7 +23,10 @@ function AddEditAd({ history, match }) {
   // variable to show or hide modal
   const [showHide, setShowHide] = useState(false);
   const [returnTest, setReturnTest] = useState();
-
+  const [companyName, setCompanyName] = useState();
+  const [companyId, setCompanyId] = useState();
+  const [userId, setUserId] = useState();
+  
   function typeUsers() {
     const userId = localStorage.getItem(USERID);
     API.getUser(userId).then((res) => {
@@ -61,29 +65,79 @@ function AddEditAd({ history, match }) {
     return isAddMode ? createAd(data) : updateAd(id, data);
   }
 
+  //Creating new Ad
   function createAd(data) {
-    console.log("Saving Ad");
-    return API.saveAd(data)
+    console.log(data);
+    console.log(Array.from(data.image));
+    const file = Array.from(data.image);
+
+    const fd = new FormData($("#adsForm")[0]);
+    console.log(fd);
+    $.ajax({
+      url: "/api/ads",
+      type: "POST",
+      data: fd,
+      contentType: false,
+      processData: false,
+    })
       .then(() => {
         alertService.success("Advertisment has been created", {
           keepAfterRouteChange: true,
         });
         history.push(".");
       })
-      .catch(alertService.error);
+      .catch(function (error) {
+        alertService.error(error.response.data.errors[0].message);
+        console.log(error.response.data.errors[0].message);
+      });
+
+    // console.log("Saving Ad");
+    // return API.saveAd(data)
+    //   .then(() => {
+    //     alertService.success("Advertisment has been created", {
+    //       keepAfterRouteChange: true,
+    //     });
+    //     history.push(".");
+    //   })
+    //   .catch(alertService.error);
   }
 
+  // Function to Update Ad information 
   function updateAd(id, data) {
-    console.log(data);
-    return API.updateAd(id, data)
-      .then((res) => {
-        console.log(res);
-        alertService.success("Advertisment updated", {
+
+    console.log(Array.from(data.image));
+    const file = Array.from(data.image);
+    const fd = new FormData($("#adsForm")[0]);
+    console.log(fd);
+    $.ajax({
+      url: "/api/ads/" + id,
+      type: "PUT",
+      data: fd,
+      contentType: false,
+      processData: false,
+    })
+      .then(() => {
+        alertService.success("Ad has been updated", {
           keepAfterRouteChange: true,
         });
         history.push("..");
       })
-      .catch(alertService.error);
+      .catch(function (error) {
+        alertService.error(error.response.data.errors[0].message);
+        console.log(error.response.data.errors[0].message);
+      });
+
+
+    // console.log(data);
+    // return API.updateAd(id, data)
+    //   .then((res) => {
+    //     console.log(res);
+    //     alertService.success("Advertisment updated", {
+    //       keepAfterRouteChange: true,
+    //     });
+    //     history.push("..");
+    //   })
+    //   .catch(alertService.error);
   }
 
   const [ad, setAd] = useState({});
@@ -93,33 +147,82 @@ function AddEditAd({ history, match }) {
     setShowHide(!showHide);    
   }
 
+    // Funtion to handle data choosen from Modal
   function handleDataBack(e) {
-    e.preventDefault();
-    console.log(e.target.value);
-    setReturnTest(e.target.value);
+    e.preventDefault();  
+    setCompanyName(e.target.dataset.company);
+    setCompanyId(e.target.dataset.id);
+    setUserId(e.target.dataset.userid);
     handleModalShowHide();
   }
 
+ // API call to Users for pulling owners info
+ function checkCompanyInfo(companyId) {  
+  console.log(companyId); 
+  API.getCompany(companyId).then((res) => {    
+    setCompanyName(res.data.name);
+  });
+}
+
+// API call to get Ad Data choosen from each card and pass company ID to checkCompanyInfo Function
+async function getAdData (id){
+  let res = await API.getAd(id);
+  let adData= await res.data;  
+  console.log(adData); 
+  let companyId = await adData.CompanyId;
+  console.log(companyId);
+  checkCompanyInfo(companyId);
+  const fields = [
+    "id",
+    "name",
+    "description",
+    "discount",
+    "status",
+    "image",
+    "start_date",
+    "end_date",
+    "CompanyId",
+    "UserId",
+  ];
+
+  fields.forEach((field) => {
+    if (field === "image" && adData[field] !== "") {
+      console.log("there is something");
+      return setValue(field, "");
+    }
+    return setValue(field, adData[field]);
+  }); 
+  
+  return adData;
+}
+
+
   useEffect(() => {
     if (!isAddMode) {
-      // get user and set form fields
-      API.getAd(id).then((ad) => {
-        const fields = [
-          "id",
-          "name",
-          "description",
-          "discount",
-          "status",
-          "image",
-          "start_date",
-          "end_date",
-          "CompanyId",
-          "UserId",
-        ];
-        fields.forEach((field) => setValue(field, ad.data[field]));
-        setAd(ad.data);
-      });
+      // get company and set form fields
+      getAdData(id);     
+      
     }
+
+    // if (!isAddMode) {
+    //   // get user and set form fields
+    //   API.getAd(id).then((ad) => {
+    //     const fields = [
+    //       "id",
+    //       "name",
+    //       "description",
+    //       "discount",
+    //       "status",
+    //       "image",
+    //       "start_date",
+    //       "end_date",
+    //       "CompanyId",
+    //       "UserId",
+    //     ];
+    //     fields.forEach((field) => setValue(field, ad.data[field]));
+    //     setAd(ad.data);
+    //   });
+    // }
     typeUsers();
   }, []);
 
@@ -129,6 +232,7 @@ function AddEditAd({ history, match }) {
         <Col size="md-2" />
         <Col size="md-8">
           <form
+            id="adsForm"
             className="card"
             onSubmit={handleSubmit(onSubmit)}
             onReset={reset}
@@ -201,6 +305,25 @@ function AddEditAd({ history, match }) {
                     <option value="Deactivate">Deactivate</option>
                   </select>
                 </div>
+                <div className="form-group col-4">
+                  <label>Image</label>
+                  <input
+                    name="image"
+                    type="file"
+                    ref={register}
+                    style={{ background: "rgba(0,0,0,0.07)",
+                    height: "33px",
+                    paddingTop: "2px",
+                    paddingBottom: "2px",
+                   }}
+                    className={`form-control ${
+                      errors.image ? "is-invalid" : ""
+                    }`}
+                  />
+                  <div className="invalid-feedback">
+                    {errors.image?.message}
+                  </div>
+                </div>
               </div>
               <div className="form-row">
                 <div className="form-group col-4">
@@ -252,35 +375,55 @@ function AddEditAd({ history, match }) {
                 </div>
               </div>
               <div className="form-row">
-                <div className="form-group col-4">
+                <div className="form-group col-2">
                   <label>Company Id</label>
                   <input
                     name="CompanyId"
                     type="number"
                     ref={register}
-                    value={returnTest}
+                    value={companyId}
                     style={{ background: "rgba(0,0,0,0.07)" }}
                     className={`form-control ${
                       errors.CompanyId ? "is-invalid" : ""
                     }`}
                   />
-                  <Button
-                    variant="primary"
-                    onClick={handleModalShowHide}
-                  >
-                    Launch demo modal
-                  </Button>
-
                   <div className="invalid-feedback">
                     {errors.CompanyId?.message}
                   </div>
                 </div>
                 <div className="form-group col-4">
+                        <label>Company Name</label>
+                        <label
+                          name="companyName"
+                          type="text"
+                          // disabled={userType === "Owner" ? true : false}
+                          style={{
+                            background: "rgba(0,0,0,0.07)",
+                            height: "30px",
+                          }}
+                          className={`form-control ${
+                            errors.companyName ? "is-invalid" : ""
+                          }`}
+                        >
+                          {companyName}
+                        </label>
+                        <div className="invalid-feedback">
+                          {errors.companyName?.message}
+                        </div>
+                      </div>
+                <div className="form-group col-3 align-self-center" >                        
+                        <Button variant="primary" onClick={handleModalShowHide}>
+                          Search Company
+                        </Button>
+                      </div>
+                <div className="form-group col-3">
                   <label>User Id</label>
                   <input
                     name="UserId"
                     type="number"
                     ref={register}
+                    value={userId}
+                    diplay="block"
                     style={{ background: "rgba(0,0,0,0.07)" }}
                     className={`form-control ${
                       errors.UserId ? "is-invalid" : ""
@@ -289,22 +432,7 @@ function AddEditAd({ history, match }) {
                   <div className="invalid-feedback">
                     {errors.UserId?.message}
                   </div>
-                </div>
-                <div className="form-group col-4">
-                  <label>Image</label>
-                  <input
-                    name="image"
-                    type="text"
-                    ref={register}
-                    style={{ background: "rgba(0,0,0,0.07)" }}
-                    className={`form-control ${
-                      errors.image ? "is-invalid" : ""
-                    }`}
-                  />
-                  <div className="invalid-feedback">
-                    {errors.image?.message}
-                  </div>
-                </div>
+                </div>                
               </div>
             </div>
             <div className="card-footer">
