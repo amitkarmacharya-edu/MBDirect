@@ -269,6 +269,95 @@ class WebRTCPeerConnection {
         console.log(event.streams);
         this.onRemoteStreamCB(event);
     }
+
+    /** signaling */
+
+    // receive messages from signaler
+    receivedMessageFromSignaler({ description, candidate }) {
+        console.log("Received msg from signal, I am polite peer: " + this.polite);
+        console.log("description:")
+        console.log(description);
+        console.log("candidate typeof : " + typeof candidate);
+        console.log(candidate);
+        if (!this.pc) {
+            return;
+        }
+
+        if (description) {
+            console.log("got description from Peer, type: " + description.type);
+            // check for collision
+            const offerCollision = (description.type === "offer") &&
+                (this.makingOffer || this.pc.signalingState !== "stable");
+            console.log("Did i make and send offer?: " + this.makingOffer);
+            console.log("detected offerCollison? : " + offerCollision);
+
+            // polite peer will always answer and cancels its own offer
+            this.ignoreOffer = !this.polite && offerCollision;
+
+            console.log("Implite peer igonered offer: " + this.ignoreOffer);
+            if (this.ignoreOffer) {
+                console.log(" already have an offer sendt, ignore this offer");
+                return;
+            }
+
+            console.log("creating answer and sending it back");
+
+            // if no collision was detected then save the remote description
+            // if it was an offer then send the answer else ignore it
+            // set the remote description
+            this.pc.setRemoteDescription(new RTCSessionDescription(description))
+                .then(() => {
+                    // answer with an offer
+                    if (description.type === "offer") {
+                        this.pc.createAnswer()
+                            .then(answer => this.pc.setLocalDescription(answer))
+                            .then(() => {
+                                this.sendMessageToSignaler({
+                                    polite: this.polite,
+                                    startTime: this.startTime,
+                                    peerData: {
+                                        type: "description",
+                                        description: this.pc.localDescription
+                                    }
+                                });
+                            })
+                            .catch(err => {
+                                this.onerror({
+                                    type: "FSLD",
+                                    message: "FAILEDTOSENDLOCALDESCRIPTION: faile to send answer after receiving offer as polite peer.",
+                                    err: err
+                                });
+                            });
+                    }
+                })
+                .catch(err => {
+                    this.onerror({
+                        type: "FSRD",
+                        message: "FAILEDTOSETREMOTEDESCRIPTION: failed to set remote description as a polite peer",
+                        err: err
+                    });
+                });
+            // candidate
+        } else if (candidate) {
+            let ice = JSON.parse(candidate).ice;
+            console.log("got ice candidate =-=========");
+            console.log(ice);
+            if (ice) {
+                this.pc.addIceCandidate(ice)
+                    .then(() => console.log("added ice candidate from peer"))
+                    .catch(err => {
+                        if (!this.ignoreOffer) {
+                            this.onerror({
+                                type: "FAIC",
+                                message: "FAILEDTOADDICECANDIDATE: failed to add ice candidate, received from the signaler",
+                                err: err
+                            });
+                        }
+                    });
+            }
+        }
+    }
+
 }
 
 export default WebRTCPeerConnection;
