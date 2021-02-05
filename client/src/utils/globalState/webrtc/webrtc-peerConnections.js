@@ -62,6 +62,48 @@ class WebRTCPeerConnection {
             }
         }
 
+        onnegotiation() {
+            if (!this.pc) {
+                return;
+            }
+    
+            if (!this.conHasStarted) {
+                return
+            }
+    
+            console.log("negoation under way");
+    
+            this.makingOffer = true;
+    
+            // calling without arguments automatically creates and sets the 
+            // appropriate description based on the current signalingState.
+            this.pc.setLocalDescription()
+                .then(() => {
+                    this.sendMessageToSignaler({
+                        polite: this.polite,
+                        startTime: this.startTime,
+                        peerData: {
+                            type: "description",
+                            description: this.pc.localDescription
+                        }
+                    });
+                    console.log("sent description on negotiation");
+                })
+                .catch(err => {
+                    console.log(false);
+                    this.onerror(
+                        {
+                            type: "FSLD",
+                            message: "FAILETOSETLOCALDESCRIPTION: onenogationneeded failed to setLocalDescription().",
+                            error: err
+                        }
+                    );
+                })
+                .finally(() => {
+                    this.makingOffer = false;
+                });
+        }
+
 }
 
 export default WebRTCPeerConnection;
