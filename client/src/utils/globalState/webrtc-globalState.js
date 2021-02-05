@@ -31,7 +31,21 @@ const reducer = (state, action) => {
         loading: false
       };
 
-
+      case CLEAR_USER_INFO:
+      return {
+        ...state,
+        lobby: {
+          firstName: "",
+          lastName: "",
+          email: "",
+          phoneNumber: "",
+          subject: "",
+          description: "",
+        },
+        loading: false
+      };
+    
+      
       default:
         return state;
 
