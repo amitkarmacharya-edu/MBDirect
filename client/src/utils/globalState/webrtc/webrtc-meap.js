@@ -312,6 +312,35 @@ class Meap {
         // console.log(remoteCam.current.srcObject)
 
     }
+    
+    /** Meeting */
+    closeMeeting() {
+        console.log("close meeting");
+        this.closeUserMedia();
+        this.closeSocketConnection();
+        this.closePeerConnection();
+    }
+
+    leaveRoom() {
+        console.log("leaving room");
+        API.leaveRoom({ userId: this.userId, roomId: this.roomId })
+            .then(res => {
+                console.log(res.data);
+                console.log("userMedia");
+                console.log(this.userMedia);
+            })
+            .catch(err => {
+                console.log(err);
+            });
+        
+            this.closeMeeting();
+    }
+
+    /** error and info */
+    onerror(msg) {
+        console.log(msg);
+        this.onerrorCB(msg)
+    }
 }
 
 const meets = new Meap({audio: true, video: true});
