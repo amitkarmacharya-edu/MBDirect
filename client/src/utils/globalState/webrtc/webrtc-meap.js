@@ -21,6 +21,36 @@ class Meap {
         this.onerrorCB = null;
     }
 
+    init() {
+
+        if (!this.userId || !this.businessId || !this.roomId) {
+            throw new Error(`Provide Info: userId: ${this.userId && true}, businessId: ${this.businessId && true}, roomId: ${this.roomId && true}`)
+        }
+
+        console.log("userId : " + this.userId);
+        console.log("roomId : " + this.roomId);
+        console.log("callee: " + this.isCallee);
+        console.log("initializing meetingroom");
+
+        if (this.signalingChannel) {
+            return;
+        }
+
+        Promise.all([
+            this.createSocketConnection(),
+            this.joinSocketRoom(),
+            this.setupUserMedia()
+        ])
+        .then(
+                (fulfillment) => {
+                    console.log("setup was successfull");
+                },
+                (rejection) => {
+                    this.leaveRoom();
+                }
+            );
+    }
+    
     /** SignalChannel */
     createSocketConnection() {
         console.log("creating Socket Connection");
