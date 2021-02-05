@@ -3,7 +3,10 @@ import "./style.css";
 
 function ListUsers(props) {
   const fullName= props.userResults.first_name + " " + props.userResults.last_name;
-  const imageSRC = window.location.origin + "/" + props.userResults.image.substring(3);
+  let imageSRC ="";
+  if(props.userResults.image){
+    imageSRC = window.location.origin + "/" + props.userResults.image.substring(3);
+  }
   console.log(props.userResults);  
       return (
             <tr key={props.userResults.id}  id={props.userResults.id} value={props.userResults.id}  onClick={props.handleDataBack}>  
@@ -24,6 +27,7 @@ function ListUsers(props) {
                   src={imageSRC}
                   style={{width:"100%"}}
                   className="img-responsive"
+                  alt="userImage"
                 />
               </td>
             </tr>
