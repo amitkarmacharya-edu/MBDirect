@@ -167,6 +167,69 @@ class WebRTCPeerConnection {
                 break;
         }
     }
+
+    /** Connection configuration */
+
+    // caller will always be polite, people in the room
+    // will always be an impolite peer and ignore the offer 
+    // and respond with their own offer
+    startCall() {
+        console.log("started call ");
+
+        if (!this.pc) {
+            return;
+        }
+
+        // check if we connection has already started, offer/answer
+        if (this.makingOffer || this.conHasStarted) {
+            return;
+        }
+
+        this.makingOffer = true;
+        this.polite = true;
+        this.initiator = true;
+
+        let constraints = this.initConfig.offerConstraints;
+        // create an offer
+        console.log("creating offer");
+        this.pc.createOffer(constraints)
+            .then((offer) => {
+
+                console.log("setting localDescription");
+                this.pc.setLocalDescription(new RTCSessionDescription(offer))
+                    .then(() => {
+                        console.log("got localDescription, sending offer");
+                        console.log(this.pc.localDescription);
+
+                        this.sendMessageToSignaler({
+                            polite: this.polite,
+                            startTime: this.startTime,
+                            peerData: {
+                                type: "description",
+                                description: this.pc.localDescription
+                            }
+                        });
+
+                        console.log("offer sent to signal channel");
+                    })
+                    .catch(err => {
+                        this.onerror({
+                            type: "FSLD",
+                            message: "FAILETOSETLOCALDESCRIPTION: failed to setLocalDescription() while creating offer",
+                            error: err
+                        });
+                    });
+
+            })
+            .catch(err => {
+                this.onerror({
+                    type: "FTCO",
+                    message: "FAILEDTOCREATEOFFER: failed while creating offer as a caller",
+                    err: err
+                });
+            })
+            .finally(() => this.makingOffer = false);
+    }
 }
 
 export default WebRTCPeerConnection;
