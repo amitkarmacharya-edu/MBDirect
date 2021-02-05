@@ -203,6 +203,48 @@ class Meap {
         }
     }
 
+    /** singaling messages  */
+    incomingSignalMessage(roomId, userId, data) {
+        console.log("received from peers");
+        console.log(roomId);
+        console.log(userId);
+        console.log(data);
+        if (!data || !userId) {
+            console.log(data);
+            console.log(userId);
+            this.onerror({
+                error: `Need data  and userId, Got data:${data && true} and userId: ${userId && true}`
+            });
+            return;
+        }
+        if (data.error) {
+            console.log(data.error)
+            this.onerror(data.error);
+            return;
+        }
+        this.setupPeerConnection({ userId, data })
+    }
+
+    sendSignalMessage(msg) {
+
+        console.log("received msg from peerCon sending msg to signal channel");
+        console.log(msg);
+        if (!msg) {
+            return;
+        }
+
+        if (!this.signalingChannel) {
+            this.onerror("no signaling channel present to send msgs");
+            return;
+        }
+
+        this.signalingChannel.send(msg);
+
+    }
+
+    handleSignalError(error) {
+        console.log(error);
+    }
     
 }
 
