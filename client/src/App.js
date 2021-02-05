@@ -12,38 +12,30 @@ import { Categories } from "./pages/Dashboard/Categories/Index";
 import { Meets } from "./pages/Dashboard/Meets/Index";
 import { Ads } from "./pages/Dashboard/Ads/Index";
 import { ProtectedRoute } from "./protected.route";
-import {Alert}  from "../../client/src/components/AlertComponent/Alert";
+import { Alert } from "../../client/src/components/AlertComponent/Alert";
+import "bootstrap/dist/css/bootstrap.css";
 
 function App({ match }) {
-  // const { path } = match;
   return (
     <>
-    <Alert />
-    <Router>
-      <div className="App">
-        <div>
-          <Switch>
-            <ProtectedRoute path="/dashboard" component={DashboardHome} />
-            <ProtectedRoute path="/companies" component={Companies} />
-            <ProtectedRoute path="/categories" component={Categories} />
-            <ProtectedRoute path="/meets" component={Meets} />
-            <ProtectedRoute path="/ads" component={Ads} />
-            {/* <ProtectedRoute exact path="/users" component={User} /> */}
-            <ProtectedRoute path="/users" component={Users} />
-            {/* <Route exact path="/users/add" component={AddEditUser} />
-              <Route exact path="/users/edit/:id" component={AddEditUser} /> */}
-            <React.Fragment>
-              <Nav />
-              <div className="container d-flex align-items-center flex-column">
-                <Route exact path="/" component={Home} />
-                <Route path="/login" component={LoginRegister} />
-              </div>
-            </React.Fragment>
-          </Switch>
+      <Alert />
+      <Router>
+        <div className="App">
+          <div>
+            <Switch>
+              <ProtectedRoute path="/dashboard" component={DashboardHome} />
+              <ProtectedRoute path="/companies" component={Companies} />
+              <ProtectedRoute path="/categories" component={Categories} />
+              <ProtectedRoute path="/meets" component={Meets} />
+              <ProtectedRoute path="/ads" component={Ads} />
+              <ProtectedRoute path="/users" component={Users} />
+              <Route exact path="/" component={Home} />
+              <Route path="/login" component={LoginRegister} />
+            </Switch>
+          </div>
         </div>
-      </div>
-    </Router>
-     </>
+      </Router>
+    </>
   );
 }
 
