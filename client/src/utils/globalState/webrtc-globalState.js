@@ -16,6 +16,19 @@ const { Provider } = MeetingContext;
 
 const reducer = (state, action) => {
     
+    switch(action.type){
+        case SET_USER_ID:
+            return {
+        ...state,
+        userId: action.userId,
+        loading: false
+      };
+
+      default:
+        return state;
+
+    }
+
 };
 
 const MeetingProvider = ({ value = [], ...props }) => {
