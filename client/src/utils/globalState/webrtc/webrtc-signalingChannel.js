@@ -13,6 +13,22 @@ export default class SignalingChannel {
         this.onmessageCB = msgCB;
     }
 
+    send(msg) {
+        console.log("sending msg to socket server");
+        if (!this.roomId || !this.userId) {
+            return;
+        }
+
+        if (this.socket && this.connectedToRoom) {
+            // sdp description broadcast
+            this.socket.emit("signalChannel", {
+                roomId: this.roomId,
+                userId: this.userId,
+                data: msg
+            });
+        }
+    }
+
     close() {
 
         if(!this.socket) {
