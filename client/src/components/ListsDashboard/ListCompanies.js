@@ -2,8 +2,10 @@ import React from "react";
 import "./style.css";
 
 function ListCompanies(props) {
-
-  const imageSRC = window.location.origin + "/" + props.companyResults.logo.substring(3);
+  let imageSRC ="";
+  if(props.companyResults.logo){
+    imageSRC = window.location.origin + "/" + props.companyResults.logo.substring(3);
+  }
   console.log(props.companyResults);
       return (
             <tr key={props.companyResults.id} id={props.companyResults.id} onClick={props.handleDataBack}>  
@@ -28,6 +30,7 @@ function ListCompanies(props) {
                   src={imageSRC}
                   className="img-responsive"
                   style={{width:"100%"}}
+                  alt="companyImage"
                 />
               </td>
             </tr>
