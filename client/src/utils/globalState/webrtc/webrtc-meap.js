@@ -245,6 +245,29 @@ class Meap {
     handleSignalError(error) {
         console.log(error);
     }
+
+     /** getUserMedia */
+     setupUserMedia() {
+        return new Promise((resolve, reject) => {
+            try{
+                console.log("creating userMedia");
+                this.userMedia = new WebRTCUserMedia(this.userMediaConstraints, this.gotLocalStream.bind(this));
+                resolve();
+            } catch (e) {
+                reject();
+            }
+        });
+    }
+
+    closeUserMedia() {
+        if (!this.userMedia) {
+            console.log("no media");
+            return;
+        }
+        this.userMedia.close();
+        this.userMedia = null;
+        console.log("media closed");
+    }
     
 }
 
