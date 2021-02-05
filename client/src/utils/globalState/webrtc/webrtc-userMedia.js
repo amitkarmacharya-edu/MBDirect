@@ -25,4 +25,22 @@ export default class WebRTCUserMedia {
     }
 
 
+    /** get media devices */
+
+    getMediaDevices() {
+        if(!navigator.mediaDevices || !navigator.mediaDevices.enumerateDevices){
+            throw new Error("Couldn't find any media device");
+        }        
+        
+        // get list of devices
+        navigator.mediaDevices.enumerateDevices()
+            .then(this.saveMediaDevices.bind(this))
+            .catch(err => { throw new Error(err) });
+    }
+
+    onDeviceChangeHandler() {
+        console.log("Updating Media Devices");
+        this.getMediaDevices();
+    }
+
 }
