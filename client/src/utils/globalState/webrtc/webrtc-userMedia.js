@@ -25,6 +25,7 @@ export default class WebRTCUserMedia {
     }
 
     /** check for webrtc support */
+
     checkForWebRTCSupport(){
         // check if weRTC is supported
         let isWebRTCSupported = navigator.getUserMedia ||
@@ -55,6 +56,22 @@ export default class WebRTCUserMedia {
     onDeviceChangeHandler() {
         console.log("Updating Media Devices");
         this.getMediaDevices();
+    }
+
+    /** access user Media */
+
+    // gets local media from the navigator, then calls get localStream.
+    // calls the function to tell the listener
+    // about the localmedia stream
+    getLocalUserMedia() {
+        console.log("WebRTCUserMedia: getUserMedia(): requesting user's media");
+        // requesting user media devices
+        navigator.mediaDevices.getUserMedia(this.constraints)
+            .then(this.saveLocalMediaStream.bind(this))
+            .then(() => this.onLocalStream())
+            .catch(err => {
+                throw new Error(err + ". Please click on the camera icon to change permission.");
+            });
     }
 
 }
