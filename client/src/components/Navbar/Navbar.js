@@ -12,7 +12,7 @@ import { USERID } from "../../constants/apiConstants";
 
 function Navbar(props) {
   const [userName, setUserName] = useState("");
-  const [userType, setUserType] = useState("");
+  // const [userType, setUserType] = useState("");
 
   useEffect(() => {
     typeUsers();
@@ -22,7 +22,7 @@ function Navbar(props) {
     const userId = localStorage.getItem(USERID);
     API.getUser(userId).then((res) => {
       console.log(res.data.type);
-      setUserType(res.data.type);
+      // setUserType(res.data.type);
       setUserName(res.data.first_name + " " + res.data.last_name);
     });
   }

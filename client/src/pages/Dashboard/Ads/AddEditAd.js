@@ -21,8 +21,7 @@ function AddEditAd({ history, match }) {
   const isAddMode = !id;
   const [userType, setUserType] = useState("");
   // variable to show or hide modal
-  const [showHide, setShowHide] = useState(false);
-  const [returnTest, setReturnTest] = useState();
+  const [showHide, setShowHide] = useState(false); 
   const [companyName, setCompanyName] = useState();
   const [companyId, setCompanyId] = useState();
   const [userId, setUserId] = useState();
@@ -53,8 +52,7 @@ function AddEditAd({ history, match }) {
     register,
     handleSubmit,
     reset,
-    setValue,
-    getValues,
+    setValue,  
     errors,
     formState,
   } = useForm({
@@ -69,7 +67,7 @@ function AddEditAd({ history, match }) {
   function createAd(data) {
     console.log(data);
     console.log(Array.from(data.image));
-    const file = Array.from(data.image);
+    // const file = Array.from(data.image);
 
     const fd = new FormData($("#adsForm")[0]);
     console.log(fd);
@@ -91,22 +89,13 @@ function AddEditAd({ history, match }) {
         console.log(error.response.data.errors[0].message);
       });
 
-    // console.log("Saving Ad");
-    // return API.saveAd(data)
-    //   .then(() => {
-    //     alertService.success("Advertisment has been created", {
-    //       keepAfterRouteChange: true,
-    //     });
-    //     history.push(".");
-    //   })
-    //   .catch(alertService.error);
   }
 
   // Function to Update Ad information 
   function updateAd(id, data) {
 
     console.log(Array.from(data.image));
-    const file = Array.from(data.image);
+    // const file = Array.from(data.image);
     const fd = new FormData($("#adsForm")[0]);
     console.log(fd);
     $.ajax({
@@ -127,20 +116,9 @@ function AddEditAd({ history, match }) {
         console.log(error.response.data.errors[0].message);
       });
 
-
-    // console.log(data);
-    // return API.updateAd(id, data)
-    //   .then((res) => {
-    //     console.log(res);
-    //     alertService.success("Advertisment updated", {
-    //       keepAfterRouteChange: true,
-    //     });
-    //     history.push("..");
-    //   })
-    //   .catch(alertService.error);
   }
 
-  const [ad, setAd] = useState({});
+  // const [ad, setAd] = useState({});
 
   // function to handle the modal
   function handleModalShowHide() {
@@ -200,29 +178,8 @@ async function getAdData (id){
   useEffect(() => {
     if (!isAddMode) {
       // get company and set form fields
-      getAdData(id);     
-      
-    }
-
-    // if (!isAddMode) {
-    //   // get user and set form fields
-    //   API.getAd(id).then((ad) => {
-    //     const fields = [
-    //       "id",
-    //       "name",
-    //       "description",
-    //       "discount",
-    //       "status",
-    //       "image",
-    //       "start_date",
-    //       "end_date",
-    //       "CompanyId",
-    //       "UserId",
-    //     ];
-    //     fields.forEach((field) => setValue(field, ad.data[field]));
-    //     setAd(ad.data);
-    //   });
-    // }
+      getAdData(id);        
+    }   
     typeUsers();
   }, []);
 

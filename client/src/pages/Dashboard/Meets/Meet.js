@@ -3,7 +3,7 @@ import Navbar from "../../../components/Navbar/Navbar";
 import Container from "../../../components/Container";
 import SearchForm from "../../../components/SearchForm";
 import API from "../../../utils/API";
-import { alertService } from "../../../services";
+// import { alertService } from "../../../services";
 import Row from "../../../components/Row";
 import Col from "../../../components/Col";
 import { USERID } from "../../../constants/apiConstants";
