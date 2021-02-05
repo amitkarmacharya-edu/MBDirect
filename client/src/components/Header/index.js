@@ -19,7 +19,7 @@ function Header() {
                         <a className="nav-link" href="/">For Business</a>
                     </li>
                     <li className="nav-item">
-                    <Link to="/login" style={{color: "red"}}> Login</Link>
+                    <Link className="nav-link" to="/login" style={{color: "red", verticalAlign:"middle"}}> Login</Link>
                     </li>
                 </ul>
             </div>
