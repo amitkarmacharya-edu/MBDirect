@@ -374,6 +374,26 @@ class WebRTCPeerConnection {
         this.onSignaler(msg);
     }
 
+    // forwards all the error using a cb func
+    // if the you have implemented aa error handler
+    onerror(error) {
+        console.log(error);
+        // alert(error.message);
+        if (this.onErrorCB) {
+            // cb that handles error
+            this.onErrorCB(error);
+        }
+    }
+
+    close() {
+        if (!this.pc) {
+            return;
+        }
+
+        this.pc.close();
+        this.pc = null;
+    }
+
 }
 
 export default WebRTCPeerConnection;
