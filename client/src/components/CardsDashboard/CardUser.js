@@ -9,7 +9,7 @@ import * as BiIcons from 'react-icons/bi';
 function CardUser(props) {
   let imageSRC =props.userResults.image;
   if(!props.userResults.image){
-    imageSRC = window.location.origin + "/images/no-image.png";     
+    imageSRC = window.location.origin + "/images/userAvatar.png";     
   }    
    
   return (

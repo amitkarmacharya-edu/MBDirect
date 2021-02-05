@@ -7,7 +7,7 @@ function ListUsers(props) {
   if(props.userResults.image){
     imageSRC = window.location.origin + "/" + props.userResults.image.substring(3);
   } else {
-    imageSRC = window.location.origin + "/images/no-image.png";
+    imageSRC = window.location.origin + "/images/userAvatar.png";
   }    
       return (
             <tr key={props.userResults.id}  id={props.userResults.id} value={props.userResults.id}  onClick={props.handleDataBack}>  
