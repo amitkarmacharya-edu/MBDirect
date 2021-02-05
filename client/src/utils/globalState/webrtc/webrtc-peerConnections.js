@@ -104,6 +104,21 @@ class WebRTCPeerConnection {
                 });
         }
 
+        /** Ice */
+    onConnectionStateChange(event) {
+
+        console.log(event);
+        console.log("iceConnectionState: " + this.pc.iceConnectionState);
+
+        if (!this.pc) {
+            return
+        }
+
+        if (this.pc.iceConnectionState === "failed") {
+            this.pc.restartIce();
+        }
+
+    }
 }
 
 export default WebRTCPeerConnection;
