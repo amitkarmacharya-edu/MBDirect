@@ -35,16 +35,32 @@ class WebRTCPeerConnection {
         this.pc.ontrack = this.receivedRemoteStream.bind(this);
         this.pc.onconnectionstatechange = this.connectionStateChange.bind(this);
         this.pc.onicegatheringstatechange = this.iceGatheringState;
-        
+
         // callbacks to handle various RTCPeeconnection event
         // will be initialized by the app layer
         this.onErrorCB = errorHandler;
         this.onRemoteStreamCB = remoteStreamHandler;
         this.onSignaler = signalHandler;
 
-
-
     }
+
+        /** connection change */
+        connectionStateChange(event) {
+            switch (this.pc.connectionState) {
+                case "connected":
+                    this.conHasStarted = true;
+                    console.log("connection has started");
+                    break;
+                case "disconnected":
+                case "failed":
+                // One or more transports has terminated unexpectedly or in an error
+                case "closed":
+                    console.log("disconnected, failed, closed");
+                    // The connection has been closed
+                    this.conHasStarted = false
+                    break;
+            }
+        }
 
 }
 
