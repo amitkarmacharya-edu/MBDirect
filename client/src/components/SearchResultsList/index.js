@@ -211,8 +211,8 @@ function SearchResultsList(props) {
                       })
                       .map(function (result) {
                         return (
-                          <ListMeets
-                            meetResults={result}
+                          <ListCompanies
+                            companyResults={result}
                             key={result.id}
                             userType={props.userType}
                             handleDataBack={props.handleDataBack}
