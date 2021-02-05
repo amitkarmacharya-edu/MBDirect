@@ -230,6 +230,45 @@ class WebRTCPeerConnection {
             })
             .finally(() => this.makingOffer = false);
     }
+
+     /** user Media / stream */
+
+    // adds tracks from stream to the peer connection
+    addLocalStream(stream) {
+        if (!this.pc) {
+            return;
+        }
+
+        console.log("stream: ")
+        console.log(stream);
+        // add each track to the stream
+        for (const track of stream.getTracks()) {
+            this.pc.addTrack(track, stream);
+        }
+        this.localStream = true;
+        console.log("added localstream to the connection");
+    }
+
+    // forwards the remote stream usig a cb func
+    receivedRemoteStream(event) {
+
+        // if cb has been initialized else call error
+        if (!this.onRemoteStreamCB) {
+            console.log("NO remote stream callback");
+            this.onerror(
+                {
+                    type: "FINI",
+                    msg: "FEATUREISNOTIMPLEMENTED: cb function not provided to the RTCPeerConnection Instance when remoteStream is received."
+                }
+            );
+            return;
+        }
+
+        // call back that handles the stream from remote peer
+        this.remoteStream = event.streams;
+        console.log(event.streams);
+        this.onRemoteStreamCB(event);
+    }
 }
 
 export default WebRTCPeerConnection;
