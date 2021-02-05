@@ -73,7 +73,14 @@ const reducer = (state, action) => {
           loading: false
         };
   
-
+        case UPDATE_STAGE:
+            return {
+              ...state,
+              currentStage: action.updatedStage,
+              currentStageIndex: action.updatedStageIndex,
+              loading: false,
+            };
+      
     
 
       default:
