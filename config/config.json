@@ -1,7 +1,7 @@
 {
   "development": {
     "username": "root",
-    "password": "AD0505",
+    "password": "root",
     "database": "mbdirect",
     "host": "127.0.0.1",
     "port":3306,
