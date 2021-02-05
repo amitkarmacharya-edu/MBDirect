@@ -7,6 +7,10 @@ import * as FaIcons from 'react-icons/fa';
 import * as BiIcons from 'react-icons/bi';
 
 function CardUser(props) {
+  let imageSRC =props.userResults.image;
+  if(!props.userResults.image){
+    imageSRC = window.location.origin + "/images/no-image.png";     
+  }    
    
   return (
     <div className="card mb-3" id={props.userResults.id} >
@@ -69,7 +73,7 @@ function CardUser(props) {
             </span>            
           </Col>
           <Col size="md-4">
-              <img className="rounded-circle img-fluid " src={props.userResults.image} alt="UserImage" data-holder-rendered="true" />
+              <img className="rounded-circle img-fluid " src={imageSRC} alt="UserImage" data-holder-rendered="true" />
             {/* <img alt="Pic" src={props.userResults.image} className="img-fluid" /> */}
             {/* <div><h5>Company: </h5>{props.userResults.Companies[0].name}</div> 
             <img alt="Pic" src={props.userResults.Companies[0].logo} className="img-fluid" /> */}

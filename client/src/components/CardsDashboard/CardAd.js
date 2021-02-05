@@ -12,8 +12,13 @@ import * as TiIcons from 'react-icons/ti';
 function CardAd(props) { 
   const [companiesData, setCompaniesData] = useState([]);
   const [usersData, setUsersData] = useState([]);
+  const [imageSRC, setImageSRC] = useState();
 
   useEffect(() => {
+    setImageSRC(props.adResults.image);
+    if(!props.adResults.image){
+      setImageSRC(window.location.origin + "/images/no-image.png");     
+    }
     setCompaniesData(props.companiesData);
     setUsersData(props.usersData)    
   }, [])
@@ -94,7 +99,7 @@ function CardAd(props) {
 
           </Col>
           <Col size="md-4">
-              <img className="rounded-circle img-fluid " src={props.adResults.image}
+              <img className="rounded-circle img-fluid " src={imageSRC}
               data-holder-rendered="true" alt="adImage"/>           
           </Col>
         </Row>

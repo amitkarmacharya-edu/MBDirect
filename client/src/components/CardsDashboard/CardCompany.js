@@ -10,11 +10,17 @@ import * as TiIcons from "react-icons/ti";
 
 function CardCompany(props) {
   const [caterogies, setCategories] = useState([]);
+  const [imageSRC, setImageSRC] = useState();
 
   useEffect(()=>{
-    setCategories (props.categories);
+    setImageSRC(props.companyResults.logo);
+    if(!props.companyResults.logo){
+      setImageSRC(window.location.origin + "/images/no-image.png");     
+    }
+    setCategories (props.categories);    
   },[caterogies]);
     
+  
   return (
     <div className="card mb-3" id={props.companyResults.id} >
       <div className="card-header">
@@ -121,7 +127,7 @@ function CardCompany(props) {
           <Col size="md-4">
             <img
               className="rounded-circle img-fluid "
-              src={props.companyResults.logo}
+              src={imageSRC}
               data-holder-rendered="true"
               alt="companylogo"
             />
