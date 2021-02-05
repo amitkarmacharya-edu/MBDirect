@@ -119,6 +119,33 @@ class WebRTCPeerConnection {
         }
 
     }
+
+    onIceCandidate({ candidate }) {
+
+        if (candidate && candidate.candidate && this.onSignaler) {
+
+            // console.log("---------------- filtered candidate -------------");
+            // console.log(candidate.candidate);
+
+            this.sendMessageToSignaler({
+                polite: this.polite,
+                startTime: this.startTime,
+                peerData: {
+                    type: "candidate",
+                    candidate: JSON.stringify({ ice: candidate })
+                }
+            });
+
+            console.log("ice candidate sent");
+
+        } else {
+            this.onerror({
+                type: "EOI",
+                message: "ENDOFICECANDIDATES: filtered all the non udp and null ice candidate "
+            });
+        }
+
+    }
 }
 
 export default WebRTCPeerConnection;
