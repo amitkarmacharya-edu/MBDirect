@@ -24,6 +24,14 @@ const reducer = (state, action) => {
         loading: false
       };
 
+      case SAVE_USER_INFO:
+      return {
+        ...state,
+        lobby: action.lobby,
+        loading: false
+      };
+
+
       default:
         return state;
 
