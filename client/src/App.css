@@ -9,7 +9,8 @@ html,body, body * {
  }
 
  body {
-    background-image: url(pic.jpg);
+    /* background-image: url(pic.jpg); */
+    background-color: #dee2e6;
     background-size:  cover;    
   }
 
