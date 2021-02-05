@@ -24,6 +24,20 @@ export default class WebRTCUserMedia {
         this.open();
     }
 
+    /** check for webrtc support */
+    checkForWebRTCSupport(){
+        // check if weRTC is supported
+        let isWebRTCSupported = navigator.getUserMedia ||
+        navigator.webkitGetUserMedia ||
+        navigator.mozGetUserMedia ||
+        navigator.msGetUserMedia ||
+        window.RTCPeerConnection;
+
+       if (!isWebRTCSupported) {
+           throw new Error("WebRTC not supported in your browser. please use chrome, firefox, safari, or edge");
+       }
+
+   }
 
     /** get media devices */
 
