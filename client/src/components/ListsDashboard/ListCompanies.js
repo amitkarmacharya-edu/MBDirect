@@ -5,8 +5,10 @@ function ListCompanies(props) {
   let imageSRC ="";
   if(props.companyResults.logo){
     imageSRC = window.location.origin + "/" + props.companyResults.logo.substring(3);
+  } else {
+  imageSRC = window.location.origin + "/images/no-image.png";
   }
-  console.log(props.companyResults);
+  
       return (
             <tr key={props.companyResults.id} id={props.companyResults.id} onClick={props.handleDataBack}>  
             <td data-th="Id" data-id={props.companyResults.id} data-company={props.companyResults.name} data-userid={props.companyResults.UserId} className="name-cell align-middle">

@@ -6,8 +6,9 @@ function ListUsers(props) {
   let imageSRC ="";
   if(props.userResults.image){
     imageSRC = window.location.origin + "/" + props.userResults.image.substring(3);
-  }
-  console.log(props.userResults);  
+  } else {
+    imageSRC = window.location.origin + "/images/no-image.png";
+  }    
       return (
             <tr key={props.userResults.id}  id={props.userResults.id} value={props.userResults.id}  onClick={props.handleDataBack}>  
             <td data-th="Id" data-id={props.userResults.id} data-user={fullName}  className="name-cell align-middle">
