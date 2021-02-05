@@ -95,10 +95,7 @@ function CardAd(props) {
           </Col>
           <Col size="md-4">
               <img className="rounded-circle img-fluid " src={props.adResults.image}
-              data-holder-rendered="true"/>
-            {/* <img alt="Pic" src={props.userResults.image} className="img-fluid" /> */}
-            {/* <div><h5>Company: </h5>{props.userResults.Companies[0].name}</div> 
-            <img alt="Pic" src={props.userResults.Companies[0].logo} className="img-fluid" /> */}
+              data-holder-rendered="true" alt="adImage"/>           
           </Col>
         </Row>
       </div>
