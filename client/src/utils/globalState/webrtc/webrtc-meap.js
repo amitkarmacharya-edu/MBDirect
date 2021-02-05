@@ -21,6 +21,59 @@ class Meap {
         this.onerrorCB = null;
     }
 
+    /** SignalChannel */
+    createSocketConnection() {
+        console.log("creating Socket Connection");
+        return new Promise((resolve, reject) => {
+            if (this.signalingChannel && this.signalingChannel.socket) {
+                console.log("have socket connection");
+                resolve();
+            }
+            try {
+                this.signalingChannel = new SignalingChannel("ws://127.0.0.1:3001",
+                    this.handleSignalError,
+                    this.incomingSignalMessage
+                );
+                this.signalingChannel.open();
+                console.log(this.signalingChannel);
+                console.log("creating Socket Connection: successfull");
+                resolve();
+            } catch (e) {
+                console.log("Erro while creating signal channel");
+                reject();
+            }
+        });
+    }
+
+    closeSocketConnection() {
+        console.log(this.signalingChannel);
+        if (!this.signalingChannel) {
+            return;
+        }
+        this.signalingChannel.close();
+        this.signalingChannel = null;
+    }
+
+    joinSocketRoom() {
+        return new Promise((resolve, reject) => {
+            if (this.roomId === "") {
+                this.onerror("need roomId to load the socket");
+                reject();
+            }
+
+            if (!(this.signalingChannel && this.signalingChannel.socket)) {
+                this.onerror("socket connection hasn't been established");
+                reject();
+            }
+
+            console.log("connecting to the socket room");
+
+            this.signalingChannel.connectToRoom(this.roomId, this.userId);
+            resolve();
+        });
+
+    }
+
     
 }
 
