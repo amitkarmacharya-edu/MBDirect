@@ -41,6 +41,11 @@ export default class WebRTCUserMedia {
    }
 
     /** get media devices */
+    
+    onDeviceChangeHandler() {
+        console.log("Updating Media Devices");
+        this.getMediaDevices();
+    }
 
     getMediaDevices() {
         if(!navigator.mediaDevices || !navigator.mediaDevices.enumerateDevices){
@@ -53,9 +58,41 @@ export default class WebRTCUserMedia {
             .catch(err => { throw new Error(err) });
     }
 
-    onDeviceChangeHandler() {
-        console.log("Updating Media Devices");
-        this.getMediaDevices();
+    saveMediaDevices(devices) {
+        if (!devices && devices.length <= 0){
+            throw new Error("Media Device is required, found None.");
+        }
+
+        /**
+         * save all the media devices
+         * and separate them into their own type
+         * those which aren't vitual
+         */
+        const audioinput = [];
+        const audiooutput = [];
+        const videoinput = [];
+        this.mediaDevices = devices.filter( device => {
+            if (device.deviceId === "" || device.label.indexOf("Virtual") !== -1){
+                return false;
+            }
+
+            if (device.kind === "audioinput"){
+                audioinput.push(device);
+            } else if (device.kind === "audiooutput") {
+                audiooutput.push(device);
+            } else if (device.kind === "videoinput") {
+                videoinput.push(device);
+            }
+
+            return true;
+        });
+
+        this.audioInputDevices = [...audioinput];
+        this.audioOutputDevices = [...audiooutput];
+        this.videoInputDevices = [...videoinput];
+
+        console.log(devices);
+        console.log("Saved All Media Devices");
     }
 
     /** access user Media */
@@ -74,4 +111,20 @@ export default class WebRTCUserMedia {
             });
     }
 
+    saveLocalMediaStream(stream) {
+
+        if(!stream) {
+            throw new Error("No Stream Available to save");
+        }
+
+        if(this.haveLocalStream) {
+            return;
+        }
+
+        this.localStream = stream;
+        this.haveLocalStream = true;
+        
+        console.log(stream);
+        console.log("saved local stream");
+    }
 }
