@@ -146,6 +146,27 @@ class WebRTCPeerConnection {
         }
 
     }
+
+    onIceCandidateError(event) {
+        console.log("On candidate Error");
+        console.log(event);
+    }
+
+    onIceGatheringState(event) {
+        let connection = event.target;
+
+        switch (connection.iceGatheringState) {
+            case "gathering":
+                console.log("gathering");
+                break;
+            case "complete":
+                console.log("complete");
+                break;
+            default: 
+                console.log("new");
+                break;
+        }
+    }
 }
 
 export default WebRTCPeerConnection;
