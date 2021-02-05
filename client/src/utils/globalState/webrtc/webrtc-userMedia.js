@@ -127,4 +127,44 @@ export default class WebRTCUserMedia {
         console.log(stream);
         console.log("saved local stream");
     }
+    
+    toggleAudio() {
+        this.localStream.getAudioTracks().forEach(track => {
+            if (track.readyState === 'live') {
+                track.enabled = !track.enabled;
+            }
+        });
+    }
+
+    toggleVideo() {
+        console.log("video toogle");
+        this.localStream.getVideoTracks().forEach(track => {
+            if(track.readyState === 'live') {
+                track.enabled = !track.enabled;
+            }
+        });
+    }
+
+    close() {
+        if (!this.haveLocalStream) {
+            console.log("no stream to close")
+            return;
+        }
+
+        this.localStream.getTracks().forEach(track => { 
+            track.stop();
+        });
+
+        this.mediaDevices = [];
+        this.videoInputDevices = [];
+        this.audioInputDevices = [];
+        this.audioOutputDevices = [];
+        this.activeAudioInputDevice = null;
+        this.activeAudioOutputDevice = null;
+        this.activeVideoInputDevice = null;
+
+        // indicates if stream was saved
+        this.haveLocalStream = false;
+
+    }
 }
