@@ -44,8 +44,20 @@ const reducer = (state, action) => {
         },
         loading: false
       };
+
+      case START_MEETING:
+      return {
+        ...state,
+        roomId: action.roomId,
+        businessId: action.businessId,
+        roomCreator: action.roomCreator,
+        meetingStarted: true,
+        loading: false,
+        meetingType: action.meetingType
+      };
+
     
-      
+
       default:
         return state;
 
