@@ -28,6 +28,51 @@ export default class SignalingChannel {
             });
         }
     }
+    
+    connectToRoom(roomId, userId) {
+        console.log("signalchannel: connecting to socket room: " + roomId);
+        if (this.registered) {
+            return;
+        }
+
+        console.log(roomId, userId);
+        this.roomId = roomId;
+        this.userId = userId;
+
+        if (!this.roomId) {
+            this.onerror({
+                error: "roomId missing to register socket"
+            });
+        }
+
+        if (!this.userId) {
+            this.onerror({
+                error: "userId missing to register socket"
+            });
+        }
+
+        // connect to room
+        this.socket.emit("connectRoom", {
+            roomId: this.roomId,
+            userId: this.userId
+        });
+    }
+    
+    leaveRoom() {
+        if(!this.connectedToRoom){
+            this.onerror({error: "not connected to any room"});
+            return;
+        }
+        
+        if(!this.roomId){
+            this.onerror({error: "roomId missing to leave room"});
+            return;
+        } 
+    
+        this.socket.to(this.roomId).emit("leave", {
+            roomId: this.roomId
+        });
+    }
 
     close() {
 
