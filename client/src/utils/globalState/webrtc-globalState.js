@@ -94,6 +94,12 @@ const reducer = (state, action) => {
                       showAlerts: false,
                     };
               
+                    case LOADING:
+      return {
+        ...state,
+        loading: true
+      };
+
 
       default:
         return state;
