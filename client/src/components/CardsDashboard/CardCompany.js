@@ -31,8 +31,7 @@ function CardCompany(props) {
                 >
                   Edit
                 </Link>
-                <button
-                  id="delete"
+                <button                  
                   id={props.companyResults.id}
                   value={props.companyResults.id}
                   onClick={props.deleteCompany}
@@ -124,6 +123,7 @@ function CardCompany(props) {
               className="rounded-circle img-fluid "
               src={props.companyResults.logo}
               data-holder-rendered="true"
+              alt="companylogo"
             />
           </Col>
         </Row>

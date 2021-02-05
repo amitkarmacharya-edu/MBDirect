@@ -1,5 +1,4 @@
 import React from "react";
-import Nav from "./components/Nav";
 import Home from "./pages/Home/Home";
 import { withRouter } from "react-router-dom";
 import LoginRegister from "./pages/LoginRegister/LoginRegister";
