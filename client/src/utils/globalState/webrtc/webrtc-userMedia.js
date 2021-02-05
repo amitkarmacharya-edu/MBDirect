@@ -127,6 +127,10 @@ export default class WebRTCUserMedia {
         console.log(stream);
         console.log("saved local stream");
     }
+
+    getLocalStream() {
+        return this.localStream;
+    }
     
     toggleAudio() {
         this.localStream.getAudioTracks().forEach(track => {
@@ -167,4 +171,5 @@ export default class WebRTCUserMedia {
         this.haveLocalStream = false;
 
     }
+    
 }
