@@ -88,7 +88,12 @@ const reducer = (state, action) => {
                   showAlerts: true
                 };
           
-    
+                case HIDE_ALERTS:
+                    return {
+                      ...state,
+                      showAlerts: false,
+                    };
+              
 
       default:
         return state;
