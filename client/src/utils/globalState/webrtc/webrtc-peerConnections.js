@@ -358,6 +358,22 @@ class WebRTCPeerConnection {
         }
     }
 
+    // send messages to signaler using the CB
+    sendMessageToSignaler(msg) {
+        if (!msg) {
+            this.onerror({
+                error: "can't send empty msg to signal, peer connection"
+            });
+        }
+        if (!this.onSignaler) {
+            this.onerror({
+                error: "failed to send message using signalChannel ien peerCon, CB not implemented"
+            });
+            return;
+        }
+        this.onSignaler(msg);
+    }
+
 }
 
 export default WebRTCPeerConnection;
