@@ -42,7 +42,7 @@
   
 
   ## Question
-  Contact me:
+  Contact us:
 
   Github:[AdrianStorr](https://github.com/AdrianStorr)
   
