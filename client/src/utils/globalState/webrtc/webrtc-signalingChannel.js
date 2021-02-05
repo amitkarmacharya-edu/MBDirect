@@ -13,6 +13,59 @@ export default class SignalingChannel {
         this.onmessageCB = msgCB;
     }
 
+    open() {
+        if (this.socket) {
+            console.log(this.socket);
+            return;
+        }
+
+        this.socket = new io();
+
+        // connection
+        this.socket.on("connect", () => {
+            console.log("connected to socket");
+        });
+
+        // error
+        this.socket.on("connecterror", () => {
+            console.log("connection error");
+            console.log("trying to reconnect");
+
+            clearTimeout(setTimeout(() => {
+                this.socket.connect();
+            }, 2000));
+        });
+
+        // connected to room
+        this.socket.on("connectedToRoom", ({userId, roomId}) => {
+            console.log(`${userId} connected to ${roomId}`);
+            this.connectedToRoom = true;
+        });
+
+        // failed to connect to room
+        this.socket.on("failedConnectRoom", (error) => {
+            console.log("failed to connect");
+            this.onerror(error);
+        });
+
+        // mssage forward by signaling channel
+        this.socket.on("peerMessages", ({roomId, userId, data}) => {
+            console.log("received msessages from peers");
+            if(!data || !userId){
+                return;
+            }
+
+            this.onmessageCB(roomId, userId, data);
+        });
+
+        // disconnect
+        this.socket.on("disconnect", () => {
+            console.log("disconnected");
+        });
+
+
+    }
+
     send(msg) {
         console.log("sending msg to socket server");
         if (!this.roomId || !this.userId) {
@@ -57,7 +110,7 @@ export default class SignalingChannel {
             userId: this.userId
         });
     }
-    
+
     leaveRoom() {
         if(!this.connectedToRoom){
             this.onerror({error: "not connected to any room"});
