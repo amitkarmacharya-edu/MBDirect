@@ -56,6 +56,24 @@ const reducer = (state, action) => {
         meetingType: action.meetingType
       };
 
+      case CLOSE_MEETING:
+        return {
+          ...state,
+          lobby:{
+            ...state.lobby,
+            subject: "",
+            description: ""
+          },
+          roomId: "",
+          businessId: "",
+          currentStage: state.stages[0],
+          currentStageIndex: 0,
+          roomCreator: false,
+          meetingStarted: false,
+          loading: false
+        };
+  
+
     
 
       default:
