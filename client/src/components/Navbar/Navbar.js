@@ -12,9 +12,10 @@ import { USERID } from "../../constants/apiConstants";
 
 function Navbar(props) {
   const [userName, setUserName] = useState("");
+  const [userImageSrc, setUserImageSrc] = useState("");
   // const [userType, setUserType] = useState("");
 
-  useEffect(() => {
+  useEffect(() => {    
     typeUsers();
   }, [])
 
@@ -23,7 +24,12 @@ function Navbar(props) {
     API.getUser(userId).then((res) => {
       console.log(res.data.type);
       // setUserType(res.data.type);
+      setUserImageSrc(res.data.image);
+      if (!res.data.image) {
+        setUserImageSrc(window.location.origin + "/images/userAvatar.png");
+      }      
       setUserName(res.data.first_name + " " + res.data.last_name);
+
     });
   }
 
@@ -37,8 +43,14 @@ function Navbar(props) {
                 <FaIcons.FaBars onClick={props.isActive} />
               </Link>
             </div>
-            <div className="col-md-11 text-white text-right">
-              <h3>Welcome, {userName} !  </h3>
+            <div className="col-md-11 text-white text-right">            
+              <h4> Welcome, {userName} !  <img
+              className="rounded-circle img-fluid "
+              src={userImageSrc}
+              style={{width:"3%", height:"3%"}}
+              data-holder-rendered="true"
+              alt="User"
+            /></h4>
             </div>
           </div>
         
