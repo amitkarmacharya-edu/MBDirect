@@ -50,7 +50,7 @@ class Meap {
                 }
             );
     }
-    
+
     /** SignalChannel */
     createSocketConnection() {
         console.log("creating Socket Connection");
@@ -102,6 +102,105 @@ class Meap {
             resolve();
         });
 
+    }
+
+     /** peer Connection */
+     createPeerConnection(params, remoteUserId = "NO_ID") {
+        console.log("creating peer connection");
+        const cb = {
+            errorHandler: this.handleError,
+            remoteStreamHandler: this.remoteStreamHandler.bind(this),
+            signalHandler: this.sendSignalMessage.bind(this),
+        }
+        let pc = {
+            con: new WebRTCPeerConnection({ ...params, ...cb }),
+            remoteUserId: remoteUserId,
+        };
+
+        console.log(this.userMedia);
+        console.log(this.userMedia.getLocalStream());
+        pc.con.addLocalStream(this.userMedia.getLocalStream());
+        // save the pc to pcs collection
+        this.pcs[remoteUserId] = pc;
+        console.log(this.pc);
+        console.log(this.pcs);
+        console.log("created peer connection");
+
+    }
+
+    closePeerConnection() {
+        if (!this.pcs) {
+            return;
+        }
+
+        console.log(this.pcs);
+
+        Object.keys(this.pcs).forEach(key => {
+            this.pcs[key].con.close();
+        });
+        this.pcs = {};
+    }
+
+    setupPeerConnection({ userId, data }) {
+
+        if (Object.keys(this.pcs).length <= 0) {
+            console.log("No existing connection so new connection was found")
+            this.createPeerConnection(peerConConfig);
+            if (this.pcs && this.pcs["NO_ID"]) {
+                let pc = this.pcs["NO_ID"];
+                delete this.pcs["NO_ID"];
+                console.log(this.pcs);
+                pc.remoteUserId = userId;
+                pc.polite = !data.polite;
+                this.pcs[userId] = pc;
+
+                if (!this.pcs[userId].con.localStream) {
+                    this.pcs[userId].con.addLocalStream(this.userMedia.getLocalStream());
+                }
+                this.pcs[userId].con.receivedMessageFromSignaler(data.peerData);
+            }
+        } else if (this.pcs && this.pcs[userId]) {
+            console.log("FOund user with id: " + userId);
+            if (!this.pcs[userId].con.localStream) {
+                this.pcs[userId].con.addLocalStream(this.userMedia.getLocalStream());
+            }
+            this.pcs[userId].con.receivedMessageFromSignaler(data.peerData);
+        } else if (this.pcs && this.pcs["NO_ID"]) {
+
+            console.log(`polite: ${data.polite}, startTime: ${data.startTime}`);
+
+            let bePolite = this.pcs["NO_ID"].con.startTime > data.startTime;
+            this.pcs["NO_ID"].con.polite = bePolite;
+            this.pcs["NO_ID"].remoteUserId = userId;
+            let pc = this.pcs["NO_ID"];
+            delete this.pcs["NO_ID"];
+            this.pcs[userId] = pc;
+
+
+            console.log(`changed NO_ID to : ${userId} and bePolite: ${this.pcs[userId].polite}`);
+            console.log(this.pcs);
+
+            if (!this.pcs[userId].con.localStream) {
+                this.pcs[userId].con.addLocalStream(this.userMedia.getLocalStream());
+            }
+            this.pcs[userId].con.receivedMessageFromSignaler(data.peerData)
+        }
+
+    }
+
+    connectToPeers() {
+        console.log("connecting to peer");
+        console.log("creating NO_ID peer connection");
+
+        this.createPeerConnection(peerConConfig);
+
+        if (this.pcs && this.pcs["NO_ID"]) {
+            console.log("starting call");
+            this.pcs["NO_ID"].con.startCall();
+            console.log("started Peer Connection");
+        } else {
+            console.log("no pcs connections");
+        }
     }
 
     
