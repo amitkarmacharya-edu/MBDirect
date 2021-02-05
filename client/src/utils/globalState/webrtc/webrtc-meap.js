@@ -269,6 +269,49 @@ class Meap {
         console.log("media closed");
     }
     
+    /** media streams */
+    
+    gotLocalStream() {
+        console.log("got local stream , invoked by userMedia open inside .then()");
+        this.playLocalStream();
+    }
+
+    playLocalStream() {
+        if (!this.userMedia) {
+            this.onerror({
+                error: "No Local Media"
+            });
+            return;
+        }
+
+        console.log("playing local stream");
+        console.log(this.selfiCam)
+        // older browsers may not have srcObject
+        this.selfiCam.current.srcObject = this.userMedia.getLocalStream();
+        this.selfiCam.current.muted = true;
+
+    }
+
+    remoteStreamHandler({ track, streams }) {
+
+        console.log(track);
+        console.log(streams);
+
+        console.log(this.remoteCam.current);
+        console.log(this.remoteCam.current.srcObject);
+
+        track.onunmute = () => {
+            console.log("inside onunmute")
+            if (this.remoteCam.current.srcObject) {
+                return;
+            }
+            this.remoteCam.current.srcObject = streams[0];
+            console.log("Playing remote video");
+            console.log(this.remoteCam.current.srcObject);
+        }
+        // console.log(remoteCam.current.srcObject)
+
+    }
 }
 
 const meets = new Meap({audio: true, video: true});
