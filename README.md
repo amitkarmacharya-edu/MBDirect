@@ -45,8 +45,11 @@
   Contact me:
 
   Github:[AdrianStorr](https://github.com/AdrianStorr)
-  Github:[Cesar H Martinez]()
-  Github:[Cesar A Martinez]()
-  Github:[Amit Karmacharya]()
+  Github:[Cesar H Martinez](https://github.com/chernanma)
+  Github:[Cesar A Martinez](https://github.com/CesarAugustoMartinez)
+  Github:[Amit Karmacharya](https://github.com/amitkarmacharya-edu)
   
-  Email :[abd,gmail.com](https://github.com/AdrianStorr)
+  Email :[Adrianloves123@gmail.com](https://github.com/AdrianStorr)
+  Email :[chernanma@msn.com](https://github.com/chernanma)
+  Email :[cesaguma@hotmail.com]((https://github.com/CesarAugustoMartinez)
+  Email :[amitkarmacharya.work@gmail.com](https://github.com/amitkarmacharya-edu)
