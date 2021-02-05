@@ -81,6 +81,13 @@ const reducer = (state, action) => {
               loading: false,
             };
       
+            case SHOW_ALERTS:
+                return {
+                  ...state,
+                  alertMsgs: action.errMsg,
+                  showAlerts: true
+                };
+          
     
 
       default:
