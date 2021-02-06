@@ -6,7 +6,7 @@ function ListCompanies(props) {
 
   console.log(props.results);
       return (
-            <tr key={props.key}>  
+            <tr key={props.keyList} id={props.keyList}>  
             <td data-th="Id" className="name-cell align-middle">
                 {props.companyResults.id}
               </td>            
@@ -27,6 +27,8 @@ function ListCompanies(props) {
                 <img
                   src={props.companyResults.logo}
                   className="img-responsive"
+                  style={{width:"50%"}}
+
                 />
               </td>
             </tr>

@@ -95,6 +95,7 @@ function SearchResultsList(props) {
                     {props.results.map((result) => (
                       <ListCompanies
                         companyResults={result}
+                        keyList={result.id}
                         key={result.id}
                         userType={props.userType}
                       />
@@ -102,8 +103,7 @@ function SearchResultsList(props) {
                   </tbody>
                 </table>
               ) : (
-                <>
-                
+                <>                
                   {props.pageName === "Meets" ? (
                     <table
                       id="table"
@@ -207,8 +207,9 @@ function SearchResultsList(props) {
                       })
                       .map(function (result) {
                         return (
-                          <ListMeets
-                            meetResults={result}
+                          <ListCompanies
+                            companyResults={result}
+                            keyList={result.id}
                             key={result.id}
                             userType={props.userType}
                           />
