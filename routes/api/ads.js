@@ -13,4 +13,8 @@ router
   .put(adsController.update)
   .delete(adsController.remove);
 
+router
+  .route("/byuser/:userId")
+  .get(adsController.findAllbyUser);
+
 module.exports = router;

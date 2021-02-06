@@ -17,4 +17,9 @@ router
   .route("/noimage/:id")
   .put(companiesController.updateWithNoImage);
 
+router
+  .route("/byuser/:userId")
+  .get(companiesController.findAllbyUser);
+  
+
 module.exports = router;

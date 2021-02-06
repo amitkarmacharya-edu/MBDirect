@@ -49,6 +49,10 @@ export default {
   getCompany: function(id) {
     return axios.get("/api/companies/" + id);
   },
+    // Gets the Company with the given id
+  getCompaniesByUser: function(userId) {
+    return axios.get("/api/companies/byuser/" + userId);
+  },
    // Update the Company with the given id
   updateCompany: function(id,companyData) {
     return axios.put("/api/companies/" + id,companyData);
@@ -61,6 +65,7 @@ export default {
   saveCompany: function(companyData) {
     return axios.post("/api/companies", companyData);
   },
+  
 
 
    /*** ADS API AXIOS CALL ***/
@@ -73,6 +78,10 @@ export default {
   // Gets the Ad with the given id
   getAd: function(id) {
     return axios.get("/api/ads/" + id);
+  },
+   // Gets the Company with the given id
+   getAdsByUser: function(userId) {
+    return axios.get("/api/ads/byuser/" + userId);
   },
    // Update the Ad with the given id
    updateAd: function(id, data) {
@@ -134,5 +143,7 @@ export default {
   saveCategory: function(categoryData) {
     return axios.post("/api/categories", categoryData);
   },
-  
+  countCategoriesByCompany: function() {
+    return axios.get("/api/categories/countbycompany");
+  },
 };
