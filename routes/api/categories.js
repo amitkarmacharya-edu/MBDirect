@@ -6,6 +6,10 @@ router.route("/")
   .get(categoriesController.findAll)
   .post(categoriesController.create);
 
+// Matches with "/api/categories"
+router.route("/countbycompany")
+  .get(categoriesController.countCategoriesByCompany);
+
 // // Matches with "/api/categories/:id"
 router
   .route("/:id")

@@ -49,7 +49,7 @@ function ListMeets(props) {
               <td data-th="Company"  className="align-middle">
                 {companyName}
               </td>
-              <td data-th="Status"  className="align-middle">
+              <td data-th="Status"  className={props.meetResults.status === "Active" ? "align-middle text-success" : "align-middle text-danger"} >
                 {props.meetResults.status}
               </td>
             </tr>

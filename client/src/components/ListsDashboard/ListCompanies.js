@@ -31,7 +31,7 @@ function ListCompanies(props) {
                 <img
                   src={imageSRC}
                   className="img-responsive"
-                  style={{width:"100%"}}
+                  style={{width:"50%"}}
                   alt="companyImage"
                 />
               </td>
