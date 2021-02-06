@@ -10,6 +10,15 @@ module.exports = {
       res.json(dbCompany);
     });
   },
+  findAllbyUser: function(req, res) {
+    db.Company.findAll({
+      where: {
+        UserId: req.params.userId
+      },
+      include: [db.Ad]}).then((dbCompany) => {
+      res.json(dbCompany);
+    });
+  },
   findById: function(req, res) {
     db.Company
       .findOne({
