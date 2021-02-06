@@ -8,6 +8,15 @@ module.exports = {
       res.json(dbAd);
     });
   },
+  findAllbyUser: function(req, res) {
+    db.Ad.findAll({
+      where: {
+        UserId: req.params.userId
+      },
+      }).then((dbAd) => {
+      res.json(dbAd);
+    });
+  },
   findById: function(req, res) {
     db.Ad
       .findOne({
@@ -43,6 +52,6 @@ module.exports = {
       })      
       .then(dbAd => res.json(dbAd))
       .catch(err => res.status(422).json(err));
-  }
+  },
 };
 
