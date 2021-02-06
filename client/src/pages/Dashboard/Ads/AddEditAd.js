@@ -21,8 +21,7 @@ function AddEditAd({ history, match }) {
   const isAddMode = !id;
   const [userType, setUserType] = useState("");
   // variable to show or hide modal
-  const [showHide, setShowHide] = useState(false);
-  const [returnTest, setReturnTest] = useState();
+  const [showHide, setShowHide] = useState(false); 
   const [companyName, setCompanyName] = useState();
   const [companyId, setCompanyId] = useState();
   const [userId, setUserId] = useState();
@@ -40,7 +39,7 @@ function AddEditAd({ history, match }) {
     id: Yup.string(),
     name: Yup.string().required("Name is required"),
     description: Yup.string().required("Description is required"),
-    discount: Yup.string(),
+    discount: Yup.number().required("Discount is required"),
     status: Yup.string().required("Status is required"),
     start_date: Yup.date().required("Start date is required"),
     end_date: Yup.date().required("End date is required"),
@@ -53,7 +52,7 @@ function AddEditAd({ history, match }) {
     register,
     handleSubmit,
     reset,
-    setValue,
+    setValue,  
     getValues,
     errors,
     formState,
@@ -61,15 +60,14 @@ function AddEditAd({ history, match }) {
     resolver: yupResolver(validationSchema),
   });
 
-  function onSubmit(data) {
+  function onSubmit(data) {    
     return isAddMode ? createAd(data) : updateAd(id, data);
   }
 
   //Creating new Ad
-  function createAd(data) {
-    console.log(data);
+  function createAd(data) {    
     console.log(Array.from(data.image));
-    const file = Array.from(data.image);
+    // const file = Array.from(data.image);
 
     const fd = new FormData($("#adsForm")[0]);
     console.log(fd);
@@ -91,22 +89,12 @@ function AddEditAd({ history, match }) {
         console.log(error.response.data.errors[0].message);
       });
 
-    // console.log("Saving Ad");
-    // return API.saveAd(data)
-    //   .then(() => {
-    //     alertService.success("Advertisment has been created", {
-    //       keepAfterRouteChange: true,
-    //     });
-    //     history.push(".");
-    //   })
-    //   .catch(alertService.error);
   }
 
   // Function to Update Ad information 
-  function updateAd(id, data) {
-
+  function updateAd(id, data) {    
     console.log(Array.from(data.image));
-    const file = Array.from(data.image);
+    // const file = Array.from(data.image);
     const fd = new FormData($("#adsForm")[0]);
     console.log(fd);
     $.ajax({
@@ -127,20 +115,9 @@ function AddEditAd({ history, match }) {
         console.log(error.response.data.errors[0].message);
       });
 
-
-    // console.log(data);
-    // return API.updateAd(id, data)
-    //   .then((res) => {
-    //     console.log(res);
-    //     alertService.success("Advertisment updated", {
-    //       keepAfterRouteChange: true,
-    //     });
-    //     history.push("..");
-    //   })
-    //   .catch(alertService.error);
   }
 
-  const [ad, setAd] = useState({});
+  // const [ad, setAd] = useState({});
 
   // function to handle the modal
   function handleModalShowHide() {
@@ -149,7 +126,7 @@ function AddEditAd({ history, match }) {
 
     // Funtion to handle data choosen from Modal
   function handleDataBack(e) {
-    e.preventDefault();  
+    e.preventDefault();     
     setCompanyName(e.target.dataset.company);
     setCompanyId(e.target.dataset.id);
     setUserId(e.target.dataset.userid);
@@ -200,29 +177,8 @@ async function getAdData (id){
   useEffect(() => {
     if (!isAddMode) {
       // get company and set form fields
-      getAdData(id);     
-      
-    }
-
-    // if (!isAddMode) {
-    //   // get user and set form fields
-    //   API.getAd(id).then((ad) => {
-    //     const fields = [
-    //       "id",
-    //       "name",
-    //       "description",
-    //       "discount",
-    //       "status",
-    //       "image",
-    //       "start_date",
-    //       "end_date",
-    //       "CompanyId",
-    //       "UserId",
-    //     ];
-    //     fields.forEach((field) => setValue(field, ad.data[field]));
-    //     setAd(ad.data);
-    //   });
-    // }
+      getAdData(id);        
+    }   
     typeUsers();
   }, []);
 
@@ -294,7 +250,7 @@ async function getAdData (id){
                     name="status"
                     ref={register}
                     aria-label=".form-select-sm"
-                    disabled={userType === "Owner" ? true : false}
+                    // disabled={userType === "Owner" ? true : false}
                     style={{
                       background: "rgba(0,0,0,0.07)",
                       height: "33px",
@@ -422,8 +378,7 @@ async function getAdData (id){
                     name="UserId"
                     type="number"
                     ref={register}
-                    value={userId}
-                    diplay="block"
+                    value={userId}                    
                     style={{ background: "rgba(0,0,0,0.07)" }}
                     className={`form-control ${
                       errors.UserId ? "is-invalid" : ""

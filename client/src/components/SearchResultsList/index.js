@@ -41,9 +41,10 @@ function SearchResultsList(props) {
   return (
     <>
       {console.log(props.userType)}
-      {console.log(props.pageName)}
+      {/*console.log(props.pageName)} */}
       {props.userType === "Admin" ? (
         <div style={{overflow:"auto"}}>
+          {console.log("Admin In")}
           {props.pageName === "Users" ? (      
               <table
                 id="table"
@@ -62,7 +63,7 @@ function SearchResultsList(props) {
                   </tr>
                 </thead>
                 <tbody>
-                  {console.log(props.results)}
+                  {/* {console.log(props.results)} */}
                   {props.results.map((result) => (
                     <ListUsers
                       userResults={result}
@@ -93,7 +94,7 @@ function SearchResultsList(props) {
                     </tr>
                   </thead>
                   <tbody>
-                    {console.log(props.results)}
+                    {/* {console.log(props.results)} */}
                     {props.results.map((result) => (
                       <ListCompanies
                         companyResults={result}
@@ -145,6 +146,7 @@ function SearchResultsList(props) {
         </div>
       ) : (
         <div style={{overflow:"auto"}}>
+          {console.log("Owner In")}
           {props.pageName === "Users" ? (
               <table
                 id="table"
@@ -199,11 +201,11 @@ function SearchResultsList(props) {
                     </tr>
                   </thead>
                   <tbody>
-                    {console.log(props.results)}
+                    {/* {console.log(props.results)} */}
                     {props.results
                       .filter(function (result) {
-                        console.log(result.UserId);
-                        console.log(parseInt(localStorage.getItem(USERID)));
+                        // console.log(result.UserId);
+                        // console.log(parseInt(localStorage.getItem(USERID)));
                         return (
                           result.UserId ===
                           parseInt(localStorage.getItem(USERID))

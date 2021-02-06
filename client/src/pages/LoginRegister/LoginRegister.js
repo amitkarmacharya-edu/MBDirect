@@ -5,6 +5,7 @@ import { useSpring, animated } from "react-spring";
 import API from "../../utils/API";
 import {ACCESS_AUTHENTICATED, USERID} from "../../constants/apiConstants";
 import { alertService } from "../../services";
+import Header from "../../components/Header";
 
 
 function LoginRegister(props) {
@@ -131,7 +132,9 @@ function LoginRegister(props) {
         setRegistartionFormStatus(false);
       }
       return (
-        <div className="container-login">
+        <>
+          <Header />
+          <div className="container-login">
            <div className="login-register-wrapper">
             <div className="nav-buttons">
               <animated.button
@@ -182,6 +185,9 @@ function LoginRegister(props) {
           </animated.div>
           </div>
           </div>        
+        </>
+
+        
       );
     }    
 export default LoginRegister;
