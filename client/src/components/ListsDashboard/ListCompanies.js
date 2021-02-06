@@ -3,29 +3,29 @@ import "./style.css";
 
 function ListCompanies(props) {
 
-
-  console.log(props.results);
+  const imageSRC = window.location.origin + "/" + props.companyResults.logo.substring(3);
+  console.log(props.companyResults);
       return (
-            <tr key={props.keyList} id={props.keyList}>  
-            <td data-th="Id" className="name-cell align-middle">
+            <tr key={props.companyResults.id} id={props.companyResults.id} onClick={props.handleDataBack}>  
+            <td data-th="Id" data-id={props.companyResults.id} data-company={props.companyResults.name} data-userid={props.companyResults.UserId} className="name-cell align-middle">
                 {props.companyResults.id}
               </td>            
-              <td data-th="Name" className="name-cell align-middle">
+              <td data-th="Name"  data-id={props.companyResults.id} data-company={props.companyResults.name} data-userid={props.companyResults.UserId} className="name-cell align-middle">
                 {props.companyResults.name}
               </td>
-              <td data-th="Description" className="align-middle">
+              <td data-th="Description"  data-id={props.companyResults.id} data-company={props.companyResults.name} data-userid={props.companyResults.UserId} className="align-middle">
                 {props.companyResults.description}
               </td>
-              <td data-th="Email" className="align-middle">                
+              <td data-th="Email"  data-id={props.companyResults.id} data-company={props.companyResults.name} data-userid={props.companyResults.UserId} className="align-middle">                
                   {props.companyResults.email}
               </td>
-              <td data-th="Phone" className="align-middle">
+              <td data-th="Phone"  data-id={props.companyResults.id} data-company={props.companyResults.name} data-userid={props.companyResults.UserId} className="align-middle">
                 {props.companyResults.phone}
               </td>  
               
-              <td data-th="Image" className="align-middle">
+              <td data-th="Logo"  data-id={props.companyResults.id} data-company={props.companyResults.name} data-userid={props.companyResults.UserId} className="align-middle">
                 <img
-                  src={props.companyResults.logo}
+                  src={imageSRC}
                   className="img-responsive"
                   style={{width:"50%"}}
 

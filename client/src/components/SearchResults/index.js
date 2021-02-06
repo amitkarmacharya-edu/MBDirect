@@ -30,8 +30,7 @@ function SearchResults(props) {
                   {props.results.map((result) => (
                     <CardCompany
                       companyResults={result}
-                      key={result.id}
-                      keyprops={result.id}                      
+                      key={result.id}                                      
                       userType={props.userType}
                       deleteCompany = {props.deleteCompany}
                       categories={props.categories}
