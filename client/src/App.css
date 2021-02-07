@@ -8,9 +8,8 @@ html,body, body * {
     background-color:inherit;
  }
 
- body {
-    /* background-image: url(pic4.jpg); */
-    background-color:rgb(231, 229, 229);
+ body {    
+     background-image: url(background.png);   
     background-size:  100%;
 
   }
