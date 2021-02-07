@@ -1,31 +1,13 @@
 import React, { useEffect, useState } from "react";
 import "./style.css";
-import API from "../../utils/API";
+// import API from "../../utils/API";
 
 
 function ListMeets(props) {
   const title= props.meetResults.title;
-  const [userName, setUserName] = useState();
-  const [companyName, setCompanyName] = useState();
-
   useEffect(() => {
-    getUserName(props.meetResults.UserId);
-    getCompanyName(props.meetResults.CompanyId);
-  }, [])
-  
-  function getUserName(Id) {
-    API.getUser(Id).then((res) => {
-      setUserName(res.data.first_name + " " + res.data.last_name);
-    });
-  }
-
-  function getCompanyName(Id) {
-    API.getCompany(Id).then((res) => {
-      setCompanyName(res.data.name);
-    });
-  }
-
-  // console.log(props.userResults);
+ 
+  }, [])  
       return (
             <tr key={props.meetResults.id}  id={props.meetResults.id} value={props.meetResults.id}>  
             <td data-th="Id" className="name-cell align-middle">
@@ -43,11 +25,11 @@ function ListMeets(props) {
               <td data-th="End_time"   className="align-middle">
                 {props.meetResults.end_time}
               </td>                
-              <td data-th="User"  className="align-middle">
-                {userName}
+              <td data-th="Guest"  className="align-middle">
+                {props.meetResults.first_name} {props.meetResults.last_name}
               </td>
               <td data-th="Company"  className="align-middle">
-                {companyName}
+                {props.meetResults.name}
               </td>
               <td data-th="Status"  className={props.meetResults.status === "Active" ? "align-middle text-success" : "align-middle text-danger"} >
                 {props.meetResults.status}
