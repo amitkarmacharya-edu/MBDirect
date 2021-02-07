@@ -90,3 +90,10 @@
   span {
     margin-left: 16px;
   }
+
+  @media only screen and (max-width: 568px) {
+    .logo-mbdirect {
+        height: 35px !important;
+        width: 80px !important;
+    }
+}
