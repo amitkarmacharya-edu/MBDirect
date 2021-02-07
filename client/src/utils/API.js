@@ -107,6 +107,14 @@ export default {
   getMeet: function(id) {
     return axios.get("/api/meets/" + id);
   },
+  // Gets total Guests with the given user id
+  getGuestsbyUserId: function(userId) {
+    return axios.get("/api/meets/countguests/" + userId);
+  },
+  // Gets total Guests with the given user id
+  getMeetsbyUserId: function(userId) {
+    return axios.get("/api/meets/countmeets/" + userId);
+  },
    // Update the Meet with the given id
    updateMeet: function(id) {
     return axios.put("/api/meets/" + id);
@@ -118,6 +126,12 @@ export default {
   // Saves a Meet to the database
   saveMeet: function(meetData) {
     return axios.post("/api/meets", meetData);
+  },
+  countMeetsByMonth: function(id, year) {
+    return axios.get("/api/meets/meetsbymonth/" + id + "/" + year);
+  },
+  countAllMeetsByMonth: function(year) {
+    return axios.get("/api/meets/allmeetsbymonth/" + year);
   },
    
    /*** Categories API AXIOS CALL ***/
