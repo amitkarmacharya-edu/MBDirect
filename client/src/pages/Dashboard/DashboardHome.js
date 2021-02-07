@@ -25,6 +25,7 @@ function DashboardHome(props) {
   const [totalAdsUser, setTotalAdsUser] = useState([]);
   const [totalMeetsAdmin, setTotalMeetsAdmin] = useState([]);
   const [totalGuests, setTotalGuests] = useState([]);
+  const [totalMeetsUser, setTotalMeetsUser] = useState([]);
   
 
   useEffect(() => {
@@ -38,7 +39,7 @@ function DashboardHome(props) {
       getGuests(localStorage.getItem(USERID));
       loadCompaniesByUser(localStorage.getItem(USERID));
       loadAdsByUser(localStorage.getItem(USERID));
-
+      getMeetsUser(localStorage.getItem(USERID));
     }  
 
   }, [userType]);
@@ -48,7 +49,6 @@ function DashboardHome(props) {
       .then((res) => {
         setCompanies(res.data);
         setTotalCompaniesAdmin(res.data.length);
-        console.log(res.data);
       })
       .catch((err) => console.log(err));
   }
@@ -57,7 +57,6 @@ function DashboardHome(props) {
     console.log(userId);
     API.getCompaniesByUser(userId)
       .then((res) => {
-        console.log(res.data);
         setTotalCompaniesUser(res.data.length);
       })
       .catch((err) => console.log(err));
@@ -67,7 +66,6 @@ function DashboardHome(props) {
     console.log(userId);
     API.getAdsByUser(userId)
       .then((res) => {
-        console.log(res.data);
         setTotalAdsUser(res.data.length);
       })
       .catch((err) => console.log(err));
@@ -77,7 +75,6 @@ function DashboardHome(props) {
     API.getUsers()
       .then((res) => {
         setTotalUsers(res.data.length);
-        console.log(res.data);
       })
       .catch((err) => console.log(err));
   }
@@ -86,7 +83,6 @@ function DashboardHome(props) {
     API.getAds()
       .then((res) => {
         setTotalAdsAdmin(res.data.length);
-        console.log(res.data);
       })
       .catch((err) => console.log(err));
   }
@@ -95,15 +91,20 @@ function DashboardHome(props) {
     API.getMeets()
       .then((res) => {
         setTotalMeetsAdmin(res.data.length);
-        console.log(res.data);
       })
       .catch((err) => console.log(err));
   }
   function getGuests(userId) {
-    let companiesIds = [];
-    API.getCompanies()
+    API.getGuestsbyUserId(userId)
       .then((res) => {
-        companiesIds.push(res.data.id);
+        setTotalGuests(res.data.length);
+      })
+      .catch((err) => console.log(err));
+  }
+  function getMeetsUser(userId) {
+    API.getMeetsbyUserId(userId)
+      .then((res) => {
+        setTotalMeetsUser(res.data.length);
         console.log(res.data);
       })
       .catch((err) => console.log(err));
@@ -111,7 +112,6 @@ function DashboardHome(props) {
   function typeUsers() {
     const userId = localStorage.getItem(USERID);
     API.getUser(userId).then((res) => {
-      console.log(res.data.type);
       setUserType(res.data.type);
     });
   }
@@ -137,12 +137,17 @@ function DashboardHome(props) {
                       </div>
                     </Col>
                     <Col md="8" xs="7">
-                      <div className="numbers">
-                        <p className="card-category">Users</p>
+                      <div className="numbers">                        
                         {userType === "Admin" ? (
+                          <>
+                          <p className="card-category">Users</p>
                           <Card.Title tag="p">{totalUsers}</Card.Title>
+                          </>
                         ):(
+                          <>
+                          <p className="card-category">Guests</p>
                           <Card.Title tag="p">{totalGuests}</Card.Title>
+                          </>
                         )}                        
                         <p />
                       </div>
@@ -233,7 +238,7 @@ function DashboardHome(props) {
                         {userType === "Admin" ? (
                           <Card.Title tag="p">{totalMeetsAdmin}</Card.Title>
                         ):(
-                          <Card.Title tag="p">200</Card.Title>
+                          <Card.Title tag="p">{totalMeetsUser}</Card.Title>
                         )}     
                         <p />
                       </div>
@@ -243,7 +248,7 @@ function DashboardHome(props) {
                 <Card.Footer>
                   <hr />
                   <div className="stats">
-                    <Link to="/meets/"><FcIcons.FcCalendar /> Last Month </Link>
+                    <Link to="/meets/"><FcIcons.FcViewDetails /> Show all </Link>
                   </div>
                 </Card.Footer>
               </Card>
@@ -254,7 +259,7 @@ function DashboardHome(props) {
               <CardStats/>
             </Col>
             <Col md="6">
-            <CardLinealChart/>
+            <CardLinealChart userType={userType}/>
             </Col>
           </Row>
           <Row>

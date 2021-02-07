@@ -9,7 +9,6 @@ function CardStats() {
 
     useEffect(() => {
         countCategories();
-        console.log(chartData);
     }, [])
 
     function countCategories(){
@@ -21,9 +20,7 @@ function CardStats() {
             })
         })
         .catch((err) => console.log(err));
-        console.log(categoriesName);
         setChartData(categoriesName);
-        console.log(chartData);
     }
 
   return (
@@ -37,15 +34,15 @@ function CardStats() {
         </Card.Header>
         <Card.Body style={{overflow: "auto"}}>
           <div style={{ display: "flex", maxWidth: 900 }}>
-            <Chart
+            <Chart 
               width={"100%"}
-              height={"Auto"}
+              height={"auto"}
               chartType="PieChart"
               loader={<div>Loading Chart</div>}
               data={chartData}
               options={{
                 fontSize: 10,
-                chartArea:{width: "100%", height: "100%"},
+                chartArea:{width: "100%", height: "90%"},
                 legend: {textStyle: {color: 'blue', fontSize: 14}}
               }}
               rootProps={{ "data-testid": "1" }}
@@ -55,7 +52,7 @@ function CardStats() {
         <Card.Footer>
           <hr />
           <div className="stats">
-            <FcIcons.FcCalendar /> Last Month
+            <FcIcons.FcPieChart /> Pie Chart
           </div>
         </Card.Footer>
       </Card>

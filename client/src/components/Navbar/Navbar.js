@@ -8,6 +8,8 @@ import { IconContext } from "react-icons";
 import { ACCESS_AUTHENTICATED } from "../../constants/apiConstants";
 import API from "../../utils/API";
 import { USERID } from "../../constants/apiConstants";
+import logo from "../../Images/MBDIRECT-Pagr.png";
+
 
 
 function Navbar(props) {
@@ -36,21 +38,25 @@ function Navbar(props) {
   return (
     <div>
       <IconContext.Provider value={{ color: "#fff" }}>
-        <div className="navbarSide">
-          
-            <div className="col-md-1">
+        <div className="navbarSide">          
+            <div className="col-md-8">
               <Link to="#" className="menu-bars">
                 <FaIcons.FaBars onClick={props.isActive} />
               </Link>
+              <a className="navbar-brand text-danger m-auto " href="/"><img className="navbar-brand logo-mbdirect" src={logo} alt="logo" width="140" height="60" /></a>
+
             </div>
-            <div className="col-md-11 text-white text-right">            
-              <h4> Welcome, {userName} !  <img
+            <div className="col-md-4 text-white">
+              <div>
+              <span className="text-lg-right float-right" style={{paddingTop: "15px"}}> Welcome, {userName} !  <img
               className="rounded-circle img-fluid "
               src={userImageSrc}
-              style={{width:"3%", height:"3%"}}
+              style={{width:"35px", height:"35px"}}
               data-holder-rendered="true"
               alt="User"
-            /></h4>
+            /></span>
+              </div>
+              
             </div>
           </div>
         

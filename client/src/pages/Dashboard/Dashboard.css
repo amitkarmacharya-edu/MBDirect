@@ -11,7 +11,7 @@
 .companies,
 .meets,
 .ads,
-.categories {
+.users {
   display: flex;
   height: 90vh;
   align-items: center;

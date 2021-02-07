@@ -9,16 +9,17 @@ html,body, body * {
  }
 
  body {
-    /* background-image: url(pic.jpg); */
-    background-color: #dee2e6;
-    background-size:  cover;    
+    /* background-image: url(pic4.jpg); */
+    background-color:rgb(231, 229, 229);
+    background-size:  100%;
+
   }
 
 .dashboardHome,
 .companies,
 .meets,
 .ads,
-.categories {
+.users {
   display: flex;
   height: 90vh;
   align-items: center;
