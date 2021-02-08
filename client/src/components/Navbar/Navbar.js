@@ -43,7 +43,7 @@ function Navbar(props) {
               <Link to="#" className="menu-bars">
                 <FaIcons.FaBars onClick={props.isActive} />
               </Link>
-              <a className="navbar-brand text-danger m-auto " href="/"><img className="navbar-brand logo-mbdirect" src={logo} alt="logo" width="140" height="60" /></a>
+              <a className="navbar-brand text-danger m-auto " href="/"><img className="navbar-brand logo-mbdirect lp-2" src={logo} alt="logoIntranet" width="130" height="50" /></a>
 
             </div>
             <div className="col-md-4 text-white">

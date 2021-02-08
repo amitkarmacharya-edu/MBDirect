@@ -1,13 +1,13 @@
 import React from "react";
 import { Link } from 'react-router-dom';
-import logo from "../../Images/MBDIRECT-Pagr.png";
+import logo from "../../Images/MBDIRECTrojo-negro.png";
 function Header() {
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"></span>
             </button>
-            <a className="navbar-brand text-danger m-auto" href="/"><img className="navbar-brand" src={logo} alt="logo" width="140" height="60" /></a>
+            <a className="navbar-brand text-danger m-auto" href="/"><img className="navbar-brand" src={logo} alt="logo" width="130" height="50" /></a>
             <div className="collapse navbar-collapse" id="navbarNav">
                 <ul className="navbar-nav ml-auto">
                     <li className="nav-item active">

@@ -8,6 +8,10 @@
     transition: all 0.5s;
     
   }
+
+  .logo-mbdirect{
+    padding: 8px;
+  }
   
   .menu-bars {
     margin-left: 2rem;
