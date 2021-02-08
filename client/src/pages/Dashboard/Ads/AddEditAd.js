@@ -338,6 +338,7 @@ async function getAdData (id){
                     type="number"
                     ref={register}
                     value={companyId}
+                    readonly="readonly"  
                     style={{ background: "rgba(0,0,0,0.07)" }}
                     className={`form-control ${
                       errors.CompanyId ? "is-invalid" : ""
@@ -351,11 +352,11 @@ async function getAdData (id){
                         <label>Company Name</label>
                         <label
                           name="companyName"
-                          type="text"
+                          type="text"                           
                           // disabled={userType === "Owner" ? true : false}
                           style={{
                             background: "rgba(0,0,0,0.07)",
-                            height: "30px",
+                            height: "30px"                            
                           }}
                           className={`form-control ${
                             errors.companyName ? "is-invalid" : ""
@@ -378,7 +379,8 @@ async function getAdData (id){
                     name="UserId"
                     type="number"
                     ref={register}
-                    value={userId}                    
+                    value={userId}     
+                    readonly="readonly"                 
                     style={{ background: "rgba(0,0,0,0.07)" }}
                     className={`form-control ${
                       errors.UserId ? "is-invalid" : ""
