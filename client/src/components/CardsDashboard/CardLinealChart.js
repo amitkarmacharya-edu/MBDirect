@@ -30,17 +30,25 @@ function CardLinealChart(props) {
     if (userType === "Owner") {
       API.countMeetsByMonth(localStorage.getItem(USERID),year)
       .then((res) => {
-        res.data.forEach((element) => {
-          meetsMonths.push([element.MonthName, element.Meets]);
-        });
+        if (res.data.length !== 0){
+          res.data.forEach((element) => {
+            meetsMonths.push([element.MonthName, element.Meets]);
+          });
+        }else{
+          meetsMonths.push(["January to December", 0]);
+        }
       })
       .catch((err) => console.log(err));
     } else if (userType === "Admin"){
       API.countAllMeetsByMonth(year)
       .then((res) => {
-        res.data.forEach((element) => {
-          meetsMonths.push([element.MonthName, element.Meets]);
-        });
+        if (res.data.length !== 0){
+          res.data.forEach((element) => {
+            meetsMonths.push([element.MonthName, element.Meets]);
+          });
+        }else{
+          meetsMonths.push(["January to December", 0]);
+        }
       })
       .catch((err) => console.log(err));
     } 
