@@ -456,6 +456,7 @@ function AddEditCompany({ history, match }) {
                           ref={register}
                           // onChange={handleOwnerId}
                           value={userId}
+                          readOnly="readonly"
                           style={{
                             background: "rgba(0,0,0,0.07)",
                             height: "30px",
