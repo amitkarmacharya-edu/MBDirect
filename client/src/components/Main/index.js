@@ -1,5 +1,7 @@
 import React from "react";
 import BusinessCategory from "../BusinessCategory";
+import { useMeetingContext } from "../../utils/globalState/webrtc/webrtc-globalState";
+
 function Main() {
     const [state, dispatch] = useMeetingContext();
     return (

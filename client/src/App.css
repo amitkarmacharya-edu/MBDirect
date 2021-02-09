@@ -8,16 +8,17 @@ html,body, body * {
     background-color:inherit;
  }
 
- body {
-    background-image: url(pic.jpg);
-    background-size:  cover;    
+ body {    
+     background-image: url(background.png);   
+    background-size:  100%;
+
   }
 
 .dashboardHome,
 .companies,
 .meets,
 .ads,
-.categories {
+.users {
   display: flex;
   height: 90vh;
   align-items: center;

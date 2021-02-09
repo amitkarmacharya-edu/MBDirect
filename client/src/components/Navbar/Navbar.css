@@ -8,6 +8,10 @@
     transition: all 0.5s;
     
   }
+
+  .logo-mbdirect{
+    padding: 8px;
+  }
   
   .menu-bars {
     margin-left: 2rem;
@@ -90,3 +94,10 @@
   span {
     margin-left: 16px;
   }
+
+  @media only screen and (max-width: 568px) {
+    .logo-mbdirect {
+        height: 35px !important;
+        width: 80px !important;
+    }
+}

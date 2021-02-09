@@ -1,17 +1,17 @@
-@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
 
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: 'Lato', sans-serif;
+  font-family: "Lato", sans-serif;
 }
 
 .dashboardHome,
 .companies,
 .meets,
 .ads,
-.categories {
+.users {
   display: flex;
   height: 90vh;
   align-items: center;
@@ -19,3 +19,61 @@
   font-size: 3rem;
   background-color: white;
 }
+
+.icons-stats {
+  height: 45px;
+  width: 45px;
+}
+
+.card .card-footer {
+  background-color: initial;
+  border: 0;
+}
+
+.card .card-header .card-title {
+  margin-top: 10px;
+  background-color: unset;
+}
+
+.card-chart .card-header .card-title {
+  margin-top: 10px;
+  margin-bottom: 0;
+}
+
+.category,
+.card-category {
+  text-transform: capitalize;
+  font-weight: 400;
+  color: #9a9a9a;
+  font-size: 0.7142em;
+}
+
+.card-category {
+  font-size: 1em;
+  background-color: unset;
+}
+.card-category {
+  color: #9A9A9A;
+  font-size: 16px;
+  line-height: 1.4em; }
+
+.card-chart .card-header .card-category {
+  margin-bottom: 5px; }
+
+.card-stats .card-footer .stats {
+  color: #9a9a9a;
+}
+.stats {
+  background-color: unset;
+}
+.numbers{
+  text-align: center;
+}
+.title-header {
+  text-transform: uppercase;
+}
+.card-footer{
+  color: #9a9a9a;
+}
+
+

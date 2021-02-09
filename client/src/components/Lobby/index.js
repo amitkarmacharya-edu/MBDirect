@@ -53,7 +53,6 @@ function Lobby() {
         }
         
     }
-
     const clearForm = () => {
         const form = formRef.current.elements;
         console.log(form);
@@ -65,7 +64,6 @@ function Lobby() {
         });
         dispatch({type: CLEAR_USER_INFO});
     }
-
     const populateFormData = () => {
         const form = formRef.current;
         let lobby = state.lobby;
@@ -133,5 +131,4 @@ function Lobby() {
         </form>
     );
 }
-
 export default Lobby;

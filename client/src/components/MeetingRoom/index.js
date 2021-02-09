@@ -37,7 +37,6 @@ function MeetingRoom({props}) {
                 return;
         }
     }
-
     return (
         <div className="meeting-wrapper container-fluid overflow-auto">
             <div className="container-md">

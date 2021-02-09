@@ -3,8 +3,12 @@ import "./style.css";
 
 function ListUsers(props) {
   const fullName= props.userResults.first_name + " " + props.userResults.last_name;
-  const imageSRC = window.location.origin + "/" + props.userResults.image.substring(3);
-  console.log(props.userResults);  
+  let imageSRC ="";
+  if(props.userResults.image){
+    imageSRC = window.location.origin + "/" + props.userResults.image.substring(3);
+  } else {
+    imageSRC = window.location.origin + "/images/userAvatar.png";
+  }    
       return (
             <tr key={props.userResults.id}  id={props.userResults.id} value={props.userResults.id}  onClick={props.handleDataBack}>  
             <td data-th="Id" data-id={props.userResults.id} data-user={fullName}  className="name-cell align-middle">
@@ -24,6 +28,7 @@ function ListUsers(props) {
                   src={imageSRC}
                   style={{width:"100%"}}
                   className="img-responsive"
+                  alt="userImage"
                 />
               </td>
             </tr>

@@ -1,13 +1,12 @@
 import React from "react";
 import "./style.css";
-function Jumbo(){
-    return (
-        <div className="jumbotron jumbotron-fluid">
-            <div className="container">
-                <h1 className="display-4">Fluid jumbotron</h1>
-                <p className="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
-            </div>
-        </div>
-        );
+function Jumbo() {
+  return (
+    <div className="container-search">
+      <div className="search-wrapper">        
+        <input name="company" type="text" class="form-control" placeholder="Type Company Name to Search" id="company"></input>
+      </div>
+    </div>
+  );
 }
 export default Jumbo;

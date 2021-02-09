@@ -41,41 +41,40 @@ function SearchResultsList(props) {
   return (
     <>
       {console.log(props.userType)}
-      {console.log(props.pageName)}
+      {/*console.log(props.pageName)} */}
       {props.userType === "Admin" ? (
-        <div style={{overflow:"auto"}}>
-          {props.pageName === "Users" ? (      
-              <table
-                id="table"
-                className="table  table-striped table-hover table-condensed"
-                
-              >
-                <thead>
-                  <tr>
-                    {headingsUsers.map(({ name, width }) => {
-                      return (
-                        <th className="col" key={name} style={{ width }}>
-                          {name.toUpperCase()}
-                        </th>
-                      );
-                    })}
-                  </tr>
-                </thead>
-                <tbody>
-                  {console.log(props.results)}
-                  {props.results.map((result) => (
-                    <ListUsers
-                      userResults={result}
-                      key={result.id}
-                      userType={props.userType}
-                      handleDataBack={props.handleDataBack}
-
-                    />
-                  ))}
-                </tbody>
-              </table>
+        <div style={{ overflow: "auto" }}>
+          {console.log("Admin In")}
+          {props.pageName === "Users" ? (
+            <table
+              id="table"
+              className="table  table-striped table-hover table-condensed"
+            >
+              <thead>
+                <tr>
+                  {headingsUsers.map(({ name, width }) => {
+                    return (
+                      <th className="col" key={name} style={{ width }}>
+                        {name.toUpperCase()}
+                      </th>
+                    );
+                  })}
+                </tr>
+              </thead>
+              <tbody>
+                {/* {console.log(props.results)} */}
+                {props.results.map((result) => (
+                  <ListUsers
+                    userResults={result}
+                    key={result.id}
+                    userType={props.userType}
+                    handleDataBack={props.handleDataBack}
+                  />
+                ))}
+              </tbody>
+            </table>
           ) : (
-            <div style={{overflow:"auto"}}>
+            <div style={{ overflow: "auto" }}>
               {props.pageName === "Companies" ? (
                 <table
                   id="table"
@@ -93,10 +92,11 @@ function SearchResultsList(props) {
                     </tr>
                   </thead>
                   <tbody>
-                    {console.log(props.results)}
+                    {/* {console.log(props.results)} */}
                     {props.results.map((result) => (
                       <ListCompanies
                         companyResults={result}
+                        keyList={result.id}
                         key={result.id}
                         userType={props.userType}
                         handleDataBack={props.handleDataBack}
@@ -106,7 +106,6 @@ function SearchResultsList(props) {
                 </table>
               ) : (
                 <>
-                
                   {props.pageName === "Meets" ? (
                     <table
                       id="table"
@@ -137,49 +136,49 @@ function SearchResultsList(props) {
                   ) : (
                     <>Add Code Here for other pages</>
                   )}
-                
                 </>
               )}
             </div>
           )}
         </div>
       ) : (
-        <div style={{overflow:"auto"}}>
+        <div style={{ overflow: "auto" }}>
+          {console.log("Owner In")}
           {props.pageName === "Users" ? (
-              <table
-                id="table"
-                className="table  table-striped table-hover table-condensed"
-              >
-                <thead>
-                  <tr>
-                    {headingsUsers.map(({ name, width }) => {
-                      return (
-                        <th className="col" key={name} style={{ width }}>
-                          {name.toUpperCase()}
-                        </th>
-                      );
-                    })}
-                  </tr>
-                </thead>
-                <tbody>
-                  {props.results
-                .filter(function (result) {
-                  console.log(result.id);
-                  console.log(parseInt(localStorage.getItem(USERID)));
-                  return result.id === parseInt(localStorage.getItem(USERID));
-                })
-                .map(function (result) {
-                  return (
-                    <ListUsers
-                      userResults={result}
-                      key={result.id}
-                      userType={props.userType}
-                      handleDataBack={props.handleDataBack}
-                    />
-                  );
-                })}
-                </tbody>
-              </table>
+            <table
+              id="table"
+              className="table  table-striped table-hover table-condensed"
+            >
+              <thead>
+                <tr>
+                  {headingsUsers.map(({ name, width }) => {
+                    return (
+                      <th className="col" key={name} style={{ width }}>
+                        {name.toUpperCase()}
+                      </th>
+                    );
+                  })}
+                </tr>
+              </thead>
+              <tbody>
+                {props.results
+                  .filter(function (result) {
+                    console.log(result.id);
+                    console.log(parseInt(localStorage.getItem(USERID)));
+                    return result.id === parseInt(localStorage.getItem(USERID));
+                  })
+                  .map(function (result) {
+                    return (
+                      <ListUsers
+                        userResults={result}
+                        key={result.id}
+                        userType={props.userType}
+                        handleDataBack={props.handleDataBack}
+                      />
+                    );
+                  })}
+              </tbody>
+            </table>
           ) : (
             <>
               {props.pageName === "Companies" ? (
@@ -199,11 +198,11 @@ function SearchResultsList(props) {
                     </tr>
                   </thead>
                   <tbody>
-                    {console.log(props.results)}
+                    {/* {console.log(props.results)} */}
                     {props.results
                       .filter(function (result) {
-                        console.log(result.UserId);
-                        console.log(parseInt(localStorage.getItem(USERID)));
+                        // console.log(result.UserId);
+                        // console.log(parseInt(localStorage.getItem(USERID)));
                         return (
                           result.UserId ===
                           parseInt(localStorage.getItem(USERID))
@@ -211,8 +210,9 @@ function SearchResultsList(props) {
                       })
                       .map(function (result) {
                         return (
-                          <ListMeets
-                            meetResults={result}
+                          <ListCompanies
+                            companyResults={result}
+                            keyList={result.id}
                             key={result.id}
                             userType={props.userType}
                             handleDataBack={props.handleDataBack}
@@ -223,56 +223,36 @@ function SearchResultsList(props) {
                 </table>
               ) : (
                 <>
-                
-                  {props.pageName === "Meets" ? (                    
-                        <table
-                          id="table"
-                          className="table  table-striped table-hover table-condensed"
-                        >
-                          <thead>
-                            <tr>
-                              {headingsMeets.map(({ name, width }) => {
-                                return (
-                                  <th
-                                    className="col"
-                                    key={name}
-                                    style={{ width }}
-                                  >
-                                    {name.toUpperCase()}
-                                  </th>
-                                );
-                              })}
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {console.log(props.results)}
-                            {props.results
-                              .filter(function (result) {
-                                console.log(result.UserId);
-                                console.log(
-                                  parseInt(localStorage.getItem(USERID))
-                                );
-                                return (
-                                  result.UserId ===
-                                  parseInt(localStorage.getItem(USERID))
-                                );
-                              })
-                              .map(function (result) {
-                                return (
-                                  <ListMeets
-                                    meetResults={result}
-                                    key={result.id}
-                                    userType={props.userType}
-                                  />
-                                );
-                              })}
-                          </tbody>
-                        </table>
-                     
+                  {props.pageName === "Meets" ? (
+                    <table
+                      id="table"
+                      className="table  table-striped table-hover table-condensed"
+                    >
+                      <thead>
+                        <tr>
+                          {headingsMeets.map(({ name, width }) => {
+                            return (
+                              <th className="col" key={name} style={{ width }}>
+                                {name.toUpperCase()}
+                              </th>
+                            );
+                          })}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {console.log(props.results)}
+                        {props.results.map((result) => (
+                          <ListMeets
+                            meetResults={result}
+                            key={result.id}
+                            userType={props.userType}
+                          />
+                        ))}
+                      </tbody>
+                    </table>
                   ) : (
                     <>Add Code Here for other pages</>
                   )}
-                   
                 </>
               )}
             </>

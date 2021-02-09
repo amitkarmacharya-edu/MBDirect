@@ -8,13 +8,16 @@ import { IconContext } from "react-icons";
 import { ACCESS_AUTHENTICATED } from "../../constants/apiConstants";
 import API from "../../utils/API";
 import { USERID } from "../../constants/apiConstants";
+import logo from "../../Images/MBDIRECT-Pagr.png";
+
 
 
 function Navbar(props) {
   const [userName, setUserName] = useState("");
-  const [userType, setUserType] = useState("");
+  const [userImageSrc, setUserImageSrc] = useState("");
+  // const [userType, setUserType] = useState("");
 
-  useEffect(() => {
+  useEffect(() => {    
     typeUsers();
   }, [])
 
@@ -22,23 +25,38 @@ function Navbar(props) {
     const userId = localStorage.getItem(USERID);
     API.getUser(userId).then((res) => {
       console.log(res.data.type);
-      setUserType(res.data.type);
+      // setUserType(res.data.type);
+      setUserImageSrc(res.data.image);
+      if (!res.data.image) {
+        setUserImageSrc(window.location.origin + "/images/userAvatar.png");
+      }      
       setUserName(res.data.first_name + " " + res.data.last_name);
+
     });
   }
 
   return (
     <div>
       <IconContext.Provider value={{ color: "#fff" }}>
-        <div className="navbarSide">
-          
-            <div className="col-md-1">
+        <div className="navbarSide">          
+            <div className="col-md-8">
               <Link to="#" className="menu-bars">
                 <FaIcons.FaBars onClick={props.isActive} />
               </Link>
+              <a className="navbar-brand text-danger m-auto " href="/"><img className="navbar-brand logo-mbdirect lp-2" src={logo} alt="logoIntranet" width="130" height="50" /></a>
+
             </div>
-            <div className="col-md-11 text-white text-right">
-              <h3>Welcome, {userName} !  </h3>
+            <div className="col-md-4 text-white">
+              <div>
+              <span className="text-lg-right float-right" style={{paddingTop: "15px"}}> Welcome, {userName} !  <img
+              className="rounded-circle img-fluid "
+              src={userImageSrc}
+              style={{width:"35px", height:"35px"}}
+              data-holder-rendered="true"
+              alt="User"
+            /></span>
+              </div>
+              
             </div>
           </div>
         
