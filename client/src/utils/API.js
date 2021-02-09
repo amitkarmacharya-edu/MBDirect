@@ -65,6 +65,10 @@ export default {
   saveCompany: function(companyData) {
     return axios.post("/api/companies", companyData);
   },
+  // get companies list by category
+  getCompaniesByCategoryId: function(){
+    return axios.get("/api/companies/bycategory/");
+  },
   
 
 

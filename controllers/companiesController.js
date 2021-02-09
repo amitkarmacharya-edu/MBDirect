@@ -1,6 +1,7 @@
 const db = require("../models");
 const uuid = require("uuid").v4;
 const path = require("path");
+const Sequelize = require("sequelize");
 // Defining methods for the companiesController
 
 module.exports = {
@@ -178,6 +179,17 @@ module.exports = {
       })      
       .then(dbCompany => res.json(dbCompany))
       .catch(err => res.status(422).json(err));
+  },
+  
+  getCompaniesByCategory: async function(req, res) {
+    console.log("inside comapnay");
+    console.log("0-----------------------------");
+    db.sequelize.query("select * from (select *, row_number() over(partition by CategoryId order by CategoryId asc) as rn from Companies) as top5 where rn <= 5;", { type: Sequelize.QueryTypes.SELECT})
+    .then(dbCompanies => {
+      console.log(dbCompanies)
+      res.json(dbCompanies)
+    })
+    .catch(err => res.status(422).json(err));
   }
 };
 
