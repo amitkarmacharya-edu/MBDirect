@@ -8,6 +8,9 @@ import {
     UPDATE_STAGE,
     SHOW_ALERTS,
     HIDE_ALERTS,
+    REJECT_CALL,
+    ACCEPT_CALL,
+    INCOMING_CALL,
     LOADING
 } from "./actions";
 
@@ -49,7 +52,7 @@ const reducer = (state, action) => {
         case START_MEETING:
             return {
                 ...state,
-                roomId: action.roomId,
+                userId: action.userId,
                 businessId: action.businessId,
                 roomCreator: action.roomCreator,
                 meetingStarted: true,
@@ -69,8 +72,10 @@ const reducer = (state, action) => {
                 businessId: "",
                 currentStage: state.stages[0],
                 currentStageIndex: 0,
+                remoteSocketId: "",
                 roomCreator: false,
                 meetingStarted: false,
+                meetingType: "",
                 loading: false
             };
 
@@ -90,9 +95,44 @@ const reducer = (state, action) => {
             };
 
         case HIDE_ALERTS:
+
             return {
                 ...state,
                 showAlerts: false,
+            };
+
+        case REJECT_CALL:
+            let newCallList = state.callNotification.filter(call => {
+                return call.remoteSocketId !== action.remoteSocketId
+            });
+            return {
+                ...state,
+                callNotification: [...newCallList],
+                showCallNotification: state.callNotification.length > 0,
+            };
+
+        case INCOMING_CALL:
+                console.log(action.data);
+            return {
+                ...state,
+                callNotification: [action.data, ...state.callNotification],
+                showCallNotification: true
+            };
+
+        case ACCEPT_CALL:
+            let newList = state.callNotification.filter(call => {
+                return call.remoteSocketId !== action.call.remoteSocketId
+            });
+            return {
+                ...state,
+                callNotification: [...newList],
+                showCallNotification: newList.length > 0,
+                currentStage: "CallSetup",
+                currentStageIndex: 1,
+                remoteSocketId: action.call.remoteSocketId,
+                meetingStarted: true,
+                meetingType: action.call.meetingType,
+                loading: false
             };
 
         case LOADING:
@@ -110,29 +150,33 @@ const MeetingProvider = ({ value = [], ...props }) => {
 
     const [state, dispatch] = useReducer(reducer, {
         lobby: {
-            firtName: "",
+            firstName: "",
             lastName: "",
             email: "",
             phoneNumber: "",
             subject: "",
             message: ""
         },
+        callNotification: [],
+        showCallNotification: false,
         alertMsgs: "",
         showAlerts: false,
-        stages: ["Lobby", "CallSetup", "InCall", "FeedBack"],
+        stages: ["Lobby", "CallSetup", "ConnectingCall", "InCall", "FeedBack"],
         currentStage: "Lobby",
         currentStageIndex: 0,
         roomCreator: false, // delete this for MBdirect
         userId: "",
-        roomId: "",
+        remoteSocketId: "",
         businessId: "",
         meetingStarted: false,
         loading: false,
-        meetingType: ""
+        meetingType: "",
+
     });
 
     return <Provider value={[state, dispatch]} {...props} />;
 };
+
 
 const useMeetingContext = () => {
     return useContext(MeetingContext);
