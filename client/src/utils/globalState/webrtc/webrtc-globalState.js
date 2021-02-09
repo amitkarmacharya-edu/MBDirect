@@ -177,7 +177,6 @@ const MeetingProvider = ({ value = [], ...props }) => {
     return <Provider value={[state, dispatch]} {...props} />;
 };
 
-
 const useMeetingContext = () => {
     return useContext(MeetingContext);
 };
