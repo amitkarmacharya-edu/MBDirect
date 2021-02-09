@@ -9,7 +9,7 @@ module.exports = {
     });
   },
   countCategoriesByCompany: function(req, res) {
-    db.sequelize.query("SELECT categories.name, COUNT(companies.id) AS numberCompanies FROM `categories` JOIN companies ON companies.CategoryId = categories.id GROUP BY categories.id", { type: sequelize.QueryTypes.SELECT})
+    db.sequelize.query("SELECT Categories.name, COUNT(companies.id) AS numberCompanies FROM `categories` JOIN companies ON companies.CategoryId = Categories.id GROUP BY Categories.id", { type: sequelize.QueryTypes.SELECT})
     .then(dbCategory => res.json(dbCategory))
     .catch(err => res.status(422).json(err));
   },

@@ -168,8 +168,7 @@ module.exports = {
   }
   ,
 
-  remove: function(req, res) {
-    
+  remove: function(req, res) {    
     db.Company
       .destroy({
         where: {
