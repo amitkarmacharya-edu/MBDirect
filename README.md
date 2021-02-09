@@ -3,7 +3,7 @@
 [Click here to go to the live site]()
 
 
-![picture]()
+![picture](./client/src/background.png)
 
   ## Table of Contents
   *  [Description](#Description)
