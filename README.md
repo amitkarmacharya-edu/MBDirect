@@ -1,6 +1,6 @@
-# MBDirect # React
+# MBDirect # React Final Project
 
-[Click here to go to the live site]()
+[Click here to go to the live site](https://mbdirect.herokuapp.com/)
 
 
 ![picture](./client/src/background.png)
