@@ -164,4 +164,9 @@ export default {
   countCategoriesByCompany: function() {
     return axios.get("/api/categories/countbycompany");
   },
+
+   // Get User Id for Meets
+   getMeetsId: function() {
+    return axios.get("/meetsId");
+  },
 };
