@@ -24,6 +24,20 @@ export default class WebRTCUserMedia {
         this.open();
     }
 
+    open(){
+        /**
+         * check if webrtc is supported
+         */
+        this.checkForWebRTCSupport();
+
+        /**
+         * request list of devices before requesting user media 
+         * which helps detect if any media devices are present
+         */
+        // this.getMediaDevices();
+        this.getLocalUserMedia(this.constraints);
+    }
+
     /** check for webrtc support */
 
     checkForWebRTCSupport(){
@@ -41,7 +55,6 @@ export default class WebRTCUserMedia {
    }
 
     /** get media devices */
-    
     onDeviceChangeHandler() {
         console.log("Updating Media Devices");
         this.getMediaDevices();
@@ -100,32 +113,19 @@ export default class WebRTCUserMedia {
     // gets local media from the navigator, then calls get localStream.
     // calls the function to tell the listener
     // about the localmedia stream
-    getLocalUserMedia() {
+    async getLocalUserMedia() {
         console.log("WebRTCUserMedia: getUserMedia(): requesting user's media");
         // requesting user media devices
-        navigator.mediaDevices.getUserMedia(this.constraints)
-            .then(this.saveLocalMediaStream.bind(this))
-            .then(() => this.onLocalStream())
-            .catch(err => {
-                throw new Error(err + ". Please click on the camera icon to change permission.");
-            });
-    }
-
-    saveLocalMediaStream(stream) {
-
-        if(!stream) {
-            throw new Error("No Stream Available to save");
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia(this.constraints);
+            this.localStream = stream;
+            this.haveLocalStream = true;
+            if(this.onLocalStream){
+                this.onLocalStream(stream);
+            }
+        } catch (e) {
+            console.log(e);
         }
-
-        if(this.haveLocalStream) {
-            return;
-        }
-
-        this.localStream = stream;
-        this.haveLocalStream = true;
-        
-        console.log(stream);
-        console.log("saved local stream");
     }
 
     getLocalStream() {

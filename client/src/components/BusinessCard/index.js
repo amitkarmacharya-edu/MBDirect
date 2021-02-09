@@ -1,10 +1,13 @@
 import React, { useState } from "react";
-import "./style.css";
 import AudioIcon from "../AudioIcon";
 import VideoIcon from "../VideoIcon";
+import "./style.css";
+
+
 function BusinessCard({ business }) {
     const [hide, setHide] = useState("d-none");
     const [imgHeaderHeight, setImgHeaderHeight] = useState("h-100");
+    
     function toggleCardBody(e) {
         if (e.currentTarget.className.indexOf("business-card") > -1 && hide === "d-none") {
             setHide("d-block");
@@ -14,9 +17,10 @@ function BusinessCard({ business }) {
             setImgHeaderHeight("h-100");
         }
     }
+    
     return (
         <div
-            className="business-card rounded"
+            className="business-card rounded mr-2"
             style={{ width: "18rem", height: "18rem" }}
             onMouseEnter={toggleCardBody}
             onMouseLeave={toggleCardBody}
@@ -24,17 +28,17 @@ function BusinessCard({ business }) {
             <div className={`position-relative business-img-header ${imgHeaderHeight}`}>
                 {
                     <img
-                        src={business.logo ? business.img : "https://co-matter.com/wp-content/themes/semplice/images/no_thumb.png"}
+                        src={business.logo ? business.logo : "https://co-matter.com/wp-content/themes/semplice/images/no_thumb.png"}
                         className={imgHeaderHeight}
                         alt={business.name}
                     />
                 }
-                <p className="business-name">{business.name}Test</p>
+                <p className="business-name">{business.name}</p>
             </div>
             <div className={`card-body ${hide}`}>
-            <VideoIcon businessId={business.businessId} roomId={business.roomId}/>
-            <AudioIcon businessId={business.businessId} roomId={business.roomId}/>  
-                {/* add a link to the business page */}
+            <VideoIcon businessId={business.id} />
+            <AudioIcon businessId={business.id} />
+            {/* add a link to the business page */}
             </div>
         </div>
     );
