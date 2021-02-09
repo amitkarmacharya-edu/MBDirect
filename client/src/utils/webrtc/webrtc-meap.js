@@ -19,50 +19,28 @@ class Meap {
         this.selfiCam = null;
         this.remoteCam = null;
         this.onerrorCB = null;
-    }
-
-    init() {
-
-        if (!this.userId || !this.businessId || !this.roomId) {
-            throw new Error(`Provide Info: userId: ${this.userId && true}, businessId: ${this.businessId && true}, roomId: ${this.roomId && true}`)
-        }
-
-        console.log("userId : " + this.userId);
-        console.log("roomId : " + this.roomId);
-        console.log("callee: " + this.isCallee);
-        console.log("initializing meetingroom");
-
-        if (this.signalingChannel) {
-            return;
-        }
-
-        Promise.all([
-            this.createSocketConnection(),
-            this.joinSocketRoom(),
-            this.setupUserMedia()
-        ])
-        .then(
-                (fulfillment) => {
-                    console.log("setup was successfull");
-                },
-                (rejection) => {
-                    this.leaveRoom();
-                }
-            );
+        this.remoteSocketId = null;
+        // calls back passed to singaling channel that handles 
+        // call reject, accept and ringing/dialTone
+        this.playMediaStreamCB = null;
+        this.isConnectedCB = null;
     }
 
     /** SignalChannel */
-    createSocketConnection() {
-        console.log("creating Socket Connection");
+    createSocketConnection(handleDialTone, callGotRejected) {
         return new Promise((resolve, reject) => {
             if (this.signalingChannel && this.signalingChannel.socket) {
                 console.log("have socket connection");
                 resolve();
             }
             try {
-                this.signalingChannel = new SignalingChannel("ws://127.0.0.1:3001",
+                this.signalingChannel = new SignalingChannel(
+                    "ws://127.0.0.1:3001",
+                    this.userId,
                     this.handleSignalError,
-                    this.incomingSignalMessage
+                    this.incomingSignalMessage.bind(this),
+                    handleDialTone,
+                    callGotRejected
                 );
                 this.signalingChannel.open();
                 console.log(this.signalingChannel);
@@ -84,10 +62,10 @@ class Meap {
         this.signalingChannel = null;
     }
 
-    joinSocketRoom() {
+    joinSocketRoom(meetingInfo) {
         return new Promise((resolve, reject) => {
-            if (this.roomId === "") {
-                this.onerror("need roomId to load the socket");
+            if (!this.businessId) {
+                this.onerror("need businessId connect");
                 reject();
             }
 
@@ -97,21 +75,20 @@ class Meap {
             }
 
             console.log("connecting to the socket room");
-
-            this.signalingChannel.connectToRoom(this.roomId, this.userId);
+            this.signalingChannel.connectToBusinessRoom(meetingInfo, this.businessId, this.userId);
             resolve();
         });
-
     }
 
-     /** peer Connection */
-     createPeerConnection(params, remoteUserId = "NO_ID") {
+    /** peer Connection */
+    createPeerConnection(params, remoteUserId = "NO_ID") {
         console.log("creating peer connection");
         const cb = {
             errorHandler: this.handleError,
             remoteStreamHandler: this.remoteStreamHandler.bind(this),
             signalHandler: this.sendSignalMessage.bind(this),
-        }
+            isConnectedCB: this.isConnectedCB
+        }   
         let pc = {
             con: new WebRTCPeerConnection({ ...params, ...cb }),
             remoteUserId: remoteUserId,
@@ -122,7 +99,7 @@ class Meap {
         pc.con.addLocalStream(this.userMedia.getLocalStream());
         // save the pc to pcs collection
         this.pcs[remoteUserId] = pc;
-        console.log(this.pc);
+        console.log(pc);
         console.log(this.pcs);
         console.log("created peer connection");
 
@@ -185,28 +162,34 @@ class Meap {
             }
             this.pcs[userId].con.receivedMessageFromSignaler(data.peerData)
         }
-
     }
 
-    connectToPeers() {
+    connectToPeers(isCallee, remoteSocketId, playMediaStream) {
         console.log("connecting to peer");
         console.log("creating NO_ID peer connection");
 
         this.createPeerConnection(peerConConfig);
+        this.isCallee = isCallee;
+        this.remoteSocketId = remoteSocketId;
+        this.playMediaStreamCB = playMediaStream;
 
         if (this.pcs && this.pcs["NO_ID"]) {
             console.log("starting call");
-            this.pcs["NO_ID"].con.startCall();
-            console.log("started Peer Connection");
+            if(!this.isCallee) {
+                this.pcs["NO_ID"].con.startCall();
+                console.log("started Peer Connection");
+            } else {
+                console.log("waiting for peer to answer the call");
+            }
         } else {
             console.log("no pcs connections");
         }
     }
 
     /** singaling messages  */
-    incomingSignalMessage(roomId, userId, data) {
+    incomingSignalMessage(remoteSocketId, userId, data) {
         console.log("received from peers");
-        console.log(roomId);
+        console.log(remoteSocketId);
         console.log(userId);
         console.log(data);
         if (!data || !userId) {
@@ -222,36 +205,34 @@ class Meap {
             this.onerror(data.error);
             return;
         }
+        this.remoteSocketId = remoteSocketId;
         this.setupPeerConnection({ userId, data })
     }
 
     sendSignalMessage(msg) {
-
         console.log("received msg from peerCon sending msg to signal channel");
         console.log(msg);
         if (!msg) {
             return;
         }
-
         if (!this.signalingChannel) {
             this.onerror("no signaling channel present to send msgs");
             return;
         }
-
         this.signalingChannel.send(msg);
-
     }
 
     handleSignalError(error) {
         console.log(error);
     }
 
-     /** getUserMedia */
-     setupUserMedia() {
+    /** getUserMedia */
+    setupUserMedia(CB) {
         return new Promise((resolve, reject) => {
             try{
                 console.log("creating userMedia");
-                this.userMedia = new WebRTCUserMedia(this.userMediaConstraints, this.gotLocalStream.bind(this));
+                console.log(this.userMediaConstraints);
+                this.userMedia = new WebRTCUserMedia(this.userMediaConstraints, CB);
                 resolve();
             } catch (e) {
                 reject();
@@ -270,9 +251,12 @@ class Meap {
     }
     
     /** media streams */
-    
     gotLocalStream() {
         console.log("got local stream , invoked by userMedia open inside .then()");
+        if(this.playMediaStreamCB){
+            console.log("callback function played");
+            this.playMediaStreamCB();
+        }
         this.playLocalStream();
     }
 
@@ -285,6 +269,7 @@ class Meap {
         }
 
         console.log("playing local stream");
+        console.log(this.userMedia);
         console.log(this.selfiCam)
         // older browsers may not have srcObject
         this.selfiCam.current.srcObject = this.userMedia.getLocalStream();
@@ -297,8 +282,7 @@ class Meap {
         console.log(track);
         console.log(streams);
 
-        console.log(this.remoteCam.current);
-        console.log(this.remoteCam.current.srcObject);
+        console.log(this.remoteCam);
 
         track.onunmute = () => {
             console.log("inside onunmute")

@@ -1,38 +1,38 @@
 import React, { useEffect } from "react";
-import { LOADING, SHOW_ALERTS, UPDATE_STAGE, SET_USER_ID } from "../../utils/globalState/webrtc/actions";
-import API from "../../utils/API";
-import Alert from "../Alert";
+import { SHOW_ALERTS } from "../../utils/globalState/webrtc/actions";
 import Lobby from "../Lobby";
 import InCall from "../InCall";
 import CallSetup from "../CallSetup";
+import ConnectingCall from "../ConnectingCall";
+import Alert from "../Alert";
 import "./style.css";
 import { useMeetingContext } from "../../utils/globalState/webrtc/webrtc-globalState";
-function MeetingRoom() {
+
+function MeetingRoom({props}) {
+
     const [state, dispatch] = useMeetingContext();
+
     // initializes the app
     useEffect(() => {
-        if(!state.roomId || !state.businessId){
+
+        if (!state.roomId || !state.businessId) {
             clearTimeout(setTimeout(() => {
-                dispatch({type: SHOW_ALERTS, error: {type: "danger", msg: "Need RoomId and businessID"}});
+                dispatch({ type: SHOW_ALERTS, errMsg: "Need RoomId and businessID" });
             }, 2000));
         }
-        // get user Id if the user doesn't have
-        // a userId when they join the room
-        (async() => {
-            if(!state.userId){
-                const res = await API.getUserId();
-                dispatch({type: SET_USER_ID, userId: res.data});
-            }
-        })()
-    },[]);
+    }, []);
+
+
     const renderCurrentStage = Stage => {
-        switch(Stage){
+        switch (Stage) {
             case "Lobby":
-                return <Lobby />
+                return <Lobby {...props}/>
             case "CallSetup":
-                return <CallSetup />
+                return <CallSetup {...props}/>
+            case "ConnectingCall":
+                return <ConnectingCall {...props}/>
             case "InCall":
-                return <InCall />
+                return <InCall {...props} />
             case "Feedback":
                 return;
         }
@@ -52,7 +52,9 @@ function MeetingRoom() {
                     </div>
                 </div>
             </div>
+
         </div>
     );
 }
+
 export default MeetingRoom;

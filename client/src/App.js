@@ -13,10 +13,11 @@ import { Ads } from "./pages/Dashboard/Ads/Index";
 import { ProtectedRoute } from "./protected.route";
 import { Alert } from "../../client/src/components/AlertComponent/Alert";
 import "bootstrap/dist/css/bootstrap.css";
+import { MeetingProvider } from "./utils/globalState/webrtc/webrtc-globalState";
 
 function App({ match }) {
   return (
-    <>
+    <MeetingProvider>
       <Alert />
       <Router>
         <div className="App">
@@ -34,7 +35,7 @@ function App({ match }) {
           </div>
         </div>
       </Router>
-    </>
+    </MeetingProvider>
   );
 }
 

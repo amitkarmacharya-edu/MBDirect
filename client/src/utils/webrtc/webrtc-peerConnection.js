@@ -4,7 +4,8 @@ class WebRTCPeerConnection {
         initConfig,
         errorHandler,
         remoteStreamHandler,
-        signalHandler
+        signalHandler,
+        isConnectedCB
     }) {
 
         // save init configuration
@@ -20,12 +21,12 @@ class WebRTCPeerConnection {
         this.conHasStarted = false;
         this.localStream = false;
         this.remoteStream = null;
-
+        
         // needed argument to create RTCPeerConnection instance
         // and to create an offer
         this.rtcConfig = initConfig.rtcConfig;
         this.offerConstraints = initConfig.offerConstraints;
-
+        
         // RTCPeerConnection creation and initialization
         this.pc = new RTCPeerConnection(this.rtcConfig);
         this.pc.onnegotiationneeded = this.onnegotiation.bind(this);
@@ -35,13 +36,13 @@ class WebRTCPeerConnection {
         this.pc.ontrack = this.receivedRemoteStream.bind(this);
         this.pc.onconnectionstatechange = this.connectionStateChange.bind(this);
         this.pc.onicegatheringstatechange = this.iceGatheringState;
-
+        
         // callbacks to handle various RTCPeeconnection event
         // will be initialized by the app layer
         this.onErrorCB = errorHandler;
         this.onRemoteStreamCB = remoteStreamHandler;
         this.onSignaler = signalHandler;
-
+        this.isConnectedCB = isConnectedCB;
     }
 
     /** connection change */
@@ -49,6 +50,7 @@ class WebRTCPeerConnection {
         switch (this.pc.connectionState) {
             case "connected":
                 this.conHasStarted = true;
+                this.isConnectedCB();
                 console.log("connection has started");
                 break;
             case "disconnected":
