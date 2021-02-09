@@ -4,7 +4,7 @@ function Jumbo() {
   return (
     <div className="container-search">
       <div className="search-wrapper">        
-        <input name="company" type="text" class="form-control" placeholder="Type Company Name to Search" id="company"></input>
+        <input name="company" type="text" className="form-control" placeholder="Type Company Name to Search" id="company"></input>
       </div>
     </div>
   );
