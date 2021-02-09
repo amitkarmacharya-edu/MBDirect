@@ -1,8 +1,12 @@
+
+
 @media only screen and (max-height: 568px) {
     .lobby-form {
+        color: black;
         font-size: 12px;
         line-height: 6px;
     }
+
     .lobby-form button {
         font-size: 13px;
         height: 30px !important;
