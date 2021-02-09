@@ -3,7 +3,7 @@ import Navbar from "../../../components/Navbar/Navbar";
 import Container from "../../../components/Container";
 import SearchForm from "../../../components/SearchForm";
 import API from "../../../utils/API";
-import { alertService } from "../../../services";
+// import { alertService } from "../../../services";
 import Row from "../../../components/Row";
 import Col from "../../../components/Col";
 import { USERID } from "../../../constants/apiConstants";
@@ -25,28 +25,22 @@ function Meet({ match }, props) {
     
 
   useEffect(() => {
-    loadMeets();   
-    typeUsers();
+    Promise.all([
+      API.getUser(localStorage.getItem(USERID)),
+      API.getMeets(),
+      API.getMeetsbyUserId(localStorage.getItem(USERID))
+    ]).then(data => {
+      console.log(data);
+      setUserType(data[0].data.type);
+      if (data[0].data.type === "Admin") {
+        setMeets(data[1].data);
+        setFilteredMeets(data[1].data);  
+      } else if (data[0].data.type ==="Owner"){
+        setMeets(data[2].data);
+        setFilteredMeets(data[2].data);  
+      }    
+    })      
   }, [])
-
-  function loadMeets() {
-    API.getMeets()
-      .then((res) => {
-        setMeets(res.data);
-        setFilteredMeets(res.data);
-        console.log(res.data);
-      })
-      .catch((err) => console.log(err));
-  }
-  
- 
-  function typeUsers() {
-    const userId = localStorage.getItem(USERID);
-    API.getUser(userId).then((res) => {
-      console.log(res.data.type);
-      setUserType(res.data.type);
-    });
-  }
 
   function handleInputChange(e) {
     const listMeets = meets.filter(

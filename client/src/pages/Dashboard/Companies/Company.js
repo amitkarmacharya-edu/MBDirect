@@ -106,8 +106,9 @@ function Company({ match }, props) {
           <Col size="md-12">
             <div>
               <Container style={{ minHeight: "80%" }}>
-                {userType === "Admin" ? (
-                  <>
+                {/* Uncomment to prevent Business Owners be able to Add Multiple Companies*/}
+                {/* {userType === "Admin" ? (
+                  <> */}
                     <Link
                       to={`${path}/add`}
                       className="btn btn-sm btn-success mb-2"
@@ -119,10 +120,10 @@ function Company({ match }, props) {
                       handleInputChange={handleInputChange}
                       sortBy={sortBy}
                     />
-                  </>
+                  {/* </>
                 ) : (
                   <></>
-                )}
+                )} */} 
 
                 <SearchResults
                   results={filteredCompanies}

@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import "bootstrap/dist/css/bootstrap.css";
 import Header from "../../components/Header";
 import Main from "../../components/Main";
 import Footer from "../../components/Footer";
@@ -9,6 +8,7 @@ import MeetingRoom from "../../components/MeetingRoom";
 import { SHOW_ALERTS, CLOSE_MEETING } from "../../utils/globalState/webrtc/actions";
 import { useMeetingContext } from "../../utils/globalState/webrtc/webrtc-globalState";
 import meap from "../../utils/webrtc/webrtc-meap";
+import "bootstrap/dist/css/bootstrap.css";
 
 function Home() {
 
@@ -29,6 +29,7 @@ function Home() {
           callGotRejected={callGotRejected}
           />}
       {state.showCallNotification && <IncomingCall />}
+
       <Footer />
     </>
   );

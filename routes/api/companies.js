@@ -6,6 +6,10 @@ router.route("/")
   .get(companiesController.findAll)
   .post(companiesController.create);
 
+  router
+  .route("/bycategory/")
+  .get(companiesController.getCompaniesByCategory);
+
 // // Matches with "/api/companies/:id"
 router
   .route("/:id")
@@ -16,5 +20,10 @@ router
 router
   .route("/noimage/:id")
   .put(companiesController.updateWithNoImage);
+
+router
+  .route("/byuser/:userId")
+  .get(companiesController.findAllbyUser);
+  
 
 module.exports = router;

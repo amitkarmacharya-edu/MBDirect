@@ -59,8 +59,7 @@ function AddEditUser({ history, match }) {
     register,
     handleSubmit,
     reset,
-    setValue,
-    getValues,
+    setValue,    
     errors,
     formState,
   } = useForm({
@@ -73,7 +72,7 @@ function AddEditUser({ history, match }) {
 
   function createUser(data) {
     console.log(Array.from(data.image));
-    const file = Array.from(data.image);
+    // const file = Array.from(data.image);
 
     const fd = new FormData($("#usersForm")[0]);
     console.log(fd);
@@ -99,7 +98,7 @@ function AddEditUser({ history, match }) {
   // Function to Update User information 
   function updateUser(id, data) {
     console.log(Array.from(data.image));
-    const file = Array.from(data.image);
+    // const file = Array.from(data.image);
     const fd = new FormData($("#usersForm")[0]);
     console.log(fd);
     $.ajax({

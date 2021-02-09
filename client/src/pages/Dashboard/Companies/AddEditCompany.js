@@ -14,23 +14,25 @@ import { Button } from "react-bootstrap";
 import ModalUser from "../../../components/Modal";
 import $ from "jquery";
 
-
 function AddEditCompany({ history, match }) {
   const { id } = match.params;
   const isAddMode = !id;
   const [userType, setUserType] = useState("");
   // variable to show or hide modal
   const [showHide, setShowHide] = useState(false);
-  const [returnTest, setReturnTest] = useState();
   const [userId, setUserId] = useState();
   const [userName, setUserName] = useState();
 
   // Checking Usertype to grant Add/Eddit permissions.
   function typeUsers() {
     const userId = localStorage.getItem(USERID);
+    
     API.getUser(userId).then((res) => {
       console.log(res.data.type);
       setUserType(res.data.type);
+      if (res.data.type !== "Admin"){
+        setUserId(userId);
+      }
     });
   }
 
@@ -142,25 +144,25 @@ function AddEditCompany({ history, match }) {
 
   // Funtion to handle data choosen from Modal
   function handleDataBack(e) {
-    e.preventDefault();  
+    e.preventDefault();
     setUserName(e.target.dataset.user);
     setUserId(e.target.dataset.id);
     handleModalShowHide();
   }
 
   // API call to Users for pulling owners info
-  function checkOwnersInfo(userId) {  
-    console.log(userId); 
-    API.getUser(userId).then((res) => {    
+  function checkOwnersInfo(userId) {
+    console.log(userId);
+    API.getUser(userId).then((res) => {
       setUserName(res.data.first_name + " " + res.data.last_name);
     });
   }
 
   // API call to get Company Data choosen from each card
-  async function getCompanyData (id){
+  async function getCompanyData(id) {
     let res = await API.getCompany(id);
-    let companyData= await res.data;  
-    console.log(companyData); 
+    let companyData = await res.data;
+    console.log(companyData);
     let userId = await companyData.UserId;
     console.log(userId);
     checkOwnersInfo(userId);
@@ -188,23 +190,20 @@ function AddEditCompany({ history, match }) {
         return setValue(field, "");
       }
       return setValue(field, companyData[field]);
-    }); 
-    
+    });
+
     return companyData;
-   
-  } 
+  }
 
   // const [companyInfo, setCompanyInfo] = useState({});
   useEffect(() => {
     if (!isAddMode) {
       // get company and set form fields
-      getCompanyData(id);     
-      
-    }
+      getCompanyData(id);
+    } 
     
     typeUsers();
     getCategories();
-    
   }, []);
 
   return (
@@ -411,7 +410,12 @@ function AddEditCompany({ history, match }) {
                     name="logo"
                     type="file"
                     ref={register}
-                    style={{ background: "rgba(0,0,0,0.07)", height: "33px", paddingTop:"2px", paddingBottom:"2px"}}
+                    style={{
+                      background: "rgba(0,0,0,0.07)",
+                      height: "33px",
+                      paddingTop: "2px",
+                      paddingBottom: "2px",
+                    }}
                     className={`form-control ${
                       errors.logo ? "is-invalid" : ""
                     }`}
@@ -424,8 +428,8 @@ function AddEditCompany({ history, match }) {
                     className="form-control form-select form-select-sm"
                     name="CategoryId"
                     ref={register}
-                    aria-label=".form-select-sm"    
-                    readOnly={userType === "Owner" ? true : false}                
+                    aria-label=".form-select-sm"
+                    readOnly={userType === "Owner" ? true : false}
                     style={{
                       background: "rgba(0,0,0,0.07)",
                       height: "33px",
@@ -452,6 +456,7 @@ function AddEditCompany({ history, match }) {
                           ref={register}
                           // onChange={handleOwnerId}
                           value={userId}
+                          readOnly="readonly"
                           style={{
                             background: "rgba(0,0,0,0.07)",
                             height: "30px",
@@ -472,7 +477,7 @@ function AddEditCompany({ history, match }) {
                             height: "30px",
                           }}
                           className={`form-control ${
-                            errors.UserId ? "is-invalid" : ""
+                            errors.ownerName ? "is-invalid" : ""
                           }`}
                         >
                           {userName}
@@ -481,7 +486,7 @@ function AddEditCompany({ history, match }) {
                           {errors.UserId?.message}
                         </div>
                       </div>
-                      <div className="form-group col-2 align-self-center" >                        
+                      <div className="form-group col-2 align-self-center">
                         <Button variant="primary" onClick={handleModalShowHide}>
                           Search Owner
                         </Button>
@@ -489,7 +494,29 @@ function AddEditCompany({ history, match }) {
                     </div>
                   </>
                 ) : (
-                  <></>
+                  <>
+                    <div className="form-row">
+                      <div className="form-group col-4">
+                        <label style={{                           
+                            display: "none"
+                          }}>Owner Id</label>
+                        <input
+                          name="UserId"
+                          type="text"
+                          ref={register}                          
+                          value={userId}
+                          style={{
+                            background: "rgba(0,0,0,0.07)",
+                            height: "30px",
+                            display: "none"
+                          }}
+                          className={`form-control ${
+                            errors.UserId ? "is-invalid" : ""
+                          }`}
+                        />
+                      </div>
+                    </div>
+                  </>
                 )}
               </>
             </div>
