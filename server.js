@@ -11,12 +11,18 @@ const isAuthenticated = require("./config/middleware/isAuthenticated");
 // Setting up port and requiring models for syncing
 const PORT = process.env.PORT || 3001; 
 
+
+
 const db = require("./models");
 const app = express();
 app.use(fileupload());
 app.use(express.urlencoded({ extended: true })); 
 app.use(express.json()); 
 app.use(express.static("public"));
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('client/build'));
+}
 
 app.use(
   session({ secret: "keyboard cat", resave: true, saveUninitialized: true })
