@@ -164,13 +164,13 @@ class Meap {
         }
     }
 
-    connectToPeers(isCallee, remoteSocketId, haveRemoteStreamNotificationCB) {
+    connectToPeers(isCallee, remoteSocketId) {
         console.log("connecting to peer");
         console.log("creating NO_ID peer connection");
 
         this.isCallee = isCallee;
         this.remoteSocketId = remoteSocketId;
-        this.haveRemoteStreamNotificationCB = haveRemoteStreamNotificationCB;
+        // this.haveRemoteStreamNotificationCB = haveRemoteStreamNotificationCB;
         this.createPeerConnection(peerConConfig);
 
         if (this.pcs && this.pcs["NO_ID"]) {
