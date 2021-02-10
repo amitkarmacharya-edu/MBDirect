@@ -28,7 +28,17 @@
   None
 
   ## Contributers
-  
+ Node.js, https://nodejs.org/en/docs/
+
+Bootcampspot, John Hopkins Univetsity, PWA Project
+
+Bootstrap, https://getbootstrap.com/
+
+JQuery W3Schools, https://www.w3schools.com/jquery/
+
+React, https://reactjs.org/
+
+React App Deployment, https://create-react-app.dev/
 
  #### Technologies
 
