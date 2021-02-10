@@ -5,7 +5,7 @@ class WebRTCPeerConnection {
         errorHandler,
         remoteStreamHandler,
         signalHandler,
-        isConnectedCB
+        haveRemoteStreamNotificationCB
     }) {
 
         // save init configuration
@@ -42,7 +42,7 @@ class WebRTCPeerConnection {
         this.onErrorCB = errorHandler;
         this.onRemoteStreamCB = remoteStreamHandler;
         this.onSignaler = signalHandler;
-        this.isConnectedCB = isConnectedCB;
+        this.haveRemoteStreamNotificationCB = haveRemoteStreamNotificationCB;
     }
 
     /** connection change */
@@ -50,7 +50,6 @@ class WebRTCPeerConnection {
         switch (this.pc.connectionState) {
             case "connected":
                 this.conHasStarted = true;
-                this.isConnectedCB();
                 console.log("connection has started");
                 break;
             case "disconnected":
@@ -104,7 +103,7 @@ class WebRTCPeerConnection {
             .finally(() => {
                 this.makingOffer = false;
             });
-    }
+    }   
 
     /** Ice */
     onConnectionStateChange(event) {
@@ -269,6 +268,7 @@ class WebRTCPeerConnection {
         // call back that handles the stream from remote peer
         this.remoteStream = event.streams;
         console.log(event.streams);
+        this.haveRemoteStreamNotificationCB();
         this.onRemoteStreamCB(event);
     }
 

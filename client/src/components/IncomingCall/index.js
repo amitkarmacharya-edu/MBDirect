@@ -38,7 +38,6 @@ function IncomingCall() {
         console.log(meetingType);
         console.log(remoteSocketId);
 
-        
         meap.signalingChannel.remoteSocketId = remoteSocketId;
         dispatch({
             type: ACCEPT_CALL,
