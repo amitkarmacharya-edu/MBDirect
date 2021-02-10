@@ -6,7 +6,7 @@ module.exports = {
   findAll: function (req, res) {
     db.sequelize
       .query(
-        "select Meets.id, Meets.title, Meets.description, Meets.start_time, Meets.end_time, Meets.status, Buser.first_name, Buser.last_name, Buser.id as UserId , Companies.name, Companies.id AS CompanyId from (((meets join companies on Meets.CompanyId = Companies.id) join users Auser on Companies.UserId = Auser.id) join users Buser on Meets.UserId = Buser.id)",
+        "select Meets.id, Meets.title, Meets.description, Meets.start_time, Meets.end_time, Meets.status, Buser.first_name, Buser.last_name, Buser.id as UserId , Companies.name, Companies.id AS CompanyId from (((Meets join Companies on Meets.CompanyId = Companies.id) join Users Auser on Companies.UserId = Auser.id) join Users Buser on Meets.UserId = Buser.id)",
         {type: sequelize.QueryTypes.SELECT })
       .then((dbMeet) => {
         res.json(dbMeet)})
