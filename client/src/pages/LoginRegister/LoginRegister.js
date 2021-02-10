@@ -182,6 +182,8 @@ function LoginRegister(props) {
             </div>
             <animated.div className="forgot-panel" style={loginProps}>
               <Link to="/">Home page</Link>
+              <br></br>
+              <span>©2020 - 2021 MB Direct - Inter TEAM. All Rights Reserved.</span>
           </animated.div>
           </div>
           </div>        
