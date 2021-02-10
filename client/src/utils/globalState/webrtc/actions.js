@@ -9,5 +9,6 @@ export const HIDE_ALERTS = "HIDE_ALERTS";
 export const REJECT_CALL = "REJECT_CALL";
 export const ACCEPT_CALL = "ACCEPT_CALL";
 export const INCOMING_CALL = "INCOMING_CALL";
+export const SET_USER_TYPE = "SET_USER_TYPE";
 
 export const LOADING = "LOADING";

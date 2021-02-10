@@ -249,7 +249,6 @@ export default class SignalingChannel {
             return;
         }
         if(!this.onerrorCB){
-            alert("signaling channel onerrorCB not implemented");
             return;
         }
 

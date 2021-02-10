@@ -25,10 +25,10 @@ function Home() {
       <Header />
       <Jumbo />
       <Main />
-      {state.meetingStarted && <MeetingRoom 
+      {/* {state.meetingStarted && <MeetingRoom 
           callGotRejected={callGotRejected}
           />}
-      {state.showCallNotification && <IncomingCall />}
+      {state.showCallNotification && <IncomingCall />} */}
 
       <Footer />
     </>

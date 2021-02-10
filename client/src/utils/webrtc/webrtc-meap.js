@@ -283,17 +283,6 @@ class Meap {
         console.log(streams);
 
         console.log(this.remoteCam);
-        // if(!this.remoteCam) {
-        //     this.isConnectedCB()
-        //     return;
-        // }
-        // if(this.remoteCam){
-        //     this.userMedia.toggleAudio();
-        //     this.userMedia.toggleVideo();
-        // }
-        
-
-        alert("came from remoteStream handler");
         track.onunmute = () => {
             console.log("inside onunmute")
             if (this.remoteCam.current.srcObject) {

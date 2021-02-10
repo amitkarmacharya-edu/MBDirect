@@ -10,6 +10,19 @@ module.exports = {
       .then((dbUser) => res.json(dbUser))
       .catch((err) => res.status(422).json(err));
   },
+  findByEmail: function (req, res) {
+    console.log("=====");
+    console.log(req.body.email);
+    console.log("=====");
+
+    db.User.findAll({ where: {
+      email: req.body.email
+    } 
+  })
+      .then((dbUser) => res.json(dbUser))
+      .catch((err) => res.status(422).json(err));
+  },
+
   findById: function (req, res) {
     db.User.findOne({
       where: {

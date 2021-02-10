@@ -380,11 +380,10 @@ class WebRTCPeerConnection {
     // if the you have implemented aa error handler
     onerror(error) {
         console.log(error);
-        // alert(error.message);
         if (this.onErrorCB) {
             // cb that handles error
             this.onErrorCB(error);
-        }
+        } 
     }
 
     close() {
