@@ -22,6 +22,7 @@ function CallSetup() {
 
         // unmounting
         return () => {
+            selfiCam.current.srcObject = null;
             console.log("unmounting CallSetup");
         };
     }, []);
@@ -37,11 +38,11 @@ function CallSetup() {
 
         // callsetup from lobby without id or bid and 
         // remoteSocketId is set when answering incoming call
-        // if ((!userId || !businessId) && !remoteSocketId) {
-        //     onerror("User ID, Business Id was missing, Please try reconnecting");
-        //     dispatch({type: CLOSE_MEETING});
-        //     return;
-        // }
+        if ((!userId || !businessId) && !remoteSocketId) {
+            onerror("User ID, Business Id was missing, Please try reconnecting");
+            dispatch({type: CLOSE_MEETING});
+            return;
+        }
 
         meap.isCallee = true;
         meap.userId = userId;
@@ -50,8 +51,6 @@ function CallSetup() {
         meap.remoteSocketId = remoteSocketId;
         meap.userMediaConstraints = meetingType === "video" ? { audio: true, video: true } : { audio: true, video: false };
 
-        alert(meap.userMediaConstraints.audio);
-        alert(meap.userMediaConstraints.video);
         console.log(meap.selfiCam);
         console.log(meap.userMedia);
 
@@ -67,12 +66,8 @@ function CallSetup() {
 
     function loadCam() {
         console.log(meap);
-        // if (meap.userMedia && meap.userMedia.localStream) {
-        //     playLocalUserMedia();
-        //     return;
-        // }
-        // start video
         console.log(meap.userMedia);
+
         meap.setupUserMedia(playLocalUserMedia)
             .then(() => {
                 console.log(meap.userMedia);
@@ -96,7 +91,6 @@ function CallSetup() {
     }
 
     function playLocalUserMedia(stream) {
-        alert("testing");
         if (!meap.userMedia) {
             dispatch({type: SHOW_ALERTS, errMsg: "Couldn't get Local Media"});
             return;
@@ -131,12 +125,13 @@ function CallSetup() {
                 console.log("no signal channel so start connection");
                 let res = await meap.createSocketConnection(handleDialTone, callGotRejected);
             }
-            meap.closeUserMedia();
+            // meap.userMedia.close();
+            selfiCam.current.srcObject = null;
             console.log(selfiCam);
             dispatch({
                 type: UPDATE_STAGE,
-                updatedStage: "ConnectingCall",
-                updatedStageIndex: 2
+                updatedStage: "InCall",
+                updatedStageIndex: 3
             });
         } catch (err) {
             console.log(err);
