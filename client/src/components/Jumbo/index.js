@@ -30,7 +30,7 @@ function Jumbo() {
       <div className="search-wrapper">
         <Carousel>
           {adsData.map((res) => (
-            <Carousel.Item interval={1000}>
+            <Carousel.Item interval={2000}>
               <div className="adimage col-md-8 offset-md-2">
                 <img className="banner" src={res.image} alt={res.id} />
               </div>

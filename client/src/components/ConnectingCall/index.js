@@ -10,7 +10,10 @@ function ConnectingCall() {
     useEffect(() => {
         console.log("mounting Connecting call");
         console.log(meap);
-           
+        // setting the call back when call is connected
+        if(!meap.isConnectedCB){
+            meap.isConnectedCB = isConnectedCB;
+        }
         setup();
 
             return () => {
@@ -22,20 +25,11 @@ function ConnectingCall() {
 
         meap.isConnectedCB = isConnectedCB;
 
-        if(!meap && !meap.signalingChannel && !meap.signalingChannel.socket){
+        if(!meap.signalingChannel && !meap.signalingChannel.socket){
             dispatch({type: SHOW_ALERTS, errMsg: "No socket connection please, try reconnecting"});
-            dispatch({type: UPDATE_STAGE, updatedStage: "CallSetup", updateStageIndex: 1});
+            dispatch({type: CLOSE_MEETING});
             return;
         }
-
-        if(meap.signalingChannel.socket && state.remoteSocketId) {
-            peerConnected();
-        }
-        
-        console.log(state);
-        if(!state.remoteSocketId){
-            meap.joinSocketRoom({userInfo: state.lobby, meetingType: state.meetingType});
-        } 
 
         console.log(meap.userMedia);
         if (!meap.userMedia){
@@ -45,18 +39,31 @@ function ConnectingCall() {
                     console.log(meap.userMedia.getLocalStream());
                 });
         }
+
+        if(meap.signalingChannel.socket && state.remoteSocketId) {
+            peerConnected();
+        }
+
+        console.log(state);
+        if(!state.remoteSocketId){
+            meap.joinSocketRoom({userInfo: state.lobby, meetingType: state.meetingType});
+        }
+
     }
 
-    function isConnectedCB() {
+    function isConnectedCB() { 
+        alert();
+
         dispatch({
             type: UPDATE_STAGE,
             updatedStage: "InCall",
-            updateStageIndex: 3
+            updatedStageIndex: 3
         });
     }
 
     function peerConnected() {
-        dispatch({type: UPDATE_STAGE, 
+        dispatch({
+            type: UPDATE_STAGE, 
             updatedStage: "InCall",
             updateStageIndex: 3
         });
