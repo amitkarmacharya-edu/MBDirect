@@ -73,11 +73,10 @@ function DashboardHome(props) {
   }, [])
   
   function handleDialTone(data) {
-      console.log("coming from handleDiatone inside Dashboard");
+        console.log("coming from handleDiatone inside Dashboard");
         console.log(data);
         dispatch({ type: INCOMING_CALL, data: data });
         console.log(state);
-        alert();
   }
 
   function callGotRejected() {

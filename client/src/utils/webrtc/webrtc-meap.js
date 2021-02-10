@@ -22,8 +22,8 @@ class Meap {
         this.remoteSocketId = null;
         // calls back passed to singaling channel that handles 
         // call reject, accept and ringing/dialTone
-        this.playMediaStreamCB = null;
-        this.isConnectedCB = null;
+        this.listener = [];
+        this.subjectHasRemoteStream = false; 
     }
 
     /** SignalChannel */
@@ -87,7 +87,7 @@ class Meap {
             errorHandler: this.handleError,
             remoteStreamHandler: this.remoteStreamHandler.bind(this),
             signalHandler: this.sendSignalMessage.bind(this),
-            isConnectedCB: this.isConnectedCB
+            haveRemoteStreamNotificationCB: this.haveRemoteStreamNotificationCB
         }   
         let pc = {
             con: new WebRTCPeerConnection({ ...params, ...cb }),
@@ -164,14 +164,14 @@ class Meap {
         }
     }
 
-    connectToPeers(isCallee, remoteSocketId, playMediaStream) {
+    connectToPeers(isCallee, remoteSocketId, haveRemoteStreamNotificationCB) {
         console.log("connecting to peer");
         console.log("creating NO_ID peer connection");
 
-        this.createPeerConnection(peerConConfig);
         this.isCallee = isCallee;
         this.remoteSocketId = remoteSocketId;
-        this.playMediaStreamCB = playMediaStream;
+        this.haveRemoteStreamNotificationCB = haveRemoteStreamNotificationCB;
+        this.createPeerConnection(peerConConfig);
 
         if (this.pcs && this.pcs["NO_ID"]) {
             console.log("starting call");
@@ -283,7 +283,17 @@ class Meap {
         console.log(streams);
 
         console.log(this.remoteCam);
+        // if(!this.remoteCam) {
+        //     this.isConnectedCB()
+        //     return;
+        // }
+        // if(this.remoteCam){
+        //     this.userMedia.toggleAudio();
+        //     this.userMedia.toggleVideo();
+        // }
+        
 
+        alert("came from remoteStream handler");
         track.onunmute = () => {
             console.log("inside onunmute")
             if (this.remoteCam.current.srcObject) {
@@ -292,9 +302,22 @@ class Meap {
             this.remoteCam.current.srcObject = streams[0];
             console.log("Playing remote video");
             console.log(this.remoteCam.current.srcObject);
+            
         }
-        // console.log(remoteCam.current.srcObject)
 
+        // flag subject Has Remote stream
+        this.subjectHasRemoteStreamNotification();
+    }
+
+    subjectHasRemoteStreamNotification() {
+        this.subjectHasRemoteStream = true;
+        this.listener.forEach(obs => {
+            obs();
+        });
+    }
+
+    addListener(listener){
+        this.listener.push(listener);
     }
     
     /** Meeting */
