@@ -40,7 +40,7 @@ React, https://reactjs.org/
 
 React App Deployment, https://create-react-app.dev/
 
- #### Technologies
+ ## Technologies
 
 - JavaScript
 - NPM Modules
