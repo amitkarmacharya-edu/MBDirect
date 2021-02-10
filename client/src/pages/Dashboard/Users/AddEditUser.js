@@ -41,11 +41,11 @@ function AddEditUser({ history, match }) {
     state: Yup.string().required("State is required"),
     zip_code: Yup.string().required("Zip code is required"),
     country: Yup.string().required("Country is required"),
-    password: Yup.string()
+    password: Yup.string().required("Password is required")
       .transform((x) => (x === "" ? undefined : x))
       .concat(isAddMode ? Yup.string().required("Password is required") : null)
       .min(6, "Password must be at least 6 characters"),
-    confirmPassword: Yup.string()
+    confirmPassword: Yup.string().required("Password is required")
       .transform((x) => (x === "" ? undefined : x))
       .when("password", (password, schema) => {
         if (password || isAddMode)
@@ -369,7 +369,7 @@ function AddEditUser({ history, match }) {
               {!isAddMode && (
                 <div>
                   <h3 className="pt-3">Change Password</h3>
-                  <p>Leave blank to keep the same password</p>
+                  <p>Enter a new password o Re-enter previous one</p>
                 </div>
               )}
               <div className="form-row">

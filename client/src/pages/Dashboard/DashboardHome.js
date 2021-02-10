@@ -11,6 +11,7 @@ import { Link } from 'react-router-dom';
 import CardStats from "../../components/CardsDashboard/CardStats";
 import CardListCompanies from "../../components/CardsDashboard/CardListCompanies";
 import CardLinealChart from "../../components/CardsDashboard/CardLinealChart";
+import { compareSync } from "bcryptjs";
 
 import MeetingRoom from "../../components/MeetingRoom";
 import IncomingCall from "../../components/IncomingCall";
@@ -88,6 +89,7 @@ function DashboardHome(props) {
     API.getCompanies()
       .then((res) => {
         setCompanies(res.data);
+        console.log("total of companies admin " + res.data.length);
         setTotalCompaniesAdmin(res.data.length);
       })
       .catch((err) => console.log(err));
@@ -97,6 +99,7 @@ function DashboardHome(props) {
     console.log(userId);
     API.getCompaniesByUser(userId)
       .then((res) => {
+        console.log("total of companies user " + res.data.length);
         setTotalCompaniesUser(res.data.length);
       })
       .catch((err) => console.log(err));
@@ -115,6 +118,7 @@ function DashboardHome(props) {
   function loadUsers() {
     API.getUsers()
       .then((res) => {
+        console.log("total of users Admin " + res.data.length);
         setTotalUsers(res.data.length);
       })
       .catch((err) => console.log(err));
@@ -131,6 +135,7 @@ function DashboardHome(props) {
   function loadMeets() {
     API.getMeets()
       .then((res) => {
+        console.log("total of meets admin " +res.data.length);
         setTotalMeetsAdmin(res.data.length);
       })
       .catch((err) => console.log(err));
@@ -138,6 +143,8 @@ function DashboardHome(props) {
   function getGuests(userId) {
     API.getGuestsbyUserId(userId)
       .then((res) => {
+        console.log("total of guests User " +res.data.length);
+
         setTotalGuests(res.data.length);
       })
       .catch((err) => console.log(err));
@@ -145,6 +152,7 @@ function DashboardHome(props) {
   function getMeetsUser(userId) {
     API.getMeetsbyUserId(userId)
       .then((res) => {
+        console.log("total of meets User " +res.data.length);
         setTotalMeetsUser(res.data.length);
         console.log(res.data);
       })
