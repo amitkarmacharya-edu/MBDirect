@@ -215,12 +215,9 @@ function CallSetup() {
                             </button>
 
                     }
-
-
-
                 </div>
             </div>
-        </div >
+        </div>
     );
 }
 

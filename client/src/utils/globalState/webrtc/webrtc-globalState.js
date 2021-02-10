@@ -11,6 +11,7 @@ import {
     REJECT_CALL,
     ACCEPT_CALL,
     INCOMING_CALL,
+    SET_USER_TYPE,
     LOADING
 } from "./actions";
 
@@ -116,6 +117,7 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 callNotification: [action.data, ...state.callNotification],
+                remoteUserId: action.data.remoteUserId,
                 showCallNotification: true
             };
 
@@ -139,6 +141,12 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 loading: true
+            };
+
+        case SET_USER_TYPE: 
+            return {
+                ...state,
+                userType: action.userTYpe
             };
 
         default:
@@ -171,6 +179,8 @@ const MeetingProvider = ({ value = [], ...props }) => {
         meetingStarted: false,
         loading: false,
         meetingType: "",
+        meetingInfo: {},
+        userType: "Guest"
 
     });
 

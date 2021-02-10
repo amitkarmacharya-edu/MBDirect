@@ -8,6 +8,9 @@ router.route("/")
   .get(usersController.findAll)
   .post(usersController.create);
 
+router.route("/email")
+  .post(usersController.findByEmail);
+
 // Matches with "/api/users/:id"
 router
   .route("/:id")

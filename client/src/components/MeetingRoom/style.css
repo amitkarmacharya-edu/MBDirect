@@ -2,12 +2,10 @@
     position: fixed;
     top: 0;
     left: 0;
-    margin-top:2.5%;
+    /* margin-top:2.5%;
     height: 100vh;
-    width: 100vh;
-    padding: 1rem;
-    overflow-y: hidden; 
-    overflow-x: scroll;
+    width: 100vh; */
+    width: 90%;
     z-index: 999;
 }
 .video-box{
@@ -24,3 +22,60 @@
     /* object-fit: cover; */
     object-fit:contain;
 }
+
+
+
+/* Extra small devices (portrait phones, less than 576px) */
+/* No media query since this is the default in Bootstrap */
+/* Small devices (landscape phones, 576px and up) */
+
+@media (max-width: 575.98px) { 
+    .meeting-wrapper {
+        height: 90vh;
+        width: 90%;
+        margin-top: 2%;
+        margin-left: 5%;
+    }
+ }
+
+@media (min-width: 576px) and (max-width: 767.98px) { 
+    .meeting-wrapper {
+        height: 90%;
+        width: 90%;
+        margin-top: -45%;
+        margin-left: 5%;
+        top: 50%;
+    }
+ }
+
+@media (min-width: 768px) and (max-width: 991.98px) { 
+     .meeting-wrapper {
+        height: 50%;
+        width: 50%;
+        margin-top: -25%;
+        margin-left: 5%;
+        top: 50%;
+    }
+ }
+
+@media (min-width: 992px) and (max-width: 1199.98px) { 
+    .meeting-wrapper {
+        height: 50%;
+        width: 50%;
+        margin-top: -25%;
+        margin-left: -25%;
+        top: 50%;
+        left: 50%;
+    }
+ }
+
+@media (min-width: 1200px) { 
+    .meeting-wrapper {
+        height: 60%;
+        width: 60%;
+        margin-top: -30%;
+        margin-left: -30%;
+        top: 50%;
+        left: 50%;
+    }
+ }

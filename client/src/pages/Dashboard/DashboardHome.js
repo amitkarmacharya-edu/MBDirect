@@ -16,9 +16,8 @@ import { compareSync } from "bcryptjs";
 import MeetingRoom from "../../components/MeetingRoom";
 import IncomingCall from "../../components/IncomingCall";
 import meap from "../../utils/webrtc/webrtc-meap";
-import { CLOSE_MEETING, INCOMING_CALL, SAVE_USER_INFO, SET_USER_ID, SHOW_ALERTS } from "../../utils/globalState/webrtc/actions";
+import { CLOSE_MEETING, INCOMING_CALL, SAVE_USER_INFO, SET_USER_ID, SET_USER_TYPE, SHOW_ALERTS } from "../../utils/globalState/webrtc/actions";
 import { useMeetingContext } from "../../utils/globalState/webrtc/webrtc-globalState";
-
 
 
 function DashboardHome(props) {
@@ -35,10 +34,8 @@ function DashboardHome(props) {
   const [totalGuests, setTotalGuests] = useState([]);
   const [totalMeetsUser, setTotalMeetsUser] = useState([]);
   
-  
   const [state, dispatch] = useMeetingContext();
   
-
   useEffect(() => {
     loadCompanies();
     typeUsers();
@@ -51,10 +48,10 @@ function DashboardHome(props) {
       loadCompaniesByUser(localStorage.getItem(USERID));
       loadAdsByUser(localStorage.getItem(USERID));
       getMeetsUser(localStorage.getItem(USERID));
+      dispatch({type: SET_USER_TYPE, userType: "Owner"});
     }  
 
   }, [userType]);
-  
   
   useEffect(() => {
     // check for user id
@@ -62,6 +59,20 @@ function DashboardHome(props) {
       console.log("LocalStorage userId : " + localStorage.getItem("UserId"));
       meap.userId = localStorage.getItem("UserId");
       dispatch({type: SET_USER_ID, userId: localStorage.getItem("UserId")});
+      API.getUser(meap.userId)
+        .then(res => {
+          if(res.data){
+            dispatch({type: SAVE_USER_INFO, lobby: {
+              firstName: res.data.first_name,
+              lastName: res.data.last_name,
+              email: res.data.email,
+              phoneNumber: res.data.phone
+            }});
+          }
+        })
+        .catch(err =>{
+
+        });
     }
 
     if (!meap.signalingChannel) {
@@ -140,6 +151,7 @@ function DashboardHome(props) {
       })
       .catch((err) => console.log(err));
   }
+
   function getGuests(userId) {
     API.getGuestsbyUserId(userId)
       .then((res) => {
@@ -149,6 +161,7 @@ function DashboardHome(props) {
       })
       .catch((err) => console.log(err));
   }
+
   function getMeetsUser(userId) {
     API.getMeetsbyUserId(userId)
       .then((res) => {
@@ -158,13 +171,13 @@ function DashboardHome(props) {
       })
       .catch((err) => console.log(err));
   }
+
   function typeUsers() {
     const userId = localStorage.getItem(USERID);
     API.getUser(userId).then((res) => {
       setUserType(res.data.type);
     });
   }
-  
   
   return (
     <>
@@ -319,7 +332,7 @@ function DashboardHome(props) {
         </div>
       </Container>
    
-    {state.meetingStarted &&
+    {/* {state.meetingStarted &&
         <MeetingRoom
           handleDialTone={handleDialTone}
           callGotRejected={callGotRejected}
@@ -329,7 +342,7 @@ function DashboardHome(props) {
         <IncomingCall 
           handleDialTone={handleDialTone}
           callGotRejected={callGotRejected}
-        />}
+        />} */}
     </>
   );
 }

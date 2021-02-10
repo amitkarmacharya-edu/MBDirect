@@ -3,14 +3,14 @@
 @media only screen and (max-height: 568px) {
     .lobby-form {
         color: black;
-        font-size: 12px;
-        line-height: 6px;
+        font-size: 10px;
+        line-height: 8px !important
     }
 
     .lobby-form button {
         font-size: 13px;
         height: 30px !important;
-        line-height: 15px;
+        line-height: 12px;
         vertical-align: middle;
     }
 }
