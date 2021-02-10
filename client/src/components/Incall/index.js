@@ -18,9 +18,9 @@ function InCall() {
     useEffect(() => {
 
         // add listener to meap
+        meap.remoteCam = remoteCam;
         meap.addListener(haveRemoteStreamNotificationCB);
 
-        meap.remoteCam = remoteCam;
         console.log("mounting In call");
         // start video and audio[]
 
@@ -80,10 +80,12 @@ function InCall() {
         console.log("starting Connection");
         if (state.remoteSocketId) {
             meap.isCallee = false;
-            meap.connectToPeers(meap.isCallee, state.remoteSocketId, haveRemoteStreamNotificationCB);
+            // meap.connectToPeers(meap.isCallee, state.remoteSocketId, haveRemoteStreamNotificationCB);
+            meap.connectToPeers(meap.isCallee, state.remoteSocketId);
         } else if (meap.userId && meap.businessId) {
             meap.isCallee = true;
-            meap.connectToPeers(meap.isCallee, state.remoteSocketId, haveRemoteStreamNotificationCB);
+            // meap.connectToPeers(meap.isCallee, state.remoteSocketId, haveRemoteStreamNotificationCB)
+            meap.connectToPeers(meap.isCallee, state.remoteSocketId);
         } else {
             meap.closeUserMedia();
             meap.closePeerConnection();

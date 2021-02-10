@@ -268,7 +268,7 @@ class WebRTCPeerConnection {
         // call back that handles the stream from remote peer
         this.remoteStream = event.streams;
         console.log(event.streams);
-        this.haveRemoteStreamNotificationCB();
+        // this.haveRemoteStreamNotificationCB();
         this.onRemoteStreamCB(event);
     }
 

@@ -218,7 +218,7 @@ io.on('connection', (socket) => {
     console.log("broadCast sdp and candidates");
     console.log("broadcast TYPE: " + data.peerData.type);
     socket.to(remoteSocketId).emit("peerMessages", {
-      remoteSocketId: this.remoteSocketId, 
+      remoteSocketId: socket.id, 
       userId: userId,
       data: data
     });

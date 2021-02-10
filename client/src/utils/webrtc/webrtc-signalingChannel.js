@@ -122,6 +122,10 @@ export default class SignalingChannel {
                 return;
             }
             this.remoteSocketId = remoteSocketId;
+            console.log('======peerserver======')
+            console.log("mysocket id: " + this.socket.id);
+            console.log("remote socket id: " + remoteSocketId);
+            console.log('============')
             this.onmessageCB(remoteSocketId, userId, data);
         });
 
@@ -147,9 +151,15 @@ export default class SignalingChannel {
         if(!this.remoteSocketId){
             return;
         }
+
+        console.log('==send==========')
+        console.log("mysocket id: " + this.socket.id);
+        console.log("remote socket id: " + this.remoteSocketId);
+        console.log('============')
         if (this.socket) {
             // sdp description broadcast
             this.socket.emit("signalChannel", {
+                mySocketId: this.socket.id,
                 remoteSocketId: this.remoteSocketId,
                 userId: this.userId,
                 data: msg
@@ -181,6 +191,12 @@ export default class SignalingChannel {
             });
             return;
         }
+
+        console.log('======connet to business======')
+        console.log("mysocket: " + this.socket);
+        console.log("mysocket id: " + this.socket.id);
+        console.log("remote socket id: " + this.remoteSocketId);
+        console.log('============')
 
         // connect to room
         this.socket.emit("connectToBusiness", {
