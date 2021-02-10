@@ -2,6 +2,7 @@ import React from "react";
 import Home from "./pages/Home/Home";
 import { withRouter } from "react-router-dom";
 import LoginRegister from "./pages/LoginRegister/LoginRegister";
+import About from "./pages/About/About";
 import "./App.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import DashboardHome from "./pages/Dashboard/DashboardHome";
@@ -63,6 +64,7 @@ function App({ match }) {
               <ProtectedRoute path="/users" component={Users} />
               <Route exact path="/" component={Home} />
               <Route path="/login" component={LoginRegister} />
+              <Route path="/about" component={About} />
             </Switch>
           </div>
         </div>
