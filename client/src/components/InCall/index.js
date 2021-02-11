@@ -169,7 +169,7 @@ function InCall() {
         meap.selfiCam = selfiCam;
         meap.remoteCam = remoteCam;
         meap.selfiCam.current.srcObject = meap.userMedia.getLocalStream();
-
+        this.selfiCam.current.muted = true;
         startConnection();
     }
 
