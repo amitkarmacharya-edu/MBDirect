@@ -6,7 +6,7 @@ import "./style.css";
 import API from "../../utils/API";
 // import InfoBox from "../InfoBox";
 
-function InCall() {
+function InCall(props) {
 
     const [state, dispatch] = useMeetingContext();
 
@@ -19,14 +19,14 @@ function InCall() {
     const [businessInfo, setBusinessInfo] = useState({});
     const [showInfoBox, setShowInfoBox] = useState(false);
     const [ownerInfo, setOwnerInfo] = useState({});
-    const [guestInfo, setGuestInfo ] = useState({});
-    const [meetingInfo, setMeetingInfo] = useState({});
+    const [guestInfo, setGuestInfo] = useState({});
     const [infoBox, setInfoBox] = useState(true);
     const [infoButton, setInfoButton] = useState(true);
-    
+
     useEffect(() => {
 
         // add listener to meap
+        meap.selfiCam = selfiCam;
         meap.remoteCam = remoteCam;
         meap.addListener(haveRemoteStreamNotificationCB);
 
@@ -48,7 +48,7 @@ function InCall() {
         }
 
         loadCam();
-        if(state.userType === "Guest"){
+        if (state.userType === "Guest") {
             getBusinessInfo();
         } else {
             getGuestInfo();
@@ -91,7 +91,7 @@ function InCall() {
     }
 
     function getBusinessInfo() {
-        if(state.businessId){
+        if (state.businessId) {
             API.getCompany(state.businessId)
                 .then(res => {
                     console.log(res);
@@ -107,7 +107,7 @@ function InCall() {
                 })
                 .catch(err => {
                     console.log(err);
-                }); 
+                });
         }
     }
 
@@ -144,12 +144,6 @@ function InCall() {
 
     function haveRemoteStreamNotificationCB() {
         setConnecting(false);
-        muteVideoWhileConnecting();
-    }
-
-    function muteVideoWhileConnecting() {
-        meap.userMedia.toggleAudio();
-        meap.userMedia.toggleVideo();
     }
 
     function playLocalUserMedia(stream) {
@@ -166,10 +160,10 @@ function InCall() {
         console.log(meap.userMedia.haveLocalStream);
         console.log(meap.userMedia.getLocalStream());
         console.log(meap.userMediaConstraints);
-        meap.selfiCam = selfiCam;
-        meap.remoteCam = remoteCam;
+        // meap.selfiCam = selfiCam;
+        // meap.remoteCam = remoteCam;
         meap.selfiCam.current.srcObject = meap.userMedia.getLocalStream();
-        this.selfiCam.current.muted = true;
+        meap.selfiCam.current.muted = true;
         startConnection();
     }
 
@@ -202,69 +196,65 @@ function InCall() {
             {
                 connecting === true
                 &&
-                <div className="connecting bg-dark text-white">
-                    <div
-                        className="bg-dark h-100 d-flex align-items-center flex-column">
-                        <div className="mt-3">
-                            <span className="text-center">Connecting with</span>
-                        </div>
-                        <div className="my-auto h-50">
-                            <img style={{height: "75%", width: "75%", borderRadius: "1rem"}} src={businessInfo.logo || "https://miro.medium.com/max/1200/1*mk1-6aYaf_Bes1E3Imhc0A.jpeg"} className="img-fluid" />
-                            <h5 className="p-1">{businessInfo.name}</h5>
-                            <h5 className=" text-center">
-                                {
-                                    state.userType === "Guest"
+                <div className="connecting h-100 bg-dark text-white d-flex flex-wrap flex-column">
+                    <div className="mt-3">
+                        <span className="text-center">Connecting</span>
+                    </div>
+                    <div className={`${props.minimized === true ? "d-none":"my-auto h-50"}`}>
+                        <img style={{ height: "75%", width: "75%", borderRadius: ".5rem" }} src={businessInfo.logo || "https://miro.medium.com/max/1200/1*mk1-6aYaf_Bes1E3Imhc0A.jpeg"} className="img-fluid" />
+                        <h5 className="p-1">{businessInfo.name}</h5>
+                        <h5 className=" text-center">
+                            {
+                                state.userType === "Guest"
                                     ?
                                     `${ownerInfo.first_name} ${ownerInfo.last_name}`
                                     :
-                                    `${guestInfo.first_name} ${guestInfo.last_name}` 
-                                
-                                }
-                            </h5>
-                        </div>
-                        <div className="mb-3 text-center">
-                            {/* end call */}
-                            <button type="button" className="btn btn-secondary bg-dark text-danger text-center px-4 w-25" onClick={handleCallEnd}>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-telephone-x" viewBox="0 0 16 16">
-                                    <path d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.568 17.568 0 0 0 4.168 6.608 17.569 17.569 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.678.678 0 0 0-.58-.122l-2.19.547a1.745 1.745 0 0 1-1.657-.459L5.482 8.062a1.745 1.745 0 0 1-.46-1.657l.548-2.19a.678.678 0 0 0-.122-.58L3.654 1.328zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z" />
-                                    <path fillRule="evenodd" d="M11.146 1.646a.5.5 0 0 1 .708 0L13 2.793l1.146-1.147a.5.5 0 0 1 .708.708L13.707 3.5l1.147 1.146a.5.5 0 0 1-.708.708L13 4.207l-1.146 1.147a.5.5 0 0 1-.708-.708L12.293 3.5l-1.147-1.146a.5.5 0 0 1 0-.708z" />
-                                </svg>
-                            </button>
-                        </div>
+                                    `${guestInfo.first_name} ${guestInfo.last_name}`
+
+                            }
+                        </h5>
+                    </div>
+                    <div className="mb-3 text-center">
+                        {/* end call */}
+                        <button type="button" className="btn btn-secondary bg-dark text-danger text-center px-4 w-25" onClick={handleCallEnd}>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-telephone-x" viewBox="0 0 16 16">
+                                <path d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.568 17.568 0 0 0 4.168 6.608 17.569 17.569 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.678.678 0 0 0-.58-.122l-2.19.547a1.745 1.745 0 0 1-1.657-.459L5.482 8.062a1.745 1.745 0 0 1-.46-1.657l.548-2.19a.678.678 0 0 0-.122-.58L3.654 1.328zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z" />
+                                <path fillRule="evenodd" d="M11.146 1.646a.5.5 0 0 1 .708 0L13 2.793l1.146-1.147a.5.5 0 0 1 .708.708L13.707 3.5l1.147 1.146a.5.5 0 0 1-.708.708L13 4.207l-1.146 1.147a.5.5 0 0 1-.708-.708L12.293 3.5l-1.147-1.146a.5.5 0 0 1 0-.708z" />
+                            </svg>
+                        </button>
                     </div>
                 </div>
             }
             {/* In call layout */}
-            <div className="row bg-dark">
-                <div className="col-12 p-2">
-                    <div className="video-playground position-relative">
-                        <div className="video-container  rounded">
-                            <video id="selfi-cam" className="self-potrait-lg" autoPlay playsInline ref={remoteCam}></video>
+            <div className="bg-dark in-call">
+                <div className="p-2">
+                    <div className="video-playground">
+                        <div className="video-container remote-video rounded">
+                            <video id="selfi-cam" className={`${props.minimized === true ? "self-potrait-minimized-lg":"self-potrait-lg"}`} autoPlay playsInline ref={remoteCam}></video>
                             <p className="text-white p-1 text-center name">
                                 {
-                                state.userType === "Guest"
-                                ?
-                                `${ownerInfo.first_name} ${ownerInfo.last_name}`
-                                :
-                                `${guestInfo.first_name} ${guestInfo.last_name}`
+                                    state.userType === "Guest"
+                                        ?
+                                        `${ownerInfo.first_name} ${ownerInfo.last_name}`
+                                        :
+                                        `${guestInfo.first_name} ${guestInfo.last_name}`
                                 }
                             </p>
                         </div>
 
                         <div className="video-container self-potrait-sm-container position-absolute rounded">
                             <video id="selfi-cam" className=" bg-dark self-potrait-sm" autoPlay playsInline hidden={state.meetingType === "audio"} ref={selfiCam}></video>
-                            <p className="text-white p-1 text-center name-sm">
+                            <p className="text-white p-1 text-center name">
                                 {
-                                    `${state.lobby.firstName} ${state.lobby.lastName}` 
+                                    `${state.lobby.firstName} ${state.lobby.lastName}`
                                 }
                             </p>
                         </div>
 
-
                     </div>
-                    <div className="col-12 controls">
+                    <div className="controls">
                         {/* microphone */}
-                        <button type="button" className="btn btn-secondary bg-dark px-4" onClick={() => toggleVideoAudio("audio")}>
+                        <button type="button" className="btn btn-secondary bg-dark" onClick={() => toggleVideoAudio("audio")}>
                             {
                                 toggleAudio === true
                                     ? <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-mic text-success " viewBox="0 0 16 16">
@@ -277,7 +267,7 @@ function InCall() {
                             }
                         </button>
                         {/* video camera */}
-                        <button type="button" className="btn btn-secondary bg-dark px-4 " onClick={() => toggleVideoAudio("video")}>
+                        <button type="button" className="btn btn-secondary bg-dark" onClick={() => toggleVideoAudio("video")}>
                             {
                                 toggleVideo === true
                                     ? <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-camera-video text-success" viewBox="0 0 16 16">
@@ -290,17 +280,17 @@ function InCall() {
 
                         </button>
                         {/* end call */}
-                        <button type="button" className="btn btn-secondary bg-dark text-danger px-4 " onClick={handleCallEnd}>
+                        <button type="button" className="btn btn-secondary bg-dark text-danger" onClick={handleCallEnd}>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-telephone-x" viewBox="0 0 16 16">
                                 <path d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.568 17.568 0 0 0 4.168 6.608 17.569 17.569 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.678.678 0 0 0-.58-.122l-2.19.547a1.745 1.745 0 0 1-1.657-.459L5.482 8.062a1.745 1.745 0 0 1-.46-1.657l.548-2.19a.678.678 0 0 0-.122-.58L3.654 1.328zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z" />
                                 <path fillRule="evenodd" d="M11.146 1.646a.5.5 0 0 1 .708 0L13 2.793l1.146-1.147a.5.5 0 0 1 .708.708L13.707 3.5l1.147 1.146a.5.5 0 0 1-.708.708L13 4.207l-1.146 1.147a.5.5 0 0 1-.708-.708L12.293 3.5l-1.147-1.146a.5.5 0 0 1 0-.708z" />
                             </svg>
                         </button>
                         {/* settings */}
-                        <button type="button" className="btn btn-secondary bg-dark px-4" hidden={infoButton} onClick={() => setInfoBox(!infoBox)}>
+                        <button type="button" className="btn btn-secondary bg-dark" hidden={infoButton} onClick={() => setInfoBox(!infoBox)}>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-info-circle" viewBox="0 0 16 16">
-                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                                <path d="M8.93 6.588l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                <path d="M8.93 6.588l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
                             </svg>
                         </button>
                     </div>
@@ -309,7 +299,6 @@ function InCall() {
 
             {/* {   
                 infoBox && <InfoBox info={businessInfo} info={state.userType !== "Guest" ? businessInfo : guestInfo}/>
-                
             } */}
         </>
     );

@@ -7,9 +7,22 @@
 }
 
 .self-potrait-lg {
-    height: 400px;
+    height: 550px;
     width: 100%;
     object-fit: cover;
+}
+
+.minimized-connecting,
+.self-potrait-minimized-lg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 9999;
+    background-color: black;
 }
 
 .name-sm {
@@ -18,9 +31,100 @@
 
 .connecting {
     position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
     width: 100%;
-    z-index: 999;
+    z-index: 9999;
 }
+
+.name {
+    font-size: 18px !important;
+}
+
+@media (min-width: 280px) and (max-width: 280px) {
+    .controls { 
+        padding: 0;
+        margin: 0;
+    }
+    .controls button {
+        margin: 0 5px;
+        max-width: 25%;
+    }
+
+    .controls button svg {
+        display: block;
+        margin: auto;
+    }
+
+    .name {
+        background-color: rgba(22, 22, 22, 0.24);
+        font-size: 12px !important;
+        display: inline !important;
+        padding: .25rem;
+    }
+
+    .self-potrait-sm-container {
+        width: 80px;
+    }
+
+}
+
+
+@media (min-width: 320px) and (max-width: 320px) {
+    .in-call, .connecting {
+        max-height: 400px;
+    }
+
+    .name {
+        background-color: rgba(22, 22, 22, 0.24);
+        font-size: 12px !important;
+        display: inline !important;
+        padding: .25rem;
+    }
+
+    .video-container {
+        max-height: 350px;
+    }
+
+    .self-potrait-lg {
+        max-height: 320px !important;
+    }
+}
+
+@media only screen and (max-width: 360px) {
+
+    .self-potrait-lg {
+        max-height: 480px;
+    }
+}
+
+/* Extra small devices (portrait phones, less than 576px) */
+@media only screen and (max-width: 575.98px) { 
+    .name {
+        background-color: rgba(22, 22, 22, 0.24);
+        font-size: 12px !important;
+        display: inline !important;
+        padding: .25rem;
+    }
+
+    .self-potrait-lg {
+        max-height: 400px;
+    }
+
+}
+
+/* Extra ipad pro and desktop */
+@media only screen and (min-width: 998.98px) { 
+    .remote-video {
+        min-height: 627px;
+    }
+
+    .controls {
+        margin-bottom: 2rem;
+    }
+
+    .controls button {
+        padding: 1rem 2rem;
+        margin: 0 1rem;
+        border-radius: .4rem;
+    }
+}
+
