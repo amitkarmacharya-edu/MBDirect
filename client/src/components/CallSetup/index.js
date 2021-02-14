@@ -90,7 +90,7 @@ function CallSetup() {
         dispatch({ type: INCOMING_CALL, data: data });
     }
 
-    function playLocalUserMedia(stream) {
+    function playLocalUserMedia() {
         if (!meap.userMedia) {
             dispatch({type: SHOW_ALERTS, errMsg: "Couldn't get Local Media"});
             return;
@@ -106,6 +106,7 @@ function CallSetup() {
         console.log(meap.userMediaConstraints);
         meap.selfiCam = selfiCam;
         meap.selfiCam.current.srcObject = meap.userMedia.getLocalStream();
+        meap.selfiCam.current.srcObject.muted = true;
     }
 
     function handleCallCancel() {
@@ -125,7 +126,7 @@ function CallSetup() {
                 console.log("no signal channel so start connection");
                 let res = await meap.createSocketConnection(handleDialTone, callGotRejected);
             }
-            // meap.userMedia.close();
+            meap.closeUserMedia();
             selfiCam.current.srcObject = null;
             console.log(selfiCam);
             dispatch({
@@ -158,16 +159,15 @@ function CallSetup() {
     }
 
     return (
-        <div className="call-setup row bg-dark h-100">
-            <div className="col-12 p-2 h-100 w-100">
-                <div className="video-playground">
+        <div className="call-setup bg-dark h-100">
+                <div className="video-playground h-100">
                     <div className="video-container rounded">
-                        <video id="selfi-cam" className="self-potrait h-100 bg-white" autoPlay playsInline ref={selfiCam}></video>
-                        <p className="text-white p-1 text-center name">{state.lobby.firstName} {state.lobby.lastName}</p>
+                        <video id="selfi-cam" className="self-potrait h-100" autoPlay playsInline ref={selfiCam}></video>
+                        <p className="text-white p-1 text-center">{state.lobby.firstName} {state.lobby.lastName}</p>
                     </div>
                 </div>
                 {/* controls */}
-                <div className="col-12 controls text-center">
+                <div className="my-2 text-center">
                     {/* Cancel Call */}
                     <button type="button" className="btn btn-secondary bg-danger w-25 px-1 mx-1" onClick={handleCallCancel}>
                         Cancel
@@ -213,10 +213,8 @@ function CallSetup() {
                                 }
 
                             </button>
-
                     }
                 </div>
-            </div>
         </div>
     );
 }
