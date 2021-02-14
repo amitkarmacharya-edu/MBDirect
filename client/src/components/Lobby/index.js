@@ -149,25 +149,25 @@ function Lobby() {
     }
 
     return (
-        <form className="row bg-white m-auto lobby-form text-dark" ref={formRef}>
+        <form className="row bg-white m-auto pt-2 h-100 w-100 lobby-form text-dark" ref={formRef}>
             {/* <p className="px-3 mt-3">Please Provide your information</p> */}
             {/* full name */}
-            <div className="mb-3 col-12 text-left">
+            <div className=" col-12 text-left">
                 <label className="form-label ">First Name: <span className="text-danger">*</span></label>
                 <input onChange={handleOnChange} name="firstName" type="text" className="form-control" placeholder="John " required/>
             </div>
             {/* last name */}
-            <div className="mb-3 col-12 text-left">
+            <div className=" col-12 text-left">
                 <label className="form-label">Last Name: <span className="text-danger">*</span></label>
                 <input onChange={handleOnChange} name="lastName" type="text" className="form-control" placeholder="Doe" required/>
             </div>
             {/* email */}
-            <div className="mb-3 col-12 text-left">
+            <div className=" col-12 text-left">
                 <label className="form-label">Email Address: <span className="text-danger">*</span></label>
                 <input onChange={handleOnChange} name="email" type="email" className="form-control" placeholder="example@email.com" required/>
             </div>
             {/* phone number */}
-            <div className="mb-3 col-12 text-left">
+            <div className=" col-12 text-left">
                 <label className="form-label">Phone Number:</label>
                 <input onChange={handleOnChange} name="phoneNumber" 
                 type="text" 
@@ -175,12 +175,12 @@ function Lobby() {
                 />
             </div>
             {/* subject */}
-            <div className="mb-3 col-12 text-left">
+            <div className=" col-12 text-left">
                 <label className="form-label">Subject</label>
                 <input onChange={handleOnChange} name="subject" type="text" className="form-control"  placeholder="Enter your subject" />
             </div>
             {/* message */}
-            <div className="mb-3 col-12 text-left">
+            <div className=" col-12 text-left">
                 <label className="form-label">Message: </label>
                 <textarea onChange={handleOnChange} name="message" className="form-control" rows="3" placeholder="Enter your message"></textarea>
             </div>

@@ -1,16 +1,60 @@
+.lobby-form button {
+    margin-top: 1rem;
+}
 
+@media only screen and (max-width: 280px) {
+    .lobby-form button {
+        padding: .5rem 0;
+        font-size: 12px;
+        width: 30%;
+    }
+}
 
-@media only screen and (max-height: 568px) {
+@media only screen and (min-width: 999.98px) {
     .lobby-form {
-        color: black;
-        font-size: 10px;
-        line-height: 8px !important
+        min-height: 627px;
+    }
+}
+
+@media (min-width: 999.98px) and (max-width: 1598.98px) {
+    
+
+    input[type="text"], input[type="email"] {
+        min-height: 35px;
     }
 
-    .lobby-form button {
-        font-size: 13px;
-        height: 30px !important;
-        line-height: 12px;
-        vertical-align: middle;
+    .lobby-form,
+    .lobby-form .card-header,
+    input::-webkit-input-placeholder,
+    textarea::-webkit-input-placeholder {
+        font-size: 18px;
+        margin: 0 !important;
+    }
+
+    textarea {
+        min-height: 86px;
+    }
+
+    .lobby-form .card-header {
+        min-height: 48px;
+    }
+
+}
+
+@media only screen and (min-width: 320px) and (max-width: 320px) {
+    .lobby-form {
+        max-height: 460px;
+    }
+
+    .lobby-form,
+    .lobby-form .card-header,
+    input::-webkit-input-placeholder,
+    textarea::-webkit-input-placeholder {
+        font-size: 12px;
+        margin: 0 !important;
+    }
+
+    input[type="text"], input[type="email"] {
+        max-height: 30px;
     }
 }
