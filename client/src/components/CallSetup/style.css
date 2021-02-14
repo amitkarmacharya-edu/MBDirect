@@ -1,19 +1,21 @@
+.call-setup {
+    background-color: black;
+}
+
 .video-playground {
-    height: 90%;
     width: 100%;
     overflow: hidden;
 }
-.controls {
-    height: 50px;
-    min-width: 100%;
-}
-.self-potrait {
+
+.video-container p {
+    font-size: 20px;
     height: 100%;
-    width: 100%;
-    object-fit: cover;
 }
+
+.self-potrait,
 .self-potrait-sm {
     height: 100%;
     width: 100%;
     object-fit: cover;
+    background-color: black;
 }
