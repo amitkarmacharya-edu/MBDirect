@@ -1,13 +1,1 @@
-{
-    "type": "service_account",
-    "project_id": "mbdirect",
-    "private_key_id": "40fef218c5cb2139f7769052ddeffb3593daeeed",
-    "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQDlS9/WDxiu5jYf\nRhQMQ4lDfBSiXuqvrHnKRAe2HXs/Et8phDEj/bcmP7+STZRipBp5sKOPVh0DfDRg\nr0Szs3oCG4zJ0HOKZ2MZC9v7qOUqD8D4epMoC3b9RFSfIDT0GXvSdC9gabe399Hh\nLUiu4m7BphtOVpFUMRsZfIGlXAD2szFu/d6CERgKTzIyfYgzVL8px5HxeYxl0/rD\nXZoXRQfPlxTg9m3TO6vJD9x/HsfWbDz7XXGdq8rBKNvAU2jVXiYf7Hu/xTh3LghB\nSb/QbxEjylTDQLj9thtq7NG/BWbGrt2S9dku0Urtmuen8ie7iSXjizbHf88hypnC\nlm0DqaFFAgMBAAECggEAEI1wpChE1ONjhtBtRBFgCFIdvzbw5CukQxi0Ic5xBjWb\njIixb3KyVP2HG82j55cHHj/FHuTNhWHi+hPM9tf+98X7XNpCbPxXqAg2Ii2oFWg7\nuvRGST7CoTfcj/woNnLcgG3IucIH9Czcps+5Dn7kFfCiyf3v0c8VsLpPNZu1qhlU\ncvsGBkkG2xL1rrMyAnWDw35/9+euukUJuDrkN9Z12y3fwyPFOPj8EmEBdi3ykO+X\nWfHvQbGOqxSgp1SB19s+ZoHpersVRtjyP7FNimRqbifKtQBJ4XDBji7Ep5blu8Sv\n+2BqGoL4EoXz10bVmkZCtWow1xIIbvKcI+uWnsIYBQKBgQD+xwNtzrnJqbessdgY\n2x+iETdSTpEgh0uIIUNIuLw/+w3/6mSosyzGvcp9U83rw73n3cbwoDlLUTdD7q/c\nzPglH/1Q+jarl77IXz+bk9daYmAw++/z683DmVGaEXDXoKSLNZdkr+7KV+keFyp0\nvN7HcBgVPMaSMZvouDPH1YaIqwKBgQDmZY7ryWpmV9X6nhbeIPxWxyp+mZDH+BYO\nrORYQYxQev7+SjJMXOwLcXuZi4649gwzKKpMMpgxl0Q8NgGjEIKrPzo4UZ7Igc9m\nYCSW3FTJt7d42kExMuGGd0b5pbROEiijNA+I9CPIavH/ZM4lHABMZTlTlKH/QKS0\nCsde+rFdzwKBgE5jZQawCDGn6j9UKKzdHop6yY6lZbmgZvjnYxBI5oK498G5mGbf\nWfN8CYUt97mGbDOe5Mq8QWSPBHX+RlWlKuQhR4tWsONyuNxlkeiIQEYq5nWrzlQ6\nRQDdd2Hz48g0QOwj/QSZrNrM2YjMj9+DDPhH4OEH5gCtCs87fZMKe24pAoGAG+nJ\n+v8YCPYzUn28v4S3jbvrhhMM221PHtALijXGzilYo25R0bagUnKZSu0BiZ8lsz0G\nBN1MWxW8ip7wa9UgP6cVYqVg22H+wqR7Slu/WgEMFXQ72b4UXLouuyg8RAknKz6v\ncyRBAZMTZqHL5+sQjjDlVR740Xf/fGCh7vvoaTkCgYABgU9lfraa7+zbKZ782UTC\n/UTez+5wciqgRhShZR4IRWmVT0AqNdF7NudlrwfKapRRhP0LbKWxH8R/RZiR+Eoa\noLzUz+K5VzRTdBp4SZNISGy5M5nvln2e8PoHr9/BzJhmG96u8GT3o9gd+m0ScT+e\nftV+4X19VIVTKmDr5N3cLQ==\n-----END PRIVATE KEY-----\n",
-    "client_email": "mbdirect-images@mbdirect.iam.gserviceaccount.com",
-    "client_id": "114515966288897042725",
-    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-    "token_uri": "https://oauth2.googleapis.com/token",
-    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/mbdirect-images%40mbdirect.iam.gserviceaccount.com"
-  }
-  
+
