@@ -5,7 +5,7 @@ function ListUsers(props) {
   const fullName= props.userResults.first_name + " " + props.userResults.last_name;
   let imageSRC ="";
   if(props.userResults.image){
-    imageSRC = window.location.origin + "/" + props.userResults.image.substring(3);
+    imageSRC = props.userResults.image;
   } else {
     imageSRC = window.location.origin + "/images/userAvatar.png";
   }    

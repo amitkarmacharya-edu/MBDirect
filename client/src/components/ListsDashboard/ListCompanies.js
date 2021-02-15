@@ -2,9 +2,9 @@ import React from "react";
 import "./style.css";
 
 function ListCompanies(props) {
-  let imageSRC ="";
+  let imageSRC ="";  
   if(props.companyResults.logo){
-    imageSRC = window.location.origin + "/" + props.companyResults.logo.substring(3);
+    imageSRC = props.companyResults.logo;
   } else {
   imageSRC = window.location.origin + "/images/no-image.png";
   }
