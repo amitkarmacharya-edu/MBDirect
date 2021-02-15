@@ -1,6 +1,7 @@
 const db = require("../models");
 const uuid = require("uuid").v4;
 const path = require("path");
+const { uploadImage } = require("../gcCloudStorage/helpers/gcCloudStorage.js");
 
 
 // Defining methods for the adsController
@@ -31,8 +32,6 @@ module.exports = {
       .then(dbAd => res.json(dbAd))
       .catch(err => res.status(422).json(err));
   },
-
-
   create: function(req, res) {
     if (!req.files || !req.files.image){
       const ad = {
@@ -51,21 +50,10 @@ module.exports = {
       return
     }
 
-    console.log(req.files);
-    const img = req.files.image;
-    const imgName = uuid();
-    const imgType = img.mimetype.split("/")[1];
-    const IMAGE_PATH_CLIENT = `../images/${imgName}.${imgType}`;
-    const IMAGE_PATH_SERVER = path.join(
-      __dirname,
-      `../public/images/${imgName}.${imgType}`
-    );
-    // Use the mv() method to place the file somewhere on your server
-    img.mv(IMAGE_PATH_SERVER, err => {
-      if (err) {
-        console.log(err);
-        return res.status(500).send(err);
-      }
+  // console.log(req.files);
+  const img = req.files.image;
+  uploadImage(img)
+    .then(imageUrl => {
       const ad = {
         name: req.body.name,
         description: req.body.description,
@@ -75,18 +63,13 @@ module.exports = {
         end_date: req.body.end_date,
         CompanyId: req.body.CompanyId,
         UserId:req.body.UserId,
-        image: IMAGE_PATH_CLIENT,        
+        image: imageUrl,        
       }
       db.Ad.create(ad)
       .then((dbAd) => res.json(dbAd))
-      .catch((err) => res.status(422).json(err));      
-    });   
-
-
-    // db.Ad
-    //   .create(req.body)
-    //   .then(dbAd => res.json(dbAd))
-    //   .catch(err => res.status(422).json(err));
+      .catch((err) => res.status(422).json(err));
+    })
+    .catch(err => res.status(422).json(err));
   },
   update: function(req, res) {
 
@@ -115,50 +98,31 @@ module.exports = {
       return
     }
 
-    console.log(req.files);
+    // console.log(req.files);
     const img = req.files.image;
-    const imgName = uuid();
-    const imgType = img.mimetype.split("/")[1];
-    const IMAGE_PATH_CLIENT = `../images/${imgName}.${imgType}`;
-    const IMAGE_PATH_SERVER = path.join(
-      __dirname,
-      `../public/images/${imgName}.${imgType}`
-    );
-    // Use the mv() method to place the file somewhere on your server
-    img.mv(IMAGE_PATH_SERVER, err => {
-      if (err) {
-        console.log(err);
-        return res.status(500).send(err);
-      }
-      const ad = {
-        name: req.body.name,
-        description: req.body.description,
-        discount: req.body.discount,
-        status: req.body.status,
-        start_date: req.body.start_date,
-        end_date: req.body.end_date,
-        CompanyId: req.body.CompanyId,
-        UserId:req.body.UserId,
-        image: IMAGE_PATH_CLIENT,        
-      }
-      db.Ad.update(ad,
-        {
-          where: {
-            id: idToNumber,
-          },
-        })
-      .then((dbAd) => res.json(dbAd))
-      .catch((err) => res.status(422).json(err));      
-    });   
-
-    // db.Ad
-    //   .update(req.body, {
-    //     where: {
-    //       id: req.params.id
-    //     }
-    //   })
-    //   .then(dbAd => res.json(dbAd))
-    //   .catch(err => res.status(422).json(err));
+    uploadImage(img)
+      .then(imageUrl => {
+        const ad = {
+          name: req.body.name,
+          description: req.body.description,
+          discount: req.body.discount,
+          status: req.body.status,
+          start_date: req.body.start_date,
+          end_date: req.body.end_date,
+          CompanyId: req.body.CompanyId,
+          UserId:req.body.UserId,
+          image: imageUrl,        
+        }
+        db.Ad.update(ad,
+          {
+            where: {
+              id: idToNumber,
+            },
+          })
+        .then((dbAd) => res.json(dbAd))
+        .catch((err) => res.status(422).json(err)); 
+      })
+      .catch(err => res.status(422).json(err));
   },
   remove: function(req, res) {
     db.Ad
