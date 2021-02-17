@@ -49,10 +49,11 @@ function VideoIcon({businessId, roomId}){
 }
     return (
         <span
-        className="p-2 border icon-box"
+        className="p-2 border icon-box overflow-hidden"
         onClick={startMeeting}
-        >Video
-        <i className="fa fa-video-camera icon" aria-hidden="true"></i>
+        >
+        Video
+         <i className="fa fa-video-camera icon mx-1 h-100" aria-hidden="true"></i>
         </span>
     );
 }

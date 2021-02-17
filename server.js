@@ -83,6 +83,9 @@ db.sequelize.sync().then(() => {
   });
 });
 
+/**
+ * Socket.io
+ */
 
 // stores relations between user and business
 // store all the business ids, users send request
@@ -161,12 +164,6 @@ io.on('connection', (socket) => {
       return;
     }
 
-    // // no more than 2 people in one room
-    // if (io.sockets.adapter.rooms.get(bidToSid[bId]).size >= 2){
-    //   socket.emit("BusinessBusy", {errMsg: "Business is Busy with another caller"});
-    //   return;
-    // }
-
     // join room
     console.log("connected to business: " + bId);
     
@@ -192,22 +189,11 @@ io.on('connection', (socket) => {
    * Incoming and outgoing calls
    */
 
-  // // dial tone
-  // this.socket.on("dialTone", ({remoteSocketId, msg}) => {
-  //   console.log(msg);
-  // });
-
   // call rejected
   socket.on("callRejected", ({remoteSocketId}) => {
       console.log("Call rejected for : " + remoteSocketId);
       socket.to(remoteSocketId).emit("callRejected", {remoteUserId: socket.id});
   });
-
-  // // call accepted
-  // this.socket.on("callAccepted", () => {
-  //     console.log("Call was accepted");
-  // });
-
 
   /** 
    * webrtc

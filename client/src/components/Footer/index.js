@@ -27,7 +27,7 @@ function Footer() {
                     </div>
                 </div>
                 <div className="row">
-                <div class="col-md-8 col-xs-12 offset-md-2">
+                <div className="col-md-8 col-xs-12 offset-md-2">
                     <div className="panel-footer">
                     ©2020 - 2021 MB Direct - Inter TEAM. All Rights Reserved.
                     </div>
