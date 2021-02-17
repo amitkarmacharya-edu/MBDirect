@@ -25,11 +25,6 @@ function Home() {
       <Header />
       <Jumbo />
       <Main />
-      {/* {state.meetingStarted && <MeetingRoom 
-          callGotRejected={callGotRejected}
-          />}
-      {state.showCallNotification && <IncomingCall />} */}
-
       <Footer />
     </>
   );

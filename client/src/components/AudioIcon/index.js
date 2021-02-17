@@ -49,7 +49,7 @@ function AudioIcon({businessId}){
         className="p-2 border icon-box"
         onClick={startMeeting}
         >Audio
-            <i className="fa fa-phone icon" aria-hidden="true"></i>
+            <i className="fa fa-phone icon mx-1 h-100" aria-hidden="true"></i>
         </span>
     );
 }

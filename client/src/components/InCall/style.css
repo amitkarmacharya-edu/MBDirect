@@ -6,8 +6,12 @@
     border: 1px solid black;
 }
 
+.in-call {
+    height: 90%;
+}
+
 .self-potrait-lg {
-    height: 550px;
+    height: 100%;
     width: 100%;
     object-fit: cover;
 }
@@ -114,7 +118,8 @@
 /* Extra ipad pro and desktop */
 @media only screen and (min-width: 998.98px) { 
     .remote-video {
-        min-height: 627px;
+        height: 100%;
+        object-fit: contain;
     }
 
     .controls {

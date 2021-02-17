@@ -227,11 +227,10 @@ function InCall(props) {
             }
             {/* In call layout */}
             <div className="bg-dark in-call">
-                <div className="p-2">
-                    <div className="video-playground">
-                        <div className="video-container remote-video rounded">
-                            <video id="selfi-cam" className={`${props.minimized === true ? "self-potrait-minimized-lg":"self-potrait-lg"}`} autoPlay playsInline ref={remoteCam}></video>
-                            <p className="text-white p-1 text-center name">
+                    <div className="video-playground h-100">
+                        <div className="video-container remote-video rounded h-100">
+                            <video id="selfi-cam" className={`${props.minimized === true ? "self-potrait-minimized-lg":"self-potrait-lg h-100"}`} autoPlay playsInline ref={remoteCam}></video>
+                            <span className="text-white p-1 text-center name">
                                 {
                                     state.userType === "Guest"
                                         ?
@@ -239,16 +238,16 @@ function InCall(props) {
                                         :
                                         `${guestInfo.first_name} ${guestInfo.last_name}`
                                 }
-                            </p>
+                            </span>
                         </div>
 
                         <div className="video-container self-potrait-sm-container position-absolute rounded">
                             <video id="selfi-cam" className=" bg-dark self-potrait-sm" autoPlay playsInline hidden={state.meetingType === "audio"} ref={selfiCam}></video>
-                            <p className="text-white p-1 text-center name">
+                            <span className="text-white p-1 text-center name px-2 rounded">
                                 {
                                     `${state.lobby.firstName} ${state.lobby.lastName}`
                                 }
-                            </p>
+                            </span>
                         </div>
 
                     </div>
@@ -294,7 +293,6 @@ function InCall(props) {
                             </svg>
                         </button>
                     </div>
-                </div>
             </div>
 
             {/* {   
