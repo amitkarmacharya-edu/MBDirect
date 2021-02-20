@@ -43,13 +43,14 @@ React App Deployment, https://create-react-app.dev/
  ## Technologies
 
 - JavaScript
+- Node,js
 - NPM Modules
 - Axios
-- Mongodb
+- MySQL
 - React.js
 - Package.json
 - API
-- MVC format
+- MERN model
   
 
   ## Questions
